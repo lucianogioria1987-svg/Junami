@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Imprimir: {{ titulo }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; }
+            .no-print { display: none; }
+            @page { margin: 2cm; size: A4; }
+        }
+        body { background: #525659; font-family: 'Times New Roman', serif; }
+        .hoja-a4 {
+            background: white; width: 210mm; min-height: 297mm;
+            margin: 2rem auto; padding: 2cm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fixed top-4 right-4 no-print flex gap-2">
+        <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded font-bold shadow hover:bg-blue-700">🖨️ Imprimir Ahora</button>
+        <button onclick="window.close()" class="bg-gray-600 text-white px-4 py-2 rounded font-bold shadow hover:bg-gray-700">Cerrar</button>
+    </div>
+
+    <div class="hoja-a4 text-gray-800">
+        
+        <div class="border-b-2 border-gray-800 pb-4 mb-8 flex justify-between items-end">
+            <div>
+                <h1 class="text-3xl font-bold uppercase tracking-wider">Junami</h1>
+                <p class="text-sm text-gray-500">Centro de Gestión Terapéutica</p>
+            </div>
+            <div class="text-right text-sm">
+                <p><strong>Paciente:</strong> {{ paciente.nombre }}</p>
+                <p><strong>DNI:</strong> {{ paciente.dni }}</p>
+                <p><strong>Fecha Impresión:</strong> {{ fecha_impresion }}</p>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-center mb-8 underline decoration-double">{{ titulo }}</h2>
+
+        {% if seccion == 'planificacion' %}
+            <div class="space-y-8">
+                <div>
+                    <h3 class="font-bold text-lg uppercase border-b border-gray-300 mb-2">Plan Anual</h3>
+                    <div class="text-justify whitespace-pre-wrap leading-relaxed">{{ datos.plan or 'Sin datos cargados.' }}</div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg uppercase border-b border-gray-300 mb-2">Objetivos Mensuales</h3>
+                    <div class="text-justify whitespace-pre-wrap leading-relaxed">{{ datos.objetivos or 'Sin datos cargados.' }}</div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg uppercase border-b border-gray-300 mb-2">Sugerencias al Hogar</h3>
+                    <div class="text-justify whitespace-pre-wrap leading-relaxed">{{ datos.sugerencias or 'Sin datos cargados.' }}</div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if seccion == 'evoluciones' %}
+            <div class="space-y-4">
+                {% for log in datos %}
+                <div class="mb-4 pb-4 border-b border-gray-200 break-inside-avoid">
+                    <div class="flex justify-between font-bold text-sm mb-1 bg-gray-100 p-1">
+                        <span>{{ log.fecha }} - {{ log.hora }}hs</span>
+                        <span>Prof. {{ log.profesional }}</span>
+                    </div>
+                    <p class="text-justify text-sm whitespace-pre-wrap">{{ log.nota }}</p>
+                </div>
+                {% else %}
+                <p class="italic text-center text-gray-500">No hay evoluciones registradas.</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if seccion == 'datos' %}
+            <div class="grid grid-cols-2 gap-6 text-sm">
+                <div class="col-span-2 bg-gray-100 p-2 font-bold uppercase">Información Personal</div>
+                <div><span class="font-bold">Edad:</span> {{ paciente.edad }}</div>
+                <div><span class="font-bold">Fecha Nacimiento:</span> {{ paciente.fecha_nacimiento }}</div>
+                <div><span class="font-bold">Domicilio:</span> {{ paciente.domicilio }}</div>
+                <div><span class="font-bold">Obra Social:</span> {{ paciente.obra_social }}</div>
+                
+                <div class="col-span-2 bg-gray-100 p-2 font-bold uppercase mt-4">Escolaridad</div>
+                <div><span class="font-bold">Escuela:</span> {{ paciente.escuela_nombre }}</div>
+                <div><span class="font-bold">Grado:</span> {{ paciente.escuela_grado }}</div>
+
+                <div class="col-span-2 bg-gray-100 p-2 font-bold uppercase mt-4">Familia</div>
+                <div><span class="font-bold">Madre:</span> {{ paciente.nombre_madre }} ({{ paciente.tel_madre }})</div>
+                <div><span class="font-bold">Padre:</span> {{ paciente.nombre_padre }} ({{ paciente.tel_padre }})</div>
+
+                <div class="col-span-2 bg-gray-100 p-2 font-bold uppercase mt-4">Equipo Clínico</div>
+                <div class="col-span-2"><span class="font-bold">Diagnóstico:</span> {{ paciente.diagnostico }}</div>
+                <div><span class="font-bold">Médico Cabecera:</span> {{ paciente.medico_cabecera }}</div>
+                <div><span class="font-bold">Neurólogo:</span> {{ paciente.neurologo }}</div>
+            </div>
+        {% endif %}
+
+        <div class="mt-16 pt-8 border-t border-gray-800 text-center text-xs text-gray-500">
+            Documento generado digitalmente por sistema Junami el {{ fecha_impresion }}.
+        </div>
+
+    </div>
+</body>
+</html>
