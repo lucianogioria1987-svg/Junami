@@ -1,1 +1,34 @@
-[]
+[
+    {
+        "id": 1,
+        "id_paciente": 2,
+        "profesional": "Lic. María González",
+        "nota": "El objetivo de esta propuesta es implementar Junami para digitalizar y optimizar el flujo clínico-administrativo de su institución.\r\nEl enfoque no se basa únicamente en ofrecer un sistema, sino en generar un impacto operativo real dentro de la clínica:\r\n",
+        "fecha": "05/03/2026",
+        "hora": "09:41"
+    },
+    {
+        "id": 2,
+        "id_paciente": 2,
+        "profesional": "Lic. María González",
+        "nota": "",
+        "fecha": "05/03/2026",
+        "hora": "10:04"
+    },
+    {
+        "id": 3,
+        "id_paciente": 2,
+        "fecha": "05/03/2026",
+        "hora": "10:07",
+        "profesional": "Lic. María González",
+        "nota": "fgfgfg"
+    },
+    {
+        "id": 4,
+        "id_paciente": 1,
+        "profesional": "Lic. María González",
+        "nota": "dsd\r\n",
+        "fecha": "09/03/2026",
+        "hora": "09:37"
+    }
+]

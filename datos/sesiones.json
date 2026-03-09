@@ -1,1 +1,28 @@
-[]
+[
+    {
+        "id": 1,
+        "id_paciente": 1,
+        "nombre_paciente": "Lisandro Gioria",
+        "profesional_nombre": "Aux. Lucía Diaz",
+        "profesional_especialidad": "Terapia Ocupacional",
+        "dias": [
+            "Lunes"
+        ],
+        "hora": "18:00",
+        "consultorio": "Sala 1",
+        "tipo": "Individual"
+    },
+    {
+        "id": 2,
+        "id_paciente": 1,
+        "nombre_paciente": "Lisandro Gioria",
+        "profesional_nombre": "Aux. Lucía Diaz",
+        "profesional_especialidad": "Terapia Ocupacional",
+        "dias": [
+            "Jueves"
+        ],
+        "hora": "18:45",
+        "consultorio": "Sala 1",
+        "tipo": "Individual"
+    }
+]

@@ -7,91 +7,21 @@
     <title>Junami - Admisiones</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        .modal-tab-active {
-            border-bottom: 2px solid #2563eb;
-            color: #2563eb;
-            font-weight: bold;
-        }
-
-        .modal-tab-inactive {
-            color: #6b7280;
-        }
-
-        .modal-content-tab {
-            display: none;
-        }
-
-        .modal-content-tab.active {
-            display: block;
-        }
-
-        /* --- ESTILOS DE IMPRESIÓN --- */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .modal-tab-active { border-bottom: 2px solid #2563eb; color: #2563eb; font-weight: bold; }
+        .modal-tab-inactive { color: #6b7280; }
+        .modal-content-tab { display: none; }
+        .modal-content-tab.active { display: block; }
         @media print {
-            body * {
-                visibility: hidden;
-            }
-
-            .modal-lectura.active,
-            .modal-lectura.active * {
-                visibility: visible;
-            }
-
-            .modal-lectura.active {
-                position: fixed !important;
-                top: 0 !important;
-                left: 0 !important;
-                width: 100vw !important;
-                height: 100vh !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-                z-index: 99999 !important;
-                display: block !important;
-                overflow: visible !important;
-            }
-
-            .modal-lectura.active .printable-content {
-                width: 100% !important;
-                max-width: 100% !important;
-                box-shadow: none !important;
-                border: none !important;
-                margin: 0 !important;
-                padding: 20px !important;
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
-            }
-
-            .no-print,
-            button,
-            header,
-            aside,
-            .close-btn {
-                display: none !important;
-            }
-
-            body {
-                background: white !important;
-                color: black !important;
-            }
+            body * { visibility: hidden; }
+            .modal-lectura.active, .modal-lectura.active * { visibility: visible; }
+            .modal-lectura.active { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; margin: 0 !important; padding: 0 !important; background: white !important; z-index: 99999 !important; display: block !important; overflow: visible !important; }
+            .modal-lectura.active .printable-content { width: 100% !important; max-width: 100% !important; box-shadow: none !important; border: none !important; margin: 0 !important; padding: 20px !important; position: absolute !important; top: 0 !important; left: 0 !important; }
+            .no-print, button, header, aside, .close-btn { display: none !important; }
+            body { background: white !important; color: black !important; }
         }
     </style>
 </head>
@@ -99,644 +29,409 @@
 <body class="bg-slate-50 font-sans text-slate-600">
 
     <div class="flex h-screen overflow-hidden">
-
         <aside class="w-64 bg-white flex flex-col shadow-2xl z-20 flex-shrink-0 transition-all duration-300 no-print">
-            <div
-                class="h-40 bg-gradient-to-br from-blue-700 to-teal-500 flex flex-col items-center justify-center text-white relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 rounded-full bg-white opacity-10 blur-xl">
-                </div>
-                <div class="absolute bottom-0 left-0 -ml-4 -mb-4 w-20 h-20 rounded-full bg-teal-300 opacity-20 blur-lg">
-                </div>
-                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Nidus"
-                    class="h-20 w-auto mb-2 z-10 object-contain rounded shadow-sm bg-white/10 backdrop-blur-sm p-1">
+            <div class="h-40 bg-gradient-to-br from-blue-700 to-teal-500 flex flex-col items-center justify-center text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 rounded-full bg-white opacity-10 blur-xl"></div>
+                <div class="absolute bottom-0 left-0 -ml-4 -mb-4 w-20 h-20 rounded-full bg-teal-300 opacity-20 blur-lg"></div>
+                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Junami" class="h-20 w-auto mb-2 z-10 object-contain rounded shadow-sm bg-white/10 backdrop-blur-sm p-1">
                 <div class="text-lg font-bold tracking-widest z-10 uppercase text-shadow">Junami</div>
                 <div class="text-xs text-blue-100 z-10 opacity-90">Gestión Terapéutica</div>
             </div>
-
+            
             <nav class="flex-1 py-6 space-y-1 overflow-y-auto">
                 <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Principal</p>
-
-                <a href="{{ url_for('dashboard') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group">
-                    <svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z">
-                        </path>
-                    </svg>
+                <a href="{{ url_for('dashboard_loguin_bp.dashboard') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group">
+                    <svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z"></path></svg>
                     Dashboard General
                 </a>
-                <a href="{{ url_for('dashboard2') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
-                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                        </path>
-                    </svg>Dashboard Personal</a>
-
-                <a href="{{ url_for('admisiones') }}"
-                    class="flex items-center px-6 py-3 text-blue-700 bg-blue-50 border-r-4 border-blue-600 font-bold transition-all group">
-                    <svg class="w-5 h-5 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                        </path>
-                    </svg>Admisiones
+                <a href="{{ url_for('dashboard_personal_bp.dashboard2') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Dashboard Personal</a>
+                <a href="{{ url_for('admisiones') }}" class="flex items-center px-6 py-3 text-blue-700 bg-blue-50 border-r-4 border-blue-600 font-bold transition-all"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>Admisiones</a>
+                <a href="{{ url_for('pacientes') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Pacientes</a>
+                <a href="{{ url_for('agenda') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>Agenda / Turnos</a>
+                <a href="{{ url_for('historias') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Historias Clínicas</a>
+                <a href="{{ url_for('reportes') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>Reportes y Estadísticas</a>
+                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">Administración</p>
+                <a href="{{ url_for('profesionales') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>Profesionales</a>
+                <a href="{{ url_for('facturacion') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition group">
+                    <svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Facturación
                 </a>
-
-                <a href="{{ url_for('pacientes') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
-                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
-                        </path>
-                    </svg>Pacientes</a>
-                <a href="{{ url_for('agenda') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
-                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>Agenda / Turnos</a>
-                <a href="{{ url_for('historias') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
-                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>Historias Clínicas</a>
-                <a href="{{ url_for('reportes') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
-                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                        </path>
-                    </svg>Reportes y Estadísticas</a>
-                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">Administración
-                </p>
-                <a href="{{ url_for('profesionales') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
-                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
-                        </path>
-                    </svg>Staff Terapéutico</a>
-                <a href="{{ url_for('facturacion') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition group"><svg
-                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                        </path>
-                    </svg>Facturación</a>
-                <a href="{{ url_for('configuracion') }}"
-                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
-                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
-                        </path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>Configuración</a>
+                <a href="{{ url_for('configuracion') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Configuración</a>
             </nav>
             <div class="p-4 border-t border-gray-100">
                 <div class="flex items-center gap-3">
-                    {% if profesional and profesional.foto %}<img
-                        src="{{ url_for('static', filename='uploads/' + profesional.foto) }}"
-                        class="w-10 h-10 rounded-full object-cover border border-teal-200">{% else %}<div
-                        class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold">
-                        {{ profesional.iniciales if profesional else 'J' }}</div>{% endif %}
+                    {% if profesional and profesional.foto %}
+                    <img src="{{ url_for('static', filename='uploads/' + profesional.foto) }}" class="w-10 h-10 rounded-full object-cover border border-teal-200">
+                    {% else %}
+                    <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold">{{ profesional.iniciales if profesional else 'J' }}</div>
+                    {% endif %}
                     <div>
-                        <p class="text-sm font-bold text-gray-700">{{ profesional.nombre if profesional else 'Admin' }}
-                        </p>
+                        <p class="text-sm font-bold text-gray-700">{{ profesional.nombre if profesional else 'Admin' }}</p>
                         <p class="text-xs text-gray-400">{{ profesional.rol if profesional else 'Sistema' }}</p>
                     </div>
-                    <a href="/logout" class="ml-auto text-gray-400 hover:text-red-500"><svg class="w-5 h-5" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                            </path>
-                        </svg></a>
+                    <a href="/logout" class="ml-auto text-gray-400 hover:text-red-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg></a>
                 </div>
             </div>
         </aside>
+
         <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50">
 
             <header class="bg-white h-16 flex items-center justify-between px-8 shadow-sm z-10 no-print">
                 <div class="flex items-center gap-4">
                     <h1 class="text-xl font-bold text-slate-700">Admisiones</h1>
-                    <span class="text-sm text-gray-400 border-l border-gray-200 pl-4 hidden md:block">Buzón de
-                        Solicitudes</span>
                 </div>
-                <button onclick="document.getElementById('modalNueva').classList.remove('hidden')"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-sm text-sm font-bold flex items-center gap-2 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
+                <button onclick="document.getElementById('modalNueva').classList.remove('hidden')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-sm text-sm font-bold transition">
                     Nueva Solicitud
                 </button>
             </header>
 
             {% macro ficha_lectura(id_modal, adm) %}
-            <div id="{{ id_modal }}"
-                class="modal-lectura fixed inset-0 bg-gray-900/80 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4 transition-opacity">
-                <div
-                    class="printable-content bg-slate-100 w-full max-w-6xl h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-600">
-
+            <div id="{{ id_modal }}" class="modal-lectura fixed inset-0 bg-gray-900/80 hidden flex items-center justify-center z-50 backdrop-blur-sm p-4 transition-opacity">
+                <div class="printable-content bg-slate-100 w-full max-w-6xl h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-600">
+                    
                     <div class="bg-white px-8 py-5 border-b flex justify-between items-center shadow-sm z-10 no-print">
                         <div class="flex items-center gap-4">
-                            <div
-                                class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl border border-blue-200">
-                                {{ adm.nombre[0] }}</div>
+                            <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl">{{ adm.nombre[0] }}</div>
                             <div>
                                 <h2 class="text-2xl font-bold text-slate-800 leading-none">{{ adm.nombre }}</h2>
-                                <p class="text-sm text-slate-500 mt-1">ID: #{{ adm.id }} | Solicitud: {{
-                                    adm.fecha_solicitud }}</p>
+                                <p class="text-sm text-slate-500 mt-1">ID: #{{ adm.id }} | Solicitud: {{ adm.fecha_solicitud }}</p>
                             </div>
                         </div>
                         <div class="flex gap-3">
-                            <a href="{{ url_for('imprimir_admision', id=adm.id) }}" target="_blank"
-                                class="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 shadow-sm transition">
-                                <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
-                                    </path>
-                                </svg>
-                                Imprimir
-                            </a>
-                            <button onclick="closeModal('{{ id_modal }}')"
-                                class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold shadow transition">Cerrar</button>
+                            <a href="{{ url_for('imprimir_admision', id=adm.id) }}" target="_blank" class="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition">Imprimir</a>
+                            <button onclick="closeModal('{{ id_modal }}')" class="bg-slate-800 text-white hover:bg-slate-900 px-4 py-2 rounded-lg text-sm font-bold shadow transition">Cerrar</button>
                         </div>
                     </div>
 
                     <div class="flex-1 overflow-y-auto p-8 bg-slate-100">
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                             <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-4 border-b pb-2">
-                                    Datos Personales</h3>
+                                <h3 class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-4 border-b pb-2">Datos Personales</h3>
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                                    <div>
-                                        <p class="text-xs text-slate-400 uppercase">Edad</p>
-                                        <p class="font-bold text-slate-800">{{ adm.edad }} años</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-slate-400 uppercase">Fecha Nac.</p>
-                                        <p class="font-medium text-slate-700">{{ adm.fecha_nacimiento }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-slate-400 uppercase">DNI</p>
-                                        <p class="font-medium text-slate-700">{{ adm.dni }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-slate-400 uppercase">Obra Social</p>
-                                        <p class="font-bold text-blue-700">{{ adm.obra_social }}</p>
-                                    </div>
-                                    <div class="col-span-2">
-                                        <p class="text-xs text-slate-400 uppercase">Domicilio</p>
-                                        <p class="font-medium text-slate-700">{{ adm.domicilio }}</p>
-                                    </div>
-                                    <div class="col-span-2">
-                                        <p class="text-xs text-slate-400 uppercase">Email</p>
-                                        <p class="font-medium text-slate-700">{{ adm.email }}</p>
-                                    </div>
+                                    <div><p class="text-xs text-slate-400 uppercase">Edad</p><p class="font-bold text-slate-800">{{ adm.edad }} años</p></div>
+                                    <div><p class="text-xs text-slate-400 uppercase">Fecha Nac.</p><p class="font-medium text-slate-700">{{ adm.fecha_nacimiento }}</p></div>
+                                    <div><p class="text-xs text-slate-400 uppercase">DNI</p><p class="font-medium text-slate-700">{{ adm.dni }}</p></div>
+                                    <div><p class="text-xs text-slate-400 uppercase">Obra Social</p><p class="font-bold text-blue-700">{{ adm.obra_social }}</p></div>
+                                    <div class="col-span-2"><p class="text-xs text-slate-400 uppercase">Domicilio</p><p class="font-medium text-slate-700">{{ adm.domicilio }}</p></div>
+                                    <div class="col-span-2"><p class="text-xs text-slate-400 uppercase">Email</p><p class="font-medium text-slate-700">{{ adm.email }}</p></div>
                                 </div>
                             </div>
-                            <div
-                                class="bg-gradient-to-br from-white to-blue-50 p-6 rounded-xl shadow-sm border border-blue-100 relative overflow-hidden">
-                                <div
-                                    class="absolute top-0 right-0 w-20 h-20 bg-blue-100 rounded-full -mr-10 -mt-10 opacity-50">
-                                </div>
-                                <h3 class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-4 relative z-10">
-                                    Estado Admisión</h3>
+                            <div class="bg-gradient-to-br from-white to-blue-50 p-6 rounded-xl shadow-sm border border-blue-100 relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-20 h-20 bg-blue-100 rounded-full -mr-10 -mt-10 opacity-50"></div>
+                                <h3 class="text-xs font-bold text-blue-600 uppercase tracking-wider mb-4 relative z-10">Estado Admisión</h3>
                                 <div class="space-y-4 relative z-10">
                                     <div>
-                                        <p class="text-xs text-slate-400 uppercase">Prioridad</p><span
-                                            class="inline-block mt-1 px-3 py-1 rounded-full text-xs font-bold {% if adm.prioridad == 'Alta' %}bg-red-100 text-red-700 border border-red-200{% elif adm.prioridad == 'Media' %}bg-yellow-100 text-yellow-700 border border-yellow-200{% else %}bg-green-100 text-green-700 border border-green-200{% endif %}">{{
-                                            adm.prioridad }}</span>
+                                        <p class="text-xs text-slate-400 uppercase">Prioridad</p>
+                                        <span class="inline-block mt-1 px-3 py-1 rounded-full text-xs font-bold {% if adm.prioridad == 'Alta' %}bg-red-100 text-red-700 border border-red-200{% elif adm.prioridad == 'Media' %}bg-yellow-100 text-yellow-700 border border-yellow-200{% else %}bg-green-100 text-green-700 border border-green-200{% endif %}">{{ adm.prioridad }}</span>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-slate-400 uppercase">Profesional</p>
+                                        <p class="text-xs text-slate-400 uppercase">Profesional Asignado</p>
                                         <p class="font-bold text-slate-800">{{ adm.profesional_admision }}</p>
                                     </div>
                                     <div class="pt-2 border-t border-blue-200">
-                                        <p class="text-xs text-slate-400 uppercase">Entrevista</p>{% if
-                                        adm.fecha_entrevista %}<div class="flex items-center gap-2 mt-1"><svg
-                                                class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                                </path>
-                                            </svg>
-                                            <p class="font-bold text-lg text-blue-800">{{ adm.fecha_entrevista }} <span
-                                                    class="text-sm font-normal text-slate-600">({{ adm.hora_entrevista
-                                                    }}hs)</span></p>
-                                        </div>{% else %}<p class="text-sm text-slate-400 italic mt-1">Pendiente</p>{%
-                                        endif %}
+                                        <p class="text-xs text-slate-400 uppercase">Entrevista</p>
+                                        {% if adm.fecha_entrevista %}
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <p class="font-bold text-lg text-indigo-800">{{ adm.fecha_entrevista }} <span class="text-sm font-normal text-slate-600">({{ adm.hora_entrevista }}hs)</span></p>
+                                        </div>
+                                        {% else %}
+                                        <p class="text-sm text-slate-400 italic mt-1">Pendiente</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 overflow-hidden">
-                            <div
-                                class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex justify-between items-center">
-                                <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wide">Contexto Familiar
-                                </h3><span
-                                    class="text-xs font-bold px-3 py-1 rounded bg-white border border-slate-200 text-slate-600">Situación:
-                                    {{ adm.estado_padres }} {% if adm.vive_con %} <span class="text-red-500 ml-1">(Vive
-                                        con: {{ adm.vive_con }})</span> {% endif %}</span>
+                            <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex justify-between items-center">
+                                <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wide">Contexto Familiar</h3>
+                                <span class="text-xs font-bold px-3 py-1 rounded bg-white border border-slate-200 text-slate-600">Situación: {{ adm.estado_padres }} {% if adm.vive_con %} <span class="text-red-500 ml-1">(Vive con: {{ adm.vive_con }})</span> {% endif %}</span>
                             </div>
                             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="relative pl-4 border-l-4 border-pink-300">
                                     <h4 class="font-bold text-slate-800 text-lg mb-2">Madre / Tutor 1</h4>
                                     <div class="space-y-1">
                                         <p class="text-lg">{{ adm.nombre_madre or '-' }}</p>
-                                        <p class="text-sm text-slate-500">Tel: {{ adm.tel_madre or '-' }}</p>{% if
-                                        adm.domicilio_madre %}<p class="text-sm text-slate-500">Dom: {{
-                                            adm.domicilio_madre }}</p>{% endif %}
+                                        <p class="text-sm text-slate-500">Tel: {{ adm.tel_madre or '-' }}</p>
+                                        {% if adm.domicilio_madre %}<p class="text-sm text-slate-500">Dom: {{ adm.domicilio_madre }}</p>{% endif %}
                                     </div>
                                 </div>
                                 <div class="relative pl-4 border-l-4 border-blue-300">
                                     <h4 class="font-bold text-slate-800 text-lg mb-2">Padre / Tutor 2</h4>
                                     <div class="space-y-1">
                                         <p class="text-lg">{{ adm.nombre_padre or '-' }}</p>
-                                        <p class="text-sm text-slate-500">Tel: {{ adm.tel_padre or '-' }}</p>{% if
-                                        adm.domicilio_padre %}<p class="text-sm text-slate-500">Dom: {{
-                                            adm.domicilio_padre }}</p>{% endif %}
+                                        <p class="text-sm text-slate-500">Tel: {{ adm.tel_padre or '-' }}</p>
+                                        {% if adm.domicilio_padre %}<p class="text-sm text-slate-500">Dom: {{ adm.domicilio_padre }}</p>{% endif %}
                                     </div>
                                 </div>
                             </div>
-                            {% if adm.hermanos %}<div class="px-6 pb-6 pt-0">
+                            {% if adm.hermanos and adm.hermanos != 'No tiene' %}
+                            <div class="px-6 pb-6 pt-0">
                                 <p class="text-xs text-slate-400 uppercase font-bold mb-1">Hermanos</p>
-                                <p class="text-sm text-slate-700 bg-slate-50 p-2 rounded border border-slate-100">{{
-                                    adm.hermanos }}</p>
-                            </div>{% endif %}
+                                <p class="text-sm text-slate-700 bg-slate-50 p-2 rounded border border-slate-100">{{ adm.hermanos }}</p>
+                            </div>
+                            {% endif %}
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3
-                                    class="text-xs font-bold text-yellow-600 uppercase tracking-wider mb-4 border-b pb-2">
-                                    Escolaridad</h3>
+                                <h3 class="text-xs font-bold text-yellow-600 uppercase tracking-wider mb-4 border-b pb-2">Escolaridad</h3>
                                 <div class="space-y-4">
                                     <div>
                                         <p class="text-lg font-bold text-slate-800">{{ adm.escuela_nombre or '-' }}</p>
-                                        <p class="text-sm text-slate-500">{{ adm.escuela_grado or '-' }} - Turno {{
-                                            adm.escuela_turno or '-' }}</p>
-                                    </div>{% if adm.escuela_apoyo_nombre %}<div
-                                        class="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                                        <p class="text-sm text-slate-500">{{ adm.escuela_grado or '-' }} - Turno {{ adm.escuela_turno or '-' }}</p>
+                                    </div>
+                                    {% if adm.escuela_apoyo_nombre and adm.escuela_apoyo_nombre != 'No tiene' %}
+                                    <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
                                         <p class="text-xs font-bold text-yellow-700 uppercase">Apoyo / AT</p>
                                         <p class="text-sm text-yellow-900">{{ adm.escuela_apoyo_nombre }}</p>
-                                    </div>{% endif %}
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                                <h3 class="text-xs font-bold text-teal-600 uppercase tracking-wider mb-4 border-b pb-2">
-                                    Perfil Clínico</h3>
+                                <h3 class="text-xs font-bold text-teal-600 uppercase tracking-wider mb-4 border-b pb-2">Perfil Clínico</h3>
                                 <div class="space-y-4">
                                     <div>
                                         <p class="text-xs text-slate-400 uppercase">Motivo Consulta</p>
-                                        <p class="text-sm font-medium text-slate-700 bg-slate-50 p-2 rounded">{{
-                                            adm.motivo_consulta }}</p>
+                                        <p class="text-sm font-medium text-slate-700 bg-slate-50 p-2 rounded">{{ adm.motivo_consulta }}</p>
                                     </div>
                                     <div class="grid grid-cols-2 gap-4">
                                         <div>
-                                            <p class="text-xs text-slate-400 uppercase">Médico</p>
-                                            <p class="text-sm font-bold text-slate-700">{{ adm.medico_cabecera or '-' }}
-                                            </p>
+                                            <p class="text-xs text-slate-400 uppercase">Pediatra</p>
+                                            <p class="text-sm font-bold text-slate-700">{{ adm.medico_cabecera or '-' }}</p>
                                         </div>
                                         <div>
                                             <p class="text-xs text-slate-400 uppercase">Neurólogo</p>
                                             <p class="text-sm font-bold text-slate-700">{{ adm.neurologo or '-' }}</p>
                                         </div>
-                                    </div>{% if adm.tiene_terapias_previas == 'Si' %}<div
-                                        class="pt-2 border-t border-slate-100">
+                                    </div>
+                                    {% if adm.tiene_terapias_previas == 'Si' %}
+                                    <div class="pt-2 border-t border-slate-100">
                                         <p class="text-xs text-purple-600 font-bold uppercase">Historial Terapéutico</p>
                                         <p class="text-sm text-slate-600 italic">{{ adm.terapias_previas_desc }}</p>
-                                    </div>{% endif %}
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">
-                                Documentación Adjunta</h3>
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b pb-2">Documentación Adjunta (Existente)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 <div class="bg-slate-50 rounded p-3">
-                                    <p class="text-xs font-bold text-slate-500 mb-2">Orden Médica</p>{% if
-                                    adm.informe_derivacion %}<a
-                                        href="{{ url_for('static', filename='uploads/' + adm.informe_derivacion) }}"
-                                        target="_blank" class="text-sm text-blue-600 hover:underline">Ver Archivo</a>{%
-                                    else %}<span class="text-xs text-slate-300">Sin archivo</span>{% endif %}
+                                    <p class="text-xs font-bold text-slate-500 mb-2">Orden Médica</p>
+                                    {% if adm.informe_derivacion %}<a href="{{ url_for('static', filename='uploads/' + adm.informe_derivacion) }}" target="_blank" class="text-sm text-blue-600 hover:underline">Ver Archivo</a>{% else %}<span class="text-xs text-slate-300">Sin archivo</span>{% endif %}
                                 </div>
                                 <div class="bg-slate-50 rounded p-3">
-                                    <p class="text-xs font-bold text-slate-500 mb-2">Diagnósticos</p>{% if
-                                    adm.informe_diagnostico %}{% if adm.informe_diagnostico is string %}<a
-                                        href="{{ url_for('static', filename='uploads/' + adm.informe_diagnostico) }}"
-                                        target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Ver
-                                        Archivo</a>{% else %}{% for f in adm.informe_diagnostico %}<a
-                                        href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank"
-                                        class="text-sm text-blue-600 hover:underline block truncate">Archivo {{
-                                        loop.index }}</a>{% endfor %}{% endif %}{% else %}<span
-                                        class="text-xs text-slate-300">Sin archivos</span>{% endif %}
+                                    <p class="text-xs font-bold text-slate-500 mb-2">Diagnósticos</p>
+                                    {% if adm.informe_diagnostico %}{% if adm.informe_diagnostico is string %}<a href="{{ url_for('static', filename='uploads/' + adm.informe_diagnostico) }}" target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Ver Archivo</a>{% else %}{% for f in adm.informe_diagnostico %}<a href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Archivo {{ loop.index }}</a>{% endfor %}{% endif %}{% else %}<span class="text-xs text-slate-300">Sin archivos</span>{% endif %}
                                 </div>
                                 <div class="bg-slate-50 rounded p-3">
-                                    <p class="text-xs font-bold text-slate-500 mb-2">Informes Previos</p>{% if
-                                    adm.archivo_informes_previos %}{% if adm.archivo_informes_previos is string %}<a
-                                        href="{{ url_for('static', filename='uploads/' + adm.archivo_informes_previos) }}"
-                                        target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Ver
-                                        Archivo</a>{% else %}{% for f in adm.archivo_informes_previos %}<a
-                                        href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank"
-                                        class="text-sm text-blue-600 hover:underline block truncate">Archivo {{
-                                        loop.index }}</a>{% endfor %}{% endif %}{% else %}<span
-                                        class="text-xs text-slate-300">Sin archivos</span>{% endif %}
+                                    <p class="text-xs font-bold text-slate-500 mb-2">Informes Previos</p>
+                                    {% if adm.archivo_informes_previos %}{% if adm.archivo_informes_previos is string %}<a href="{{ url_for('static', filename='uploads/' + adm.archivo_informes_previos) }}" target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Ver Archivo</a>{% else %}{% for f in adm.archivo_informes_previos %}<a href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Archivo {{ loop.index }}</a>{% endfor %}{% endif %}{% else %}<span class="text-xs text-slate-300">Sin archivos</span>{% endif %}
                                 </div>
                                 <div class="bg-slate-50 rounded p-3">
-                                    <p class="text-xs font-bold text-slate-500 mb-2">Informe Escolar</p>{% if
-                                    adm.informe_escolar %}{% if adm.informe_escolar is string %}<a
-                                        href="{{ url_for('static', filename='uploads/' + adm.informe_escolar) }}"
-                                        target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Ver
-                                        Archivo</a>{% else %}{% for f in adm.informe_escolar %}<a
-                                        href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank"
-                                        class="text-sm text-blue-600 hover:underline block truncate">Archivo {{
-                                        loop.index }}</a>{% endfor %}{% endif %}{% else %}<span
-                                        class="text-xs text-slate-300">Sin archivos</span>{% endif %}
+                                    <p class="text-xs font-bold text-slate-500 mb-2">Informe Escolar</p>
+                                    {% if adm.informe_escolar %}{% if adm.informe_escolar is string %}<a href="{{ url_for('static', filename='uploads/' + adm.informe_escolar) }}" target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Ver Archivo</a>{% else %}{% for f in adm.informe_escolar %}<a href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank" class="text-sm text-blue-600 hover:underline block truncate">Archivo {{ loop.index }}</a>{% endfor %}{% endif %}{% else %}<span class="text-xs text-slate-300">Sin archivos</span>{% endif %}
                                 </div>
                             </div>
                         </div>
+
+                        <div class="bg-indigo-50 p-6 rounded-xl shadow-sm border border-indigo-200 no-print">
+                            <h3 class="text-sm font-bold text-indigo-900 uppercase tracking-wide mb-4 border-b border-indigo-200 pb-2">Acción de Cierre: Entrevista y Alta</h3>
+                            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                                
+                                <form action="{{ url_for('perfil_admision', id=adm.id) }}" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                                    <div class="flex-1 w-full">
+                                        <label class="block text-xs font-bold text-indigo-700 mb-1">Adjuntar Informe de Entrevista Realizada</label>
+                                        <input type="file" name="archivo_entrevista" required class="w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white file:text-indigo-700 hover:file:bg-gray-100 shadow-sm">
+                                    </div>
+                                    <button type="submit" class="w-full sm:w-auto mt-4 sm:mt-5 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow text-sm font-bold transition">Guardar Entrevista</button>
+                                </form>
+
+                                <div class="w-full md:w-auto flex justify-center md:justify-end border-t md:border-t-0 md:border-l border-indigo-200 pt-4 md:pt-0 md:pl-6">
+                                    <a href="{{ url_for('alta_admision', id=adm.id) }}" onclick="return confirm('¿Confirma que la entrevista fue realizada y desea dar de alta como PACIENTE ACTIVO a {{ adm.nombre }}?')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-md text-sm font-bold transition flex items-center justify-center gap-2 w-full">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Aprobar y Dar Alta
+                                    </a>
+                                </div>
+                            </div>
+                            {% if adm.informe_entrevista %}
+                            <div class="mt-4 p-3 bg-white rounded border border-green-200 flex items-center gap-2">
+                                <span class="text-green-600">✔️</span>
+                                <p class="text-sm font-bold text-gray-700">Entrevista ya cargada:</p>
+                                <a href="{{ url_for('static', filename='uploads/' + adm.informe_entrevista) }}" target="_blank" class="text-sm text-blue-600 hover:underline">{{ adm.informe_entrevista }}</a>
+                            </div>
+                            {% endif %}
+                        </div>
+
                     </div>
                 </div>
             </div>
             {% endmacro %}
 
             {% macro formulario_candidato(id_modal, titulo, action_url, adm=None) %}
-            <div id="{{ id_modal }}"
-                class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm no-print">
+            <div id="{{ id_modal }}" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm no-print">
                 <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col m-4">
                     <div class="flex justify-between items-center p-5 border-b bg-gray-50 flex-shrink-0">
                         <h3 class="text-xl font-bold text-gray-800">{{ titulo }}</h3>
-                        <button type="button"
-                            onclick="document.getElementById('{{ id_modal }}').classList.add('hidden')"
-                            class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                        <button type="button" onclick="document.getElementById('{{ id_modal }}').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
                     </div>
-                    <form action="{{ action_url }}" method="POST" enctype="multipart/form-data"
-                        class="flex-1 flex flex-col overflow-hidden">
+                    <form action="{{ action_url }}" method="POST" enctype="multipart/form-data" class="flex-1 flex flex-col overflow-hidden">
                         <div class="flex border-b bg-gray-50 px-6 flex-shrink-0">
-                            <button type="button" onclick="switchTab('{{ id_modal }}', 'datos')"
-                                id="btn-{{ id_modal }}-datos"
-                                class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-active">Datos</button>
-                            <button type="button" onclick="switchTab('{{ id_modal }}', 'familia')"
-                                id="btn-{{ id_modal }}-familia"
-                                class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-inactive hover:text-blue-600">Familia</button>
-                            <button type="button" onclick="switchTab('{{ id_modal }}', 'clinica')"
-                                id="btn-{{ id_modal }}-clinica"
-                                class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-inactive hover:text-blue-600">Clínica</button>
-                            <button type="button" onclick="switchTab('{{ id_modal }}', 'agenda')"
-                                id="btn-{{ id_modal }}-agenda"
-                                class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-inactive hover:text-blue-600 text-indigo-600">AGENDA</button>
+                            <button type="button" onclick="switchTab('{{ id_modal }}', 'datos')" id="btn-{{ id_modal }}-datos" class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-active">Datos</button>
+                            <button type="button" onclick="switchTab('{{ id_modal }}', 'familia')" id="btn-{{ id_modal }}-familia" class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-inactive hover:text-blue-600">Familia</button>
+                            <button type="button" onclick="switchTab('{{ id_modal }}', 'clinica')" id="btn-{{ id_modal }}-clinica" class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-inactive hover:text-blue-600">Clínica</button>
+                            <button type="button" onclick="switchTab('{{ id_modal }}', 'agenda')" id="btn-{{ id_modal }}-agenda" class="py-3 px-4 text-xs font-bold uppercase tracking-wide modal-tab-inactive hover:text-blue-600 text-indigo-600">AGENDA</button>
                         </div>
-
                         <div class="p-6 overflow-y-auto flex-1">
+                            
                             <div id="tab-{{ id_modal }}-datos" class="modal-content-tab active space-y-4">
                                 <div class="grid grid-cols-2 gap-4">
-                                    <div class="col-span-2"><label
-                                            class="block text-xs font-bold text-gray-500 uppercase mb-1">Nombre
-                                            Completo</label><input type="text" name="nombre"
-                                            value="{{ adm.nombre if adm else '' }}" required
-                                            class="w-full border rounded p-2 text-sm bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-blue-500">
+                                    <div class="col-span-2">
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nombre Completo</label>
+                                        <input type="text" name="nombre" value="{{ adm.nombre if adm else '' }}" required class="w-full border rounded p-2 text-sm bg-gray-50 focus:bg-white outline-none focus:ring-2 focus:ring-blue-500">
                                     </div>
-                                    <div><label
-                                            class="block text-xs font-bold text-gray-500 uppercase mb-1">DNI</label><input
-                                            type="text" name="dni" value="{{ adm.dni if adm else '' }}"
-                                            class="w-full border rounded p-2 text-sm"></div>
-                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Fecha
-                                            Nacimiento</label><input type="date" name="fecha_nacimiento"
-                                            value="{{ adm.fecha_nacimiento | fecha_input if adm else '' }}"
-                                            class="w-full border rounded p-2 text-sm"></div>
-                                    <div><label
-                                            class="block text-xs font-bold text-gray-500 uppercase mb-1">Edad</label><input
-                                            type="number" name="edad" value="{{ adm.edad if adm else '' }}" required
-                                            class="w-full border rounded p-2 text-sm"></div>
-                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Obra
-                                            Social</label><select name="obra_social"
-                                            class="w-full border rounded p-2 text-sm bg-white">{% for os in
-                                            obras_sociales %}<option value="{{ os }}" {% if adm and adm.obra_social==os
-                                                %}selected{% endif %}>{{ os }}</option>{% endfor %}</select></div>
-                                    <div class="col-span-2"><label
-                                            class="block text-xs font-bold text-gray-500 uppercase mb-1">Domicilio
-                                            Principal</label><input type="text" name="domicilio"
-                                            value="{{ adm.domicilio if adm else '' }}"
-                                            class="w-full border rounded p-2 text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">DNI</label><input type="text" name="dni" value="{{ adm.dni if adm else '' }}" required class="w-full border rounded p-2 text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Fecha Nacimiento</label><input type="date" name="fecha_nacimiento" value="{{ adm.fecha_nacimiento | fecha_input if adm else '' }}" required class="w-full border rounded p-2 text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Edad</label><input type="number" name="edad" value="{{ adm.edad if adm else '' }}" required class="w-full border rounded p-2 text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Obra Social</label>
+                                        <select name="obra_social" required class="w-full border rounded p-2 text-sm bg-white">
+                                            <option value="">Seleccione...</option>
+                                            {% for os in obras_sociales %}
+                                            <option value="{{ os }}" {% if adm and adm.obra_social==os %}selected{% endif %}>{{ os }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Domicilio Principal</label><input type="text" name="domicilio" value="{{ adm.domicilio if adm else '' }}" required class="w-full border rounded p-2 text-sm"></div>
+                                    <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email</label><input type="email" name="email" value="{{ adm.email if adm else '' }}" placeholder="Ej: Poner 'no@tiene.com' si no aplica" required class="w-full border rounded p-2 text-sm"></div>
                                 </div>
                             </div>
+
                             <div id="tab-{{ id_modal }}-familia" class="modal-content-tab space-y-4">
                                 <div class="bg-gray-50 p-3 rounded border border-gray-200">
-                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Situación
-                                        Convivencia Padres</label>
-                                    <select name="estado_padres" onchange="toggleCustodia('{{ id_modal }}', this.value)"
-                                        class="w-full border rounded p-2 text-sm bg-white">
-                                        <option value="Conviven" {% if adm and adm.estado_padres=='Conviven'
-                                            %}selected{% endif %}>Conviven Juntos</option>
-                                        <option value="Separados" {% if adm and adm.estado_padres=='Separados'
-                                            %}selected{% endif %}>Separados / Divorciados</option>
-                                        <option value="Monoparental" {% if adm and adm.estado_padres=='Monoparental'
-                                            %}selected{% endif %}>Monoparental</option>
-                                        <option value="Otro" {% if adm and adm.estado_padres=='Otro' %}selected{% endif
-                                            %}>Otro</option>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Situación Convivencia Padres</label>
+                                    <select name="estado_padres" required onchange="toggleCustodia('{{ id_modal }}', this.value)" class="w-full border rounded p-2 text-sm bg-white">
+                                        <option value="">Seleccione...</option>
+                                        <option value="Conviven" {% if adm and adm.estado_padres=='Conviven' %}selected{% endif %}>Conviven Juntos</option>
+                                        <option value="Separados" {% if adm and adm.estado_padres=='Separados' %}selected{% endif %}>Separados / Divorciados</option>
+                                        <option value="Monoparental" {% if adm and adm.estado_padres=='Monoparental' %}selected{% endif %}>Monoparental</option>
+                                        <option value="Otro" {% if adm and adm.estado_padres=='Otro' %}selected{% endif %}>Otro</option>
                                     </select>
-                                    <div id="div-custodia-{{ id_modal }}"
-                                        class="mt-3 pt-3 border-t border-gray-300 {% if not (adm and adm.estado_padres == 'Separados') %}hidden{% endif %}">
-                                        <label
-                                            class="block text-xs font-bold text-red-600 uppercase mb-1 flex items-center gap-1">¿Con
-                                            quién reside principalmente?</label><select name="vive_con"
-                                            class="w-full border border-red-200 rounded p-2 text-sm bg-red-50 text-red-800">
+                                    <div id="div-custodia-{{ id_modal }}" class="mt-3 pt-3 border-t border-gray-300 {% if not (adm and adm.estado_padres == 'Separados') %}hidden{% endif %}">
+                                        <label class="block text-xs font-bold text-red-600 uppercase mb-1 flex items-center gap-1">¿Con quién reside principalmente?</label>
+                                        <select name="vive_con" class="w-full border border-red-200 rounded p-2 text-sm bg-red-50 text-red-800" {% if adm and adm.estado_padres == 'Separados' %}required{% endif %}>
                                             <option value="">Seleccionar...</option>
-                                            <option value="Madre" {% if adm and adm.vive_con=='Madre' %}selected{% endif
-                                                %}>Con la Madre</option>
-                                            <option value="Padre" {% if adm and adm.vive_con=='Padre' %}selected{% endif
-                                                %}>Con el Padre</option>
-                                            <option value="Compartido" {% if adm and adm.vive_con=='Compartido'
-                                                %}selected{% endif %}>Régimen Compartido</option>
-                                            <option value="Otro" {% if adm and adm.vive_con=='Otro' %}selected{% endif
-                                                %}>Otro Familiar</option>
-                                        </select></div>
+                                            <option value="Madre" {% if adm and adm.vive_con=='Madre' %}selected{% endif %}>Con la Madre</option>
+                                            <option value="Padre" {% if adm and adm.vive_con=='Padre' %}selected{% endif %}>Con el Padre</option>
+                                            <option value="Compartido" {% if adm and adm.vive_con=='Compartido' %}selected{% endif %}>Régimen Compartido</option>
+                                            <option value="Otro" {% if adm and adm.vive_con=='Otro' %}selected{% endif %}>Otro Familiar</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="bg-blue-50 p-4 rounded border border-blue-100 relative">
                                     <h4 class="font-bold text-blue-800 text-xs uppercase mb-2">Madre / Tutor 1</h4>
-                                    <div class="grid grid-cols-2 gap-2 mb-2"><input type="text" name="nombre_madre"
-                                            value="{{ adm.nombre_madre if adm else '' }}" placeholder="Nombre Completo"
-                                            class="border rounded p-2 text-sm"><input type="text" name="tel_madre"
-                                            value="{{ adm.tel_madre if adm else '' }}" placeholder="Teléfono"
-                                            class="border rounded p-2 text-sm"></div><input type="text"
-                                        name="domicilio_madre" value="{{ adm.domicilio_madre if adm else '' }}"
-                                        placeholder="Domicilio (si es distinto al principal)"
-                                        class="w-full border rounded p-2 text-sm bg-white">
+                                    <div class="grid grid-cols-2 gap-2 mb-2"><input type="text" name="nombre_madre" value="{{ adm.nombre_madre if adm else '' }}" required placeholder="Nombre Completo" class="border rounded p-2 text-sm"><input type="text" name="tel_madre" value="{{ adm.tel_madre if adm else '' }}" required placeholder="Teléfono" class="border rounded p-2 text-sm"></div><input type="text" required name="domicilio_madre" value="{{ adm.domicilio_madre if adm else '' }}" placeholder="Domicilio" class="w-full border rounded p-2 text-sm bg-white">
                                 </div>
                                 <div class="bg-blue-50 p-4 rounded border border-blue-100">
                                     <h4 class="font-bold text-blue-800 text-xs uppercase mb-2">Padre / Tutor 2</h4>
-                                    <div class="grid grid-cols-2 gap-2 mb-2"><input type="text" name="nombre_padre"
-                                            value="{{ adm.nombre_padre if adm else '' }}" placeholder="Nombre Completo"
-                                            class="border rounded p-2 text-sm"><input type="text" name="tel_padre"
-                                            value="{{ adm.tel_padre if adm else '' }}" placeholder="Teléfono"
-                                            class="border rounded p-2 text-sm"></div><input type="text"
-                                        name="domicilio_padre" value="{{ adm.domicilio_padre if adm else '' }}"
-                                        placeholder="Domicilio (si es distinto al principal)"
-                                        class="w-full border rounded p-2 text-sm bg-white">
+                                    <div class="grid grid-cols-2 gap-2 mb-2"><input type="text" name="nombre_padre" value="{{ adm.nombre_padre if adm else '' }}" required placeholder="Ej: Poner 'No aplica' si no tiene" class="border rounded p-2 text-sm"><input type="text" name="tel_padre" value="{{ adm.tel_padre if adm else '' }}" required placeholder="Ej: 'No aplica'" class="border rounded p-2 text-sm"></div><input type="text" required name="domicilio_padre" value="{{ adm.domicilio_padre if adm else '' }}" placeholder="Ej: 'No aplica' o 'Mismo domicilio'" class="w-full border rounded p-2 text-sm bg-white">
                                 </div>
-                                <div><label
-                                        class="block text-xs font-bold text-gray-500 uppercase mb-1">Hermanos</label><textarea
-                                        name="hermanos" rows="2"
-                                        class="w-full border rounded p-2 text-sm placeholder-gray-300"
-                                        placeholder="Ej: Lucas (12), Sofia (5)...">{{ adm.hermanos if adm else '' }}</textarea>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Hermanos</label>
+                                    <select required onchange="toggleHermanos('{{ id_modal }}', this.value)" class="w-full border rounded p-2 text-sm bg-white mb-2">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="No" {% if adm and (adm.hermanos == 'No tiene' or not adm.hermanos) %}selected{% endif %}>Hijo único / No tiene hermanos</option>
+                                        <option value="Si" {% if adm and adm.hermanos and adm.hermanos != 'No tiene' %}selected{% endif %}>Sí, tiene hermanos</option>
+                                    </select>
+                                    <textarea id="hermanos-desc-{{ id_modal }}" name="hermanos" rows="2" class="w-full border rounded p-2 text-sm placeholder-gray-300 {% if not (adm and adm.hermanos and adm.hermanos != 'No tiene') %}hidden{% endif %}" placeholder="Ej: Lucas (12), Sofia (5)..." {% if adm and adm.hermanos and adm.hermanos != 'No tiene' %}required{% endif %}>{{ adm.hermanos if adm and adm.hermanos != 'No tiene' else '' }}</textarea>
                                 </div>
-                                <div><label
-                                        class="block text-xs font-bold text-gray-500 uppercase mb-1">Email</label><input
-                                        type="email" name="email" value="{{ adm.email if adm else '' }}"
-                                        class="w-full border rounded p-2 text-sm"></div>
                             </div>
+
                             <div id="tab-{{ id_modal }}-clinica" class="modal-content-tab space-y-4">
                                 <div class="bg-yellow-50 p-4 rounded border border-yellow-100">
                                     <h4 class="font-bold text-yellow-800 text-xs uppercase mb-2">Escolaridad</h4>
-                                    <div class="grid grid-cols-2 gap-2 mb-2"><input type="text" name="escuela_nombre"
-                                            value="{{ adm.escuela_nombre if adm else '' }}" placeholder="Escuela"
-                                            class="col-span-2 border rounded p-2 text-sm"><input type="text"
-                                            name="escuela_grado" value="{{ adm.escuela_grado if adm else '' }}"
-                                            placeholder="Grado/Sala" class="border rounded p-2 text-sm"><select
-                                            name="escuela_turno" class="border rounded p-2 text-sm bg-white">
-                                            <option value="Mañana" {% if adm and adm.escuela_turno=='Mañana'
-                                                %}selected{% endif %}>Mañana</option>
-                                            <option value="Tarde" {% if adm and adm.escuela_turno=='Tarde' %}selected{%
-                                                endif %}>Tarde</option>
-                                            <option value="Doble" {% if adm and adm.escuela_turno=='Doble' %}selected{%
-                                                endif %}>Doble Jornada</option>
-                                        </select></div>
-                                    <div class="mt-2 pt-2 border-t border-yellow-200"><label
-                                            class="flex items-center gap-2 mb-2 cursor-pointer"><input type="checkbox"
-                                                onchange="toggleApoyo('{{ id_modal }}', this)" {% if adm and
-                                                adm.escuela_apoyo_nombre %}checked{% endif %}
-                                                class="rounded text-yellow-600 focus:ring-yellow-500"><span
-                                                class="text-xs font-bold text-yellow-800 uppercase">¿Asiste con Maestra
-                                                de Apoyo / AT?</span></label>
-                                        <div id="div-apoyo-{{ id_modal }}"
-                                            class="{% if not (adm and adm.escuela_apoyo_nombre) %}hidden{% endif %} space-y-2">
-                                            <input type="text" name="escuela_apoyo_nombre"
-                                                value="{{ adm.escuela_apoyo_nombre if adm else '' }}"
-                                                placeholder="Nombre del Profesional y Contacto"
-                                                class="w-full border rounded p-2 text-sm bg-white"><label
-                                                class="block text-xs font-bold text-yellow-700">Informes Escolar
-                                                (Varios)</label><input type="file" name="archivo_informe_escolar"
-                                                multiple class="w-full text-xs text-slate-500"></div>
+                                    <div class="grid grid-cols-2 gap-2 mb-2">
+                                        <input type="text" name="escuela_nombre" value="{{ adm.escuela_nombre if adm else '' }}" required placeholder="Escuela (Ej: 'No asiste')" class="col-span-2 border rounded p-2 text-sm">
+                                        <input type="text" name="escuela_grado" value="{{ adm.escuela_grado if adm else '' }}" required placeholder="Grado/Sala (Ej: 'No asiste')" class="border rounded p-2 text-sm">
+                                        <select name="escuela_turno" required class="border rounded p-2 text-sm bg-white">
+                                            <option value="">Turno...</option>
+                                            <option value="Mañana" {% if adm and adm.escuela_turno=='Mañana' %}selected{% endif %}>Mañana</option>
+                                            <option value="Tarde" {% if adm and adm.escuela_turno=='Tarde' %}selected{% endif %}>Tarde</option>
+                                            <option value="Doble" {% if adm and adm.escuela_turno=='Doble' %}selected{% endif %}>Doble Jornada</option>
+                                            <option value="No asiste" {% if adm and adm.escuela_turno=='No asiste' %}selected{% endif %}>No asiste</option>
+                                        </select>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-yellow-200">
+                                        <label class="block text-xs font-bold text-yellow-800 uppercase mb-1">¿Asiste con Maestra de Apoyo / AT?</label>
+                                        <select required onchange="toggleApoyo('{{ id_modal }}', this.value)" class="w-full border rounded p-2 text-sm bg-white mb-2">
+                                            <option value="">Seleccionar...</option>
+                                            <option value="No" {% if not adm or not adm.escuela_apoyo_nombre or adm.escuela_apoyo_nombre == 'No tiene' %}selected{% endif %}>No, no asiste con apoyo</option>
+                                            <option value="Si" {% if adm and adm.escuela_apoyo_nombre and adm.escuela_apoyo_nombre != 'No tiene' %}selected{% endif %}>Sí, asiste con apoyo</option>
+                                        </select>
+                                        <div id="div-apoyo-{{ id_modal }}" class="{% if not (adm and adm.escuela_apoyo_nombre and adm.escuela_apoyo_nombre != 'No tiene') %}hidden{% endif %} space-y-2">
+                                            <input type="text" name="escuela_apoyo_nombre" value="{{ adm.escuela_apoyo_nombre if adm and adm.escuela_apoyo_nombre != 'No tiene' else '' }}" placeholder="Nombre del Profesional y Contacto" class="w-full border rounded p-2 text-sm bg-white" {% if adm and adm.escuela_apoyo_nombre and adm.escuela_apoyo_nombre != 'No tiene' %}required{% endif %}>
+                                            <label class="block text-xs font-bold text-yellow-700">Informes Escolar (Opcionales)</label>
+                                            <input type="file" name="archivo_informe_escolar" multiple class="w-full text-xs text-slate-500">
+                                        </div>
                                     </div>
                                 </div>
-                                <div><label
-                                        class="block text-xs font-bold text-gray-500 uppercase mb-1">Motivo</label><input
-                                        type="text" name="motivo_consulta"
-                                        value="{{ adm.motivo_consulta if adm else '' }}" required
-                                        class="w-full border rounded p-2 text-sm"></div>
+                                <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Motivo de consulta</label><input type="text" name="motivo_consulta" value="{{ adm.motivo_consulta if adm else '' }}" required class="w-full border rounded p-2 text-sm"></div>
                                 <div class="grid grid-cols-2 gap-4">
-                                    <div><label
-                                            class="block text-xs font-bold text-gray-500 uppercase mb-1">Médico</label><input
-                                            type="text" name="medico_cabecera"
-                                            value="{{ adm.medico_cabecera if adm else '' }}"
-                                            class="w-full border rounded p-2 text-sm"></div>
-                                    <div><label
-                                            class="block text-xs font-bold text-gray-500 uppercase mb-1">Neurólogo</label><input
-                                            type="text" name="neurologo" value="{{ adm.neurologo if adm else '' }}"
-                                            class="w-full border rounded p-2 text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Médico Pediatra</label><input type="text" name="medico_cabecera" value="{{ adm.medico_cabecera if adm else '' }}" required placeholder="Ej: Poner 'No tiene'" class="w-full border rounded p-2 text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Neurólogo</label><input type="text" name="neurologo" value="{{ adm.neurologo if adm else '' }}" required placeholder="Ej: Poner 'No tiene'" class="w-full border rounded p-2 text-sm"></div>
                                 </div>
-                                <div class="mt-2 border-t pt-2"><label
-                                        class="block text-xs font-bold text-gray-500 uppercase mb-1">Diagnósticos
-                                        (Varios)</label><input type="file" name="archivo_diagnostico" multiple
-                                        class="w-full text-xs text-slate-500"></div>
-                                <div class="bg-purple-50 p-4 rounded border border-purple-100 mt-2"><label
-                                        class="block text-xs font-bold text-purple-800 uppercase mb-2">Terapias
-                                        Previas</label><select name="tiene_terapias_previas"
-                                        onchange="toggleTerapias('{{ id_modal }}', this.value)"
-                                        class="w-full border rounded p-2 text-sm bg-white mb-2">
-                                        <option value="No" {% if not adm or adm.tiene_terapias_previas !='Si'
-                                            %}selected{% endif %}>No</option>
-                                        <option value="Si" {% if adm and adm.tiene_terapias_previas=='Si' %}selected{%
-                                            endif %}>Sí</option>
+                                <div class="mt-2 border-t pt-2"><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Diagnósticos (Archivos Opcionales)</label><input type="file" name="archivo_diagnostico" multiple class="w-full text-xs text-slate-500"></div>
+                                <div class="bg-purple-50 p-4 rounded border border-purple-100 mt-2">
+                                    <label class="block text-xs font-bold text-purple-800 uppercase mb-2">Terapias Previas</label>
+                                    <select name="tiene_terapias_previas" required onchange="toggleTerapias('{{ id_modal }}', this.value)" class="w-full border rounded p-2 text-sm bg-white mb-2">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="No" {% if adm and adm.tiene_terapias_previas == 'No' %}selected{% endif %}>No</option>
+                                        <option value="Si" {% if adm and adm.tiene_terapias_previas == 'Si' %}selected{% endif %}>Sí</option>
                                     </select>
-                                    <div id="div-terapias-{{ id_modal }}"
-                                        class="{% if not (adm and adm.tiene_terapias_previas == 'Si') %}hidden{% endif %} space-y-2 border-t border-purple-200 pt-2">
-                                        <div><label
-                                                class="block text-xs font-bold text-purple-700 mb-1">Detalle</label><textarea
-                                                name="terapias_previas_desc" rows="2"
-                                                class="w-full border rounded p-2 text-sm">{{ adm.terapias_previas_desc if adm else '' }}</textarea>
-                                        </div>
-                                        <div><label class="block text-xs font-bold text-purple-700 mb-1">Informes
-                                                Previos (Varios)</label><input type="file"
-                                                name="archivo_informes_previos" multiple
-                                                class="w-full text-xs text-slate-500"></div>
+                                    <div id="div-terapias-{{ id_modal }}" class="{% if not (adm and adm.tiene_terapias_previas == 'Si') %}hidden{% endif %} space-y-2 border-t border-purple-200 pt-2">
+                                        <div><label class="block text-xs font-bold text-purple-700 mb-1">Detalle (Centros, profesionales...)</label><textarea name="terapias_previas_desc" rows="2" class="w-full border rounded p-2 text-sm" {% if adm and adm.tiene_terapias_previas == 'Si' %}required{% endif %}>{{ adm.terapias_previas_desc if adm else '' }}</textarea></div>
+                                        <div><label class="block text-xs font-bold text-purple-700 mb-1">Informes Previos (Archivos Opcionales)</label><input type="file" name="archivo_informes_previos" multiple class="w-full text-xs text-slate-500"></div>
                                     </div>
                                 </div>
                             </div>
+
                             <div id="tab-{{ id_modal }}-agenda" class="modal-content-tab space-y-4">
                                 <div class="bg-indigo-50 p-4 rounded border border-indigo-200">
-                                    <h4
-                                        class="font-bold text-indigo-800 text-xs uppercase mb-3 flex items-center gap-2">
-                                        Entrevista</h4>
+                                    <h4 class="font-bold text-indigo-800 text-xs uppercase mb-3 flex items-center gap-2">Entrevista Inicial</h4>
                                     <div class="grid grid-cols-2 gap-4">
-                                        <div><label
-                                                class="block text-xs font-bold text-indigo-700 uppercase mb-1">Fecha</label><input
-                                                type="date" name="fecha_entrevista"
-                                                value="{{ adm.fecha_entrevista | fecha_input if adm else '' }}"
-                                                class="w-full border border-indigo-300 rounded p-2 text-sm bg-white">
-                                        </div>
-                                        <div><label
-                                                class="block text-xs font-bold text-indigo-700 uppercase mb-1">Hora</label><input
-                                                type="time" name="hora_entrevista"
-                                                value="{{ adm.hora_entrevista if adm else '' }}"
-                                                class="w-full border border-indigo-300 rounded p-2 text-sm bg-white">
-                                        </div>
+                                        <div><label class="block text-xs font-bold text-indigo-700 uppercase mb-1">Fecha</label><input type="date" name="fecha_entrevista" value="{{ adm.fecha_entrevista | fecha_input if adm else '' }}" required class="w-full border border-indigo-300 rounded p-2 text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-indigo-700 uppercase mb-1">Hora</label><input type="time" name="hora_entrevista" value="{{ adm.hora_entrevista if adm else '' }}" required class="w-full border border-indigo-300 rounded p-2 text-sm bg-white"></div>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4">
-                                    <div><label
-                                            class="block text-xs font-bold text-gray-500 uppercase mb-1">Prioridad</label><select
-                                            name="prioridad" class="w-full border rounded p-2 text-sm bg-white">
-                                            <option value="Baja" {% if adm and adm.prioridad=='Baja' %}selected{% endif
-                                                %}>🟢 Baja</option>
-                                            <option value="Media" {% if adm and adm.prioridad=='Media' %}selected{%
-                                                endif %}>🟡 Media</option>
-                                            <option value="Alta" {% if adm and adm.prioridad=='Alta' %}selected{% endif
-                                                %}>🔴 Alta</option>
-                                        </select></div>
-                                    <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Profesional
-                                            Admisión</label><select name="profesional_admision"
-                                            class="w-full border rounded p-2 text-sm bg-white">{% for p in profesionales
-                                            %}<option value="{{ p.nombre }}" {% if adm and
-                                                adm.profesional_admision==p.nombre %}selected{% endif %}>{{ p.nombre }}
-                                            </option>{% endfor %}</select></div>
-                                </div>
-                                <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Disponibilidad
-                                        Preferente</label><input type="text" name="disponibilidad_preferencia"
-                                        value="{{ adm.disponibilidad_preferencia if adm else '' }}"
-                                        class="w-full border rounded p-2 text-sm"></div>
-                                {% if adm %}<div class="border-t pt-4 mt-2"><label
-                                        class="block text-xs font-bold text-gray-500 uppercase mb-2">Documentos
-                                        Internos</label>
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div class="bg-gray-50 p-2 text-center"><span
-                                                class="text-xs text-gray-400 block">Orden Médica</span><input
-                                                type="file" name="archivo_derivacion" class="text-[10px]"></div>
-                                        <div class="bg-gray-50 p-2 text-center"><span
-                                                class="text-xs text-gray-400 block">Informe Entrevista</span><input
-                                                type="file" name="archivo_entrevista" class="text-[10px]"></div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Prioridad</label>
+                                        <select name="prioridad" required class="w-full border rounded p-2 text-sm bg-white">
+                                            <option value="">Seleccione...</option>
+                                            <option value="Baja" {% if adm and adm.prioridad=='Baja' %}selected{% endif %}>🟢 Baja</option>
+                                            <option value="Media" {% if adm and adm.prioridad=='Media' %}selected{% endif %}>🟡 Media</option>
+                                            <option value="Alta" {% if adm and adm.prioridad=='Alta' %}selected{% endif %}>🔴 Alta</option>
+                                        </select>
                                     </div>
-                                </div>{% endif %}
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Profesional Admisión</label>
+                                        <select name="profesional_admision" required class="w-full border rounded p-2 text-sm bg-white">
+                                            <option value="">Seleccione...</option>
+                                            {% for p in profesionales %}
+                                            <option value="{{ p.nombre }}" {% if adm and adm.profesional_admision==p.nombre %}selected{% endif %}>{{ p.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div><label class="block text-xs font-bold text-gray-500 uppercase mb-1">Disponibilidad Preferente</label><input type="text" name="disponibilidad_preferencia" value="{{ adm.disponibilidad_preferencia if adm else '' }}" required placeholder="Ej: Solo de tarde" class="w-full border rounded p-2 text-sm"></div>
                             </div>
                         </div>
+                        
                         <div class="p-4 border-t bg-gray-50 flex gap-3 flex-shrink-0">
-                            <button type="button"
-                                onclick="document.getElementById('{{ id_modal }}').classList.add('hidden')"
-                                class="px-4 py-2 text-sm font-bold text-gray-600 hover:text-gray-800">Cancelar</button>
-                            <button type="submit"
-                                class="flex-1 bg-blue-600 text-white py-2 rounded shadow font-bold text-sm hover:bg-blue-700">Guardar</button>
+                            <button type="button" onclick="document.getElementById('{{ id_modal }}').classList.add('hidden')" class="px-4 py-2 text-sm font-bold text-gray-600 hover:text-gray-800">Cancelar</button>
+                            <button type="submit" id="btn-guardar-{{ id_modal }}" class="hidden flex-1 bg-blue-600 text-white py-2 rounded shadow font-bold text-sm hover:bg-blue-700">Guardar Cambios</button>
                         </div>
                     </form>
                 </div>
@@ -745,100 +440,63 @@
 
             <div class="flex-1 overflow-y-auto p-8 no-print">
                 <div class="max-w-4xl mx-auto space-y-8">
-
+                    
                     <div>
-                        <h2 class="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-blue-500"></span> Solicitudes Pendientes
-                        </h2>
-
+                        <h2 class="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Solicitudes Pendientes</h2>
                         {% set pendientes = candidatos | selectattr('estado', '!=', 'Procesada') | list %}
-
                         {% if pendientes %}
                         <div class="space-y-3">
                             {% for adm in pendientes %}
-                            <div
-                                class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition flex flex-col sm:flex-row justify-between items-start gap-4">
+                            <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                                 <div class="flex-1">
                                     <div class="flex items-center gap-2 mb-1">
-                                        {% if adm.prioridad == 'Alta' %}<span
-                                            class="w-3 h-3 rounded-full bg-red-500 block" title="Alta"></span>{% elif
-                                        adm.prioridad == 'Media' %}<span
-                                            class="w-3 h-3 rounded-full bg-yellow-400 block" title="Media"></span>{%
-                                        else %}<span class="w-3 h-3 rounded-full bg-green-400 block"
-                                            title="Baja"></span>{% endif %}
+                                        {% if adm.prioridad == 'Alta' %}<span class="w-3 h-3 rounded-full bg-red-500 block" title="Alta"></span>{% elif adm.prioridad == 'Media' %}<span class="w-3 h-3 rounded-full bg-yellow-400 block" title="Media"></span>{% else %}<span class="w-3 h-3 rounded-full bg-green-400 block" title="Baja"></span>{% endif %}
                                         <h3 class="font-bold text-gray-800 text-lg">{{ adm.nombre }}</h3>
-                                        <span class="text-xs font-normal text-gray-400 bg-gray-100 px-2 rounded-full">ID
-                                            #{{ adm.id }}</span>
+                                        <span class="text-xs font-normal text-gray-400 bg-gray-100 px-2 rounded-full">ID #{{ adm.id }}</span>
                                     </div>
-                                    {% if adm.fecha_entrevista %}<div
-                                        class="inline-flex items-center gap-2 bg-indigo-100 text-indigo-800 px-3 py-1 rounded-md text-sm font-bold my-2 shadow-sm border border-indigo-200">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                            </path>
-                                        </svg><span>ENTREVISTA: {{ adm.fecha_entrevista }} - {{ adm.hora_entrevista
-                                            }}hs</span></div>{% else %}<div
-                                        class="inline-flex items-center gap-2 bg-gray-100 text-gray-500 px-3 py-1 rounded-md text-xs font-medium my-2 border border-gray-200">
-                                        <span>Sin entrevista asignada</span></div>{% endif %}
-                                    <div class="flex flex-col gap-1 mt-1">
-                                        <div class="text-sm text-gray-500"><span
-                                                class="font-bold text-gray-600">Edad:</span> {{ adm.edad }} años</div>
-                                        <div class="text-sm text-gray-500"><span
-                                                class="font-bold text-gray-600">Motivo:</span> <span
-                                                class="text-blue-600 font-medium">{{ adm.motivo_consulta }}</span></div>
+                                    <div class="flex flex-col gap-1 mt-2">
+                                        {% if adm.fecha_entrevista %}
+                                        <div class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-800 px-3 py-1.5 rounded border border-indigo-200 w-max">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            <span class="font-bold text-sm">Entrevista: {{ adm.fecha_entrevista }} a las {{ adm.hora_entrevista }}hs</span>
+                                        </div>
+                                        {% else %}
+                                        <div class="inline-flex items-center gap-2 bg-gray-50 text-gray-500 px-3 py-1.5 rounded border border-gray-200 w-max text-sm"><span class="italic">Sin fecha de entrevista</span></div>
+                                        {% endif %}
+                                        <div class="text-sm text-gray-500 mt-1"><span class="font-bold text-gray-600">Motivo:</span> <span class="text-blue-600 font-medium">{{ adm.motivo_consulta }}</span></div>
                                     </div>
                                 </div>
                                 <div class="flex flex-row sm:flex-col gap-2 w-full sm:w-auto mt-2 sm:mt-0">
-                                    <button onclick="openModalLectura('modalLectura-{{ adm.id }}')"
-                                        class="px-4 py-2 border border-blue-200 bg-blue-50 text-blue-700 rounded text-sm font-bold hover:bg-blue-100 transition shadow-sm flex items-center justify-center gap-2">Ver
-                                        Ficha</button>
-                                    <button
-                                        onclick="document.getElementById('modalEdit-{{ adm.id }}').classList.remove('hidden')"
-                                        class="px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded text-sm font-bold hover:bg-gray-50 transition shadow-sm flex items-center justify-center gap-2">Editar</button>
-                                    <a href="{{ url_for('alta_admision', id=adm.id) }}"
-                                        class="px-4 py-2 bg-green-600 text-white rounded text-sm font-bold hover:bg-green-700 transition shadow-sm flex items-center justify-center gap-2">Dar
-                                        Alta</a>
+                                    <button onclick="openModalLectura('modalLectura-{{ adm.id }}')" class="w-full sm:w-auto px-5 py-2.5 bg-blue-600 text-white rounded shadow-sm text-sm font-bold hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                        Ver Solicitud
+                                    </button>
+                                    <button onclick="document.getElementById('modalEdit-{{ adm.id }}').classList.remove('hidden')" class="w-full sm:w-auto px-5 py-2 border border-gray-300 bg-white text-gray-700 rounded text-sm font-bold hover:bg-gray-50 transition shadow-sm flex items-center justify-center gap-2">Editar Datos</button>
                                 </div>
                             </div>
                             {{ ficha_lectura('modalLectura-' ~ adm.id, adm) }}
-                            {{ formulario_candidato('modalEdit-' ~ adm.id, 'Editar: ' ~ adm.nombre,
-                            url_for('perfil_admision', id=adm.id), adm) }}
+                            {{ formulario_candidato('modalEdit-' ~ adm.id, 'Editar: ' ~ adm.nombre, url_for('perfil_admision', id=adm.id), adm) }}
                             {% endfor %}
                         </div>
                         {% else %}
-                        <div class="text-center py-10 bg-white rounded-lg border border-dashed border-gray-300">
-                            <p class="text-gray-500">No hay solicitudes pendientes.</p>
-                        </div>
+                        <div class="text-center py-10 bg-white rounded-lg border border-dashed border-gray-300"><p class="text-gray-500">No hay solicitudes pendientes.</p></div>
                         {% endif %}
                     </div>
 
                     <div class="pt-8 border-t border-gray-300">
-                        <h2
-                            class="text-lg font-bold text-gray-400 mb-4 flex items-center gap-2 uppercase text-xs tracking-wider">
-                            <span class="w-2 h-2 rounded-full bg-green-500"></span> Historial de Ingresos (Ya dados de
-                            alta)
-                        </h2>
+                        <h2 class="text-lg font-bold text-gray-400 mb-4 flex items-center gap-2 uppercase text-xs tracking-wider"><span class="w-2 h-2 rounded-full bg-green-500"></span> Historial de Ingresos (Ya dados de alta)</h2>
                         {% set procesadas = candidatos | selectattr('estado', 'equalto', 'Procesada') | list %}
                         {% if procesadas %}
                         <div class="grid gap-3 opacity-75 hover:opacity-100 transition">
                             {% for adm in procesadas %}
-                            <div
-                                class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex justify-between items-center">
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 flex justify-between items-center">
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold text-lg">
-                                        ✓</div>
-                                    <div>
-                                        <h3 class="font-bold text-gray-600 line-through">{{ adm.nombre }}</h3>
-                                        <p class="text-xs text-green-600 font-bold">Alta Procesada</p>
-                                    </div>
+                                    <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold text-lg">✓</div>
+                                    <div><h3 class="font-bold text-gray-600 line-through">{{ adm.nombre }}</h3><p class="text-xs text-green-600 font-bold">Alta Procesada</p></div>
                                 </div>
                                 <div class="flex gap-2">
-                                    <button onclick="openModalLectura('modalLectura-{{ adm.id }}')"
-                                        class="text-xs text-blue-600 hover:underline px-2">Ver Ficha Original</button>
-                                    <a href="{{ url_for('borrar_admision', id=adm.id) }}"
-                                        onclick="return confirm('¿Eliminar definitivamente del historial?')"
-                                        class="text-xs bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200 font-bold">Borrar</a>
+                                    <button onclick="openModalLectura('modalLectura-{{ adm.id }}')" class="text-xs text-blue-600 hover:underline px-2">Ver Ficha Original</button>
+                                    <a href="{{ url_for('borrar_admision', id=adm.id) }}" onclick="return confirm('¿Eliminar definitivamente del historial?')" class="text-xs bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200 font-bold">Borrar</a>
                                 </div>
                             </div>
                             {{ ficha_lectura('modalLectura-' ~ adm.id, adm) }}
@@ -858,20 +516,81 @@
     </div>
 
     <script>
+        const ordenPestanas = ['datos', 'familia', 'clinica', 'agenda'];
+
         function switchTab(modalId, tabName) {
+            const modal = document.getElementById(modalId);
+            const pestañaActivaEl = modal.querySelector('.modal-content-tab.active');
+
+            if (pestañaActivaEl) {
+                const idPestañaActiva = pestañaActivaEl.id;
+                const nombrePestañaActiva = idPestañaActiva.split('-').pop();
+                const indiceActual = ordenPestanas.indexOf(nombrePestañaActiva);
+                const indiceDestino = ordenPestanas.indexOf(tabName);
+
+                if (indiceDestino > indiceActual) {
+                    for (let i = 0; i < indiceDestino; i++) {
+                        const nombrePestanaARevisar = ordenPestanas[i];
+                        const pestanaARevisar = document.getElementById('tab-' + modalId + '-' + nombrePestanaARevisar);
+                        
+                        if (pestanaARevisar) {
+                            const camposObligatorios = pestanaARevisar.querySelectorAll('input[required], select[required], textarea[required]');
+                            for (let j = 0; j < camposObligatorios.length; j++) {
+                                const campo = camposObligatorios[j];
+                                if (!campo.checkValidity()) {
+                                    if (nombrePestanaARevisar !== nombrePestañaActiva) {
+                                        mostrarPestanaVisualmente(modalId, nombrePestanaARevisar);
+                                    }
+                                    campo.reportValidity();
+                                    return; 
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            mostrarPestanaVisualmente(modalId, tabName);
+        }
+
+        function mostrarPestanaVisualmente(modalId, tabName) {
             const modal = document.getElementById(modalId);
             modal.querySelectorAll('.modal-content-tab').forEach(el => el.classList.remove('active'));
             modal.querySelectorAll('[id^="btn-' + modalId + '-"]').forEach(el => { el.classList.remove('modal-tab-active'); el.classList.add('modal-tab-inactive'); });
             document.getElementById('tab-' + modalId + '-' + tabName).classList.add('active');
             const btn = document.getElementById('btn-' + modalId + '-' + tabName);
             btn.classList.remove('modal-tab-inactive'); btn.classList.add('modal-tab-active');
+
+            const btnGuardar = document.getElementById('btn-guardar-' + modalId);
+            if (btnGuardar) {
+                if (tabName === 'agenda') { btnGuardar.classList.remove('hidden'); } else { btnGuardar.classList.add('hidden'); }
+            }
         }
+
+        function toggleCustodia(modalId, valor) {
+            const div = document.getElementById('div-custodia-' + modalId);
+            const select = div.querySelector('select[name="vive_con"]');
+            if (valor === 'Separados') { div.classList.remove('hidden'); select.setAttribute('required', 'required'); } else { div.classList.add('hidden'); select.removeAttribute('required'); select.value = ''; }
+        }
+
+        function toggleHermanos(modalId, valor) {
+            const textarea = document.getElementById('hermanos-desc-' + modalId);
+            if (valor === 'Si') { textarea.classList.remove('hidden'); textarea.setAttribute('required', 'required'); if (textarea.value === 'No tiene') textarea.value = ''; } else { textarea.classList.add('hidden'); textarea.removeAttribute('required'); textarea.value = 'No tiene'; }
+        }
+
+        function toggleApoyo(modalId, valor) {
+            const div = document.getElementById('div-apoyo-' + modalId);
+            const inputName = div.querySelector('input[name="escuela_apoyo_nombre"]');
+            if (valor === 'Si') { div.classList.remove('hidden'); inputName.setAttribute('required', 'required'); if (inputName.value === 'No tiene') inputName.value = ''; } else { div.classList.add('hidden'); inputName.removeAttribute('required'); inputName.value = 'No tiene'; }
+        }
+
+        function toggleTerapias(modalId, valor) {
+            const div = document.getElementById('div-terapias-' + modalId);
+            const textarea = div.querySelector('textarea[name="terapias_previas_desc"]');
+            if (valor === 'Si') { div.classList.remove('hidden'); textarea.setAttribute('required', 'required'); } else { div.classList.add('hidden'); textarea.removeAttribute('required'); textarea.value = ''; }
+        }
+
         function openModalLectura(id) { document.querySelectorAll('.modal-lectura').forEach(m => m.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-        function toggleApoyo(modalId, checkbox) { const div = document.getElementById('div-apoyo-' + modalId); if (checkbox.checked) { div.classList.remove('hidden'); } else { div.classList.add('hidden'); } }
-        function toggleTerapias(modalId, valor) { const div = document.getElementById('div-terapias-' + modalId); if (valor === 'Si') { div.classList.remove('hidden'); } else { div.classList.add('hidden'); } }
-        function toggleCustodia(modalId, valor) { const div = document.getElementById('div-custodia-' + modalId); if (valor === 'Separados') { div.classList.remove('hidden'); } else { div.classList.add('hidden'); } }
     </script>
 </body>
-
 </html>

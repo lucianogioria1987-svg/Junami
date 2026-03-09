@@ -200,7 +200,7 @@
                             <h3 class="text-lg font-bold text-gray-800">Asistencia y Evoluciones</h3>
                             <a href="{{ url_for('imprimir_seccion', id=paciente.id, seccion='evoluciones') }}" target="_blank" class="text-teal-600 hover:text-teal-800 font-bold text-sm flex items-center gap-2">Imprimir Historial</a>
                         </div>
-                        <form action="{{ url_for('historias') }}" method="POST" class="mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <form action="{{ url_for('guardar_evolucion_paciente', id=paciente.id) }}" method="POST" class="mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200">
                             <input type="hidden" name="id_paciente" value="{{ paciente.id }}">
                             <label class="block text-xs font-bold text-gray-500 mb-1">Nueva Evolución</label>
                             <textarea name="nota" rows="3" class="w-full rounded border-gray-300 p-2 text-sm focus:ring-teal-500" placeholder="Detalles de la sesión..."></textarea>
@@ -460,6 +460,23 @@
             activeBtn.classList.remove('tab-inactive');
             activeBtn.classList.add('tab-active');
         }
+
+        // Leer la URL y abrir la solapa automáticamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeTab = urlParams.get('tab');
+            
+            if (activeTab) {
+                const tabToActivate = document.getElementById('tab-' + activeTab);
+                if (tabToActivate) {
+                    switchTab(activeTab); // Hace clic automático en la solapa
+                    
+                    // Opcional: Limpia la URL para que no quede "sucia" con el ?tab=
+                    const urlSinParametros = window.location.pathname;
+                    window.history.replaceState({}, document.title, urlSinParametros);
+                }
+            }
+        });
     </script>
 </body>
 </html>
