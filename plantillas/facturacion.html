@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junami - Facturación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-600">
+
+    <div class="flex h-screen overflow-hidden">
+
+        <aside class="w-64 bg-white flex flex-col shadow-2xl z-20 flex-shrink-0">
+            <div
+                class="h-40 bg-gradient-to-br from-blue-700 to-teal-500 flex flex-col items-center justify-center text-white">
+                <div class="text-lg font-bold tracking-widest z-10 uppercase">Junami</div>
+                <div class="text-xs text-blue-100 z-10 opacity-90">Gestión Terapéutica</div>
+            </div>
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto">
+                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Principal</p>
+                <a href="{{ url_for('dashboard_loguin_bp.dashboard') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z">
+                        </path>
+                    </svg>Dashboard General</a>
+                <a href="{{ url_for('dashboard_personal_bp.dashboard2') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>Dashboard Personal</a>
+                <a href="{{ url_for('admisiones') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                        </path>
+                    </svg>Admisiones</a>
+                <a href="{{ url_for('pacientes') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>Pacientes</a>
+                <a href="{{ url_for('agenda') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>Agenda / Turnos</a>
+                <a href="{{ url_for('historias') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>Historias Clínicas</a>
+                <a href="{{ url_for('reportes') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>Reportes y Estadísticas</a>
+
+                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">Administración
+                </p>
+                <a href="{{ url_for('profesionales') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>Profesionales</a>
+                <a href="{{ url_for('facturacion') }}"
+                    class="flex items-center px-6 py-3 text-blue-700 bg-blue-50 border-r-4 border-blue-600 font-bold transition-all">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                    Facturación
+                </a>
+                <a href="{{ url_for('configuracion') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>Configuración</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50">
+            <header class="bg-white h-16 flex items-center justify-between px-8 shadow-sm z-10">
+                <h1 class="text-xl font-bold text-slate-700">Registro de Cobros</h1>
+
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <input type="text" id="buscadorPagos" placeholder="Buscar paciente u O.S..."
+                            class="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-64 transition">
+                        <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+
+                    <button onclick="document.getElementById('modalPago').classList.remove('hidden')"
+                        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Registrar Nuevo Pago
+                    </button>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-8">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <table class="w-full text-sm text-left" id="tablaPagos">
+                        <thead class="bg-gray-50 text-gray-500 font-medium border-b">
+                            <tr>
+                                <th class="px-6 py-3">Fecha Pago</th>
+                                <th class="px-6 py-3">Paciente</th>
+                                <th class="px-6 py-3">Entidad / OS</th>
+                                <th class="px-6 py-3">Servicio Brindado</th>
+                                <th class="px-6 py-3">Monto</th>
+                                <th class="px-6 py-3">Demora</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            {% for pago in pagos %}
+                            <tr class="hover:bg-gray-50 transition fila-pago">
+                                <td class="px-6 py-4 font-mono text-gray-600">{{ pago.fecha_pago }}</td>
+                                <td class="px-6 py-4 font-bold text-gray-700">{{ mapa_pacientes[pago.id_paciente] }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="px-2 py-1 rounded text-xs font-bold {% if pago.obra_social == 'Particular' %}bg-gray-100 text-gray-600{% else %}bg-blue-100 text-blue-700{% endif %}">
+                                        {{ pago.obra_social }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-500 text-xs">Del {{ pago.fecha_servicio }}</td>
+                                <td class="px-6 py-4 font-bold text-green-700">$ {{ pago.monto }}</td>
+                                <td class="px-6 py-4">
+                                    {% if pago.dias_demora <= 0 %} <span class="text-green-500 font-bold text-xs">
+                                        Inmediato</span>
+                                        {% elif pago.dias_demora > 60 %}
+                                        <span class="text-red-500 font-bold text-xs">{{ pago.dias_demora }} días</span>
+                                        {% else %}
+                                        <span class="text-gray-500 text-xs">{{ pago.dias_demora }} días</span>
+                                        {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr id="sinDatos">
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-400 italic">No hay pagos
+                                    registrados.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div id="noResultados" class="hidden px-6 py-8 text-center text-gray-400 italic">
+                        No se encontraron coincidencias.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="modalPago"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+        <div class="relative mx-auto p-6 border w-[500px] shadow-lg rounded-lg bg-white">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Registrar Cobro</h3>
+            <form action="{{ url_for('facturacion') }}" method="POST" class="space-y-4">
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1">Paciente</label>
+                    <select name="id_paciente" class="w-full rounded border border-gray-300 p-2 text-sm bg-white"
+                        required onchange="actualizarOS(this)">
+                        <option value="" disabled selected>Seleccione...</option>
+                        {% for p in pacientes %}
+                        <option value="{{ p.id }}" data-os="{{ p.obra_social }}">{{ p.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">Obra Social / Entidad</label>
+                        <input type="text" id="inputOS" name="obra_social"
+                            class="w-full rounded border border-gray-300 p-2 text-sm bg-gray-50" readonly required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 mb-1">Monto Cobrado ($)</label>
+                        <input type="number" name="monto" class="w-full rounded border border-gray-300 p-2 text-sm"
+                            required placeholder="Ej: 8500">
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 p-3 rounded border border-yellow-100 grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-yellow-800 mb-1">Fecha del Servicio</label>
+                        <input type="date" name="fecha_servicio"
+                            class="w-full rounded border border-yellow-300 p-2 text-xs" required>
+                        <p class="text-[10px] text-yellow-600 mt-1">¿Cuándo se atendió?</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-yellow-800 mb-1">Fecha de Cobro</label>
+                        <input type="date" name="fecha_pago" class="w-full rounded border border-yellow-300 p-2 text-xs"
+                            required>
+                        <p class="text-[10px] text-yellow-600 mt-1">¿Cuándo entró el dinero?</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 mt-6">
+                    <button type="button" onclick="document.getElementById('modalPago').classList.add('hidden')"
+                        class="flex-1 bg-white border border-gray-300 py-2 rounded text-sm text-gray-700 hover:bg-gray-50">Cancelar</button>
+                    <button type="submit"
+                        class="flex-1 bg-green-600 text-white py-2 rounded text-sm hover:bg-green-700 font-bold">Guardar
+                        Pago</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function actualizarOS(select) {
+            const os = select.options[select.selectedIndex].getAttribute('data-os');
+            document.getElementById('inputOS').value = os || 'Particular';
+        }
+
+        const fechaInput = document.querySelector('input[name="fecha_pago"]');
+        if (!fechaInput.value) { fechaInput.valueAsDate = new Date(); }
+
+        // --- SCRIPT DEL BUSCADOR ---
+        document.getElementById('buscadorPagos').addEventListener('keyup', function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('.fila-pago');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                // Columna 1: Paciente, Columna 2: Obra Social (Indices 1 y 2)
+                let paciente = row.cells[1].innerText.toLowerCase();
+                let os = row.cells[2].innerText.toLowerCase();
+
+                if (paciente.includes(filter) || os.includes(filter)) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Mostrar mensaje si no hay resultados
+            const noResult = document.getElementById('noResultados');
+            if (visibleCount === 0 && rows.length > 0) {
+                noResult.classList.remove('hidden');
+            } else {
+                noResult.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>

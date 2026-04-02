@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legajo: {{ paciente.nombre }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tab-active { border-bottom: 3px solid #0d9488; color: #0f766e; font-weight: bold; background-color: #f0fdfa; }
+        .tab-inactive { color: #64748b; background-color: white; }
+        .tab-inactive:hover { background-color: #f8fafc; color: #0f766e; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-600">
+
+    <div class="flex h-screen overflow-hidden">
+        
+        <aside class="w-64 bg-white flex flex-col shadow-2xl z-20 flex-shrink-0">
+            <div class="h-40 bg-gradient-to-br from-blue-700 to-teal-500 flex flex-col items-center justify-center text-white">
+                <div class="text-lg font-bold tracking-widest z-10 uppercase">Junami</div>
+            </div>
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto px-4">
+                <a href="{{ url_for('pacientes') }}" class="flex items-center px-4 py-2 text-gray-500 hover:text-blue-600">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Volver a Pacientes
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50">
+            
+            <header class="bg-white px-8 py-4 shadow-sm z-10 flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    {% if paciente.foto %}
+                        <img src="{{ url_for('static', filename='uploads/' + paciente.foto) }}" class="w-16 h-16 rounded-full object-cover border-2 border-teal-500">
+                    {% else %}
+                        <div class="w-16 h-16 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center text-2xl font-bold border-2 border-teal-500">{{ paciente.nombre[0] }}</div>
+                    {% endif %}
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800 leading-none">{{ paciente.nombre }}</h1>
+                        <p class="text-sm text-gray-500 mt-1">{{ paciente.edad }} años | {{ paciente.diagnostico }}</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="document.getElementById('modalTurno').classList.remove('hidden')" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium flex items-center gap-2 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Asignar Horario
+                    </button>
+                    <a href="{{ url_for('imprimir_seccion', id=paciente.id, seccion='datos') }}" target="_blank" class="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded shadow-sm text-sm font-medium flex items-center gap-2 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        Imprimir Carátula
+                    </a>
+                    <a href="{{ url_for('editar_paciente', id=paciente.id) }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium flex items-center gap-2 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        Editar Legajo
+                    </a>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="flex border-b border-gray-200 mb-6 bg-white rounded-t-lg shadow-sm">
+                    <button onclick="switchTab('datos')" id="tab-datos" class="flex-1 py-3 text-sm font-medium text-center tab-active transition rounded-tl-lg">Datos Personales</button>
+                    <button onclick="switchTab('clinica')" id="tab-clinica" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Clínica y Equipo</button>
+                    <button onclick="switchTab('plan')" id="tab-plan" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Planificación</button>
+                    <button onclick="switchTab('evoluciones')" id="tab-evoluciones" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Registro Diario</button>
+                    <button onclick="switchTab('docs')" id="tab-docs" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition rounded-tr-lg">Documentación</button>
+                </div>
+
+                <div id="content-datos" class="tab-content active space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Información Básica</h3>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div><p class="text-xs text-gray-400 uppercase">DNI</p><p class="font-medium">{{ paciente.dni or '-' }}</p></div>
+                                <div><p class="text-xs text-gray-400 uppercase">Fecha Nacimiento</p><p class="font-medium">{{ paciente.fecha_nacimiento or '-' }}</p></div>
+                                <div class="col-span-2"><p class="text-xs text-gray-400 uppercase">Dirección</p><p class="font-medium">{{ paciente.domicilio or '-' }}</p></div>
+                                <div class="col-span-2"><p class="text-xs text-gray-400 uppercase">Obra Social</p><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-bold">{{ paciente.obra_social }}</span></div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Institución Escolar</h3>
+                            <div class="space-y-3 text-sm">
+                                <div><p class="text-xs text-gray-400 uppercase">Escuela</p><p class="font-medium text-lg">{{ paciente.escuela_nombre or 'No registrada' }}</p></div>
+                                <div class="flex gap-8">
+                                    <div><p class="text-xs text-gray-400 uppercase">Grado/Año</p><p class="font-medium">{{ paciente.escuela_grado or '-' }}</p></div>
+                                    <div><p class="text-xs text-gray-400 uppercase">Turno</p><p class="font-medium">{{ paciente.escuela_turno or '-' }}</p></div>
+                                </div>
+                                {% if paciente.escuela_apoyo_nombre %}
+                                <div class="mt-2 pt-2 border-t border-gray-100">
+                                    <p class="text-xs text-yellow-600 uppercase font-bold">Maestra de Apoyo / AT</p>
+                                    <p class="font-medium text-gray-700">{{ paciente.escuela_apoyo_nombre }}</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 md:col-span-2">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Datos Familiares</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="bg-slate-50 p-3 rounded border border-slate-100">
+                                    <p class="text-xs font-bold text-slate-400 uppercase mb-2">Madre / Tutor 1</p>
+                                    <p class="font-bold text-slate-700">{{ paciente.nombre_madre or '-' }}</p>
+                                    <p class="text-sm text-slate-500 flex items-center gap-2 mb-1">{{ paciente.tel_madre or '-' }}</p>
+                                    {% if paciente.domicilio_madre %}
+                                    <p class="text-xs text-slate-400 mt-1 pt-1 border-t border-slate-200">Dom: {{ paciente.domicilio_madre }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded border border-slate-100">
+                                    <p class="text-xs font-bold text-slate-400 uppercase mb-2">Padre / Tutor 2</p>
+                                    <p class="font-bold text-slate-700">{{ paciente.nombre_padre or '-' }}</p>
+                                    <p class="text-sm text-slate-500 flex items-center gap-2 mb-1">{{ paciente.tel_padre or '-' }}</p>
+                                    {% if paciente.domicilio_padre %}
+                                    <p class="text-xs text-slate-400 mt-1 pt-1 border-t border-slate-200">Dom: {{ paciente.domicilio_padre }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4 pt-4 border-t border-gray-100">
+                                <div>
+                                    <p class="text-xs text-gray-400 uppercase font-bold mb-1">Situación de Convivencia</p>
+                                    <p class="text-sm font-medium">
+                                        {{ paciente.estado_padres or '-' }}
+                                        {% if paciente.vive_con %}
+                                            <span class="text-indigo-600 font-bold ml-1">(Vive con: {{ paciente.vive_con }})</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 uppercase font-bold mb-1">Hermanos</p>
+                                    <p class="text-sm font-medium">{{ paciente.hermanos or 'No especificado' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-clinica" class="tab-content space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Diagnóstico y Antecedentes</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                            <div><p class="text-xs text-gray-400 uppercase">Diagnóstico Principal</p><p class="font-bold text-lg text-indigo-700">{{ paciente.diagnostico }}</p></div>
+                            <div><p class="text-xs text-gray-400 uppercase">Médico de Cabecera</p><p class="font-medium">{{ paciente.medico_cabecera or 'No especificado' }}</p></div>
+                            <div><p class="text-xs text-gray-400 uppercase">Neurólogo</p><p class="font-medium">{{ paciente.neurologo or 'No especificado' }}</p></div>
+                        </div>
+                        {% if paciente.tiene_terapias_previas == 'Si' %}
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <p class="text-xs text-purple-600 uppercase font-bold mb-1">Antecedentes Terapéuticos</p>
+                            <p class="text-sm text-gray-600 italic bg-purple-50 p-3 rounded border border-purple-100">{{ paciente.terapias_previas_desc }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex justify-between items-center mb-4 border-b pb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Profesionales Tratantes</h3>
+                            <button onclick="document.getElementById('modalEquipo').classList.remove('hidden')" class="text-xs font-bold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-3 py-1 rounded transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                Gestionar Equipo
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-4">
+                            {% for p in equipo %}
+                            <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200 w-64 shadow-sm">
+                                <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold">{{ p.iniciales }}</div>
+                                <div><p class="font-bold text-sm text-gray-700">{{ p.nombre }}</p><p class="text-xs text-gray-500">{{ p.rol }}</p></div>
+                            </div>
+                            {% else %}
+                            <p class="text-gray-400 italic text-sm py-2">No hay profesionales asignados actualmente.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div id="content-plan" class="tab-content space-y-6">
+                    <form action="{{ url_for('guardar_planificacion', id=paciente.id) }}" method="POST">
+                        <div class="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-6 sticky top-0 z-10">
+                            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                Planificación y Objetivos
+                            </h3>
+                            <div class="flex gap-3">
+                                <a href="{{ url_for('imprimir_seccion', id=paciente.id, seccion='planificacion') }}" target="_blank" class="text-teal-600 hover:text-teal-800 font-bold text-sm flex items-center gap-2 px-3 py-2 bg-teal-50 rounded">Imprimir</a>
+                                <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow-sm text-sm font-bold flex items-center gap-2">Guardar Cambios</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
+                            <label class="block text-lg font-bold text-teal-800 mb-2">Plan Anual</label>
+                            <textarea name="plan_anual" rows="6" class="w-full bg-slate-50 p-4 rounded-lg border border-slate-300 text-sm text-gray-700 focus:ring-teal-500">{{ paciente.plan_anual }}</textarea>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200"><label class="block text-lg font-bold text-blue-800 mb-2">Objetivos Mensuales</label><textarea name="objetivos_mensuales" rows="10" class="w-full bg-blue-50/50 p-4 rounded-lg border border-blue-200 text-sm">{{ paciente.objetivos_mensuales }}</textarea></div>
+                            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200"><label class="block text-lg font-bold text-purple-800 mb-2">Sugerencias Hogar</label><textarea name="sugerencias_hogar" rows="10" class="w-full bg-purple-50/50 p-4 rounded-lg border border-purple-200 text-sm">{{ paciente.sugerencias_hogar }}</textarea></div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="content-evoluciones" class="tab-content">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-gray-800">Asistencia y Evoluciones</h3>
+                            <a href="{{ url_for('imprimir_seccion', id=paciente.id, seccion='evoluciones') }}" target="_blank" class="text-teal-600 hover:text-teal-800 font-bold text-sm flex items-center gap-2">Imprimir Historial</a>
+                        </div>
+                        <form action="{{ url_for('guardar_evolucion_paciente', id=paciente.id) }}" method="POST" class="mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <input type="hidden" name="id_paciente" value="{{ paciente.id }}">
+                            <label class="block text-xs font-bold text-gray-500 mb-1">Nueva Evolución</label>
+                            <textarea name="nota" rows="3" class="w-full rounded border-gray-300 p-2 text-sm focus:ring-teal-500" placeholder="Detalles de la sesión..."></textarea>
+                            <div class="mt-2 text-right">
+                                <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded text-sm font-bold shadow-sm">Guardar Registro</button>
+                            </div>
+                        </form>
+                        <div class="space-y-6 pl-4 border-l-2 border-gray-200">
+                            {% for h in historial %}
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 bg-white border-2 border-teal-500 rounded-full"></div>
+                                <div class="bg-white p-4 rounded border border-gray-100 shadow-sm">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div class="flex items-center gap-2">
+                                            {% if h.foto_profesional %}<img src="{{ url_for('static', filename='uploads/' + h.foto_profesional) }}" class="w-6 h-6 rounded-full object-cover">
+                                            {% else %}<div class="w-6 h-6 rounded-full bg-gray-200"></div>{% endif %}
+                                            <span class="font-bold text-sm text-gray-800">{{ h.profesional }}</span>
+                                        </div>
+                                        <span class="text-xs text-gray-400">{{ h.fecha }} - {{ h.hora }}hs</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 whitespace-pre-wrap">{{ h.nota }}</p>
+                                </div>
+                            </div>
+                            {% else %}
+                            <p class="text-gray-400 italic pl-6">No hay registros de evolución aún.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-docs" class="tab-content">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Subir Documento</h3>
+                        <form action="{{ url_for('subir_archivo_paciente') }}" method="POST" enctype="multipart/form-data" class="flex gap-4 items-end bg-gray-50 p-4 rounded border border-gray-200">
+                            <input type="hidden" name="id_paciente" value="{{ paciente.id }}">
+                            <div class="flex-1">
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Tipo de Archivo</label>
+                                <select name="tipo_documento" class="w-full rounded border border-gray-300 p-2 text-sm">
+                                    <option value="Evaluacion">Evaluación</option>
+                                    <option value="Informe">Informe Médico</option>
+                                    <option value="CUD">Certificado Discapacidad (CUD)</option>
+                                    <option value="Estudio">Estudio Complementario</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-xs font-bold text-gray-500 mb-1">Archivo</label>
+                                <input type="file" name="archivo" required class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            </div>
+                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold shadow hover:bg-blue-700">Subir</button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">Documentación del Paciente</h3>
+                        <div class="mb-6 pb-4 border-b border-gray-100">
+                            <h4 class="text-sm font-bold text-gray-500 uppercase mb-3">Documentación de Ingreso (Admisión)</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {% if paciente.informe_diagnostico %}
+                                    <div class="bg-blue-50 p-3 rounded border border-blue-100">
+                                        <p class="text-xs font-bold text-blue-700 mb-1">Informes Diagnósticos</p>
+                                        {% if paciente.informe_diagnostico is string %}
+                                            <a href="{{ url_for('static', filename='uploads/' + paciente.informe_diagnostico) }}" target="_blank" class="block text-sm text-blue-600 hover:underline truncate">📄 Ver Archivo</a>
+                                        {% else %}
+                                            {% for f in paciente.informe_diagnostico %}
+                                                <a href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank" class="block text-sm text-blue-600 hover:underline truncate">📄 Archivo {{ loop.index }}</a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if paciente.archivo_informes_previos %}
+                                    <div class="bg-purple-50 p-3 rounded border border-purple-100">
+                                        <p class="text-xs font-bold text-purple-700 mb-1">Antecedentes</p>
+                                        {% if paciente.archivo_informes_previos is string %}
+                                            <a href="{{ url_for('static', filename='uploads/' + paciente.archivo_informes_previos) }}" target="_blank" class="block text-sm text-purple-600 hover:underline truncate">📄 Ver Archivo</a>
+                                        {% else %}
+                                            {% for f in paciente.archivo_informes_previos %}
+                                                <a href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank" class="block text-sm text-purple-600 hover:underline truncate">📄 Archivo {{ loop.index }}</a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if paciente.informe_escolar %}
+                                    <div class="bg-yellow-50 p-3 rounded border border-yellow-100">
+                                        <p class="text-xs font-bold text-yellow-700 mb-1">Escolar / AT</p>
+                                        {% if paciente.informe_escolar is string %}
+                                            <a href="{{ url_for('static', filename='uploads/' + paciente.informe_escolar) }}" target="_blank" class="block text-sm text-yellow-600 hover:underline truncate">📄 Ver Archivo</a>
+                                        {% else %}
+                                            {% for f in paciente.informe_escolar %}
+                                                <a href="{{ url_for('static', filename='uploads/' + f) }}" target="_blank" class="block text-sm text-yellow-600 hover:underline truncate">📄 Archivo {{ loop.index }}</a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if paciente.informe_derivacion %}
+                                    <div class="bg-gray-50 p-3 rounded border border-gray-200">
+                                        <p class="text-xs font-bold text-gray-600 mb-1">Orden Médica</p>
+                                        <a href="{{ url_for('static', filename='uploads/' + paciente.informe_derivacion) }}" target="_blank" class="block text-sm text-blue-600 hover:underline truncate">📄 Ver Archivo</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-gray-50 text-gray-500 border-b"><tr><th class="px-4 py-2">Fecha</th><th class="px-4 py-2">Tipo</th><th class="px-4 py-2">Nombre Archivo</th><th class="px-4 py-2">Acción</th></tr></thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    {% if paciente.informe %}
+                                    <tr>
+                                        <td class="px-4 py-3 text-gray-400">-</td>
+                                        <td class="px-4 py-3"><span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">General</span></td>
+                                        <td class="px-4 py-3 truncate max-w-xs">{{ paciente.informe }}</td>
+                                        <td class="px-4 py-3"><a href="{{ url_for('static', filename='uploads/' + paciente.informe) }}" target="_blank" class="text-blue-600 hover:underline">Ver/Descargar</a></td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if paciente.archivos_adjuntos %}
+                                        {% for adj in paciente.archivos_adjuntos %}
+                                        <tr>
+                                            <td class="px-4 py-3 font-mono text-xs">{{ adj.fecha }}</td>
+                                            <td class="px-4 py-3"><span class="px-2 py-1 rounded text-xs font-bold {% if adj.tipo == 'Evaluacion' %}bg-purple-100 text-purple-700{% elif adj.tipo == 'Informe' %}bg-green-100 text-green-700{% elif adj.tipo == 'CUD' %}bg-orange-100 text-orange-700{% else %}bg-gray-100 text-gray-700{% endif %}">{{ adj.tipo }}</span></td>
+                                            <td class="px-4 py-3 truncate max-w-xs" title="{{ adj.nombre_original }}">{{ adj.nombre_original }}</td>
+                                            <td class="px-4 py-3"><a href="{{ url_for('static', filename='uploads/' + adj.nombre_archivo) }}" target="_blank" class="text-blue-600 hover:underline">Ver/Descargar</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="modalTurno" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-white rounded-lg shadow-xl w-[600px]">
+            <div class="p-6 border-b border-gray-100">
+                <h3 class="text-xl font-bold text-gray-800">Asignar Horario Fijo</h3>
+            </div>
+            
+            <form action="{{ url_for('asignar_horario_fijo', id=paciente.id) }}" method="POST" class="p-6 space-y-5">
+                
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Paciente</label>
+                    <input type="text" value="{{ paciente.nombre }}" readonly class="w-full border border-gray-300 rounded p-2 text-sm bg-gray-100 text-gray-600">
+                </div>
+
+
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Profesional a cargo</label>
+                    <select name="profesional" class="w-full border border-gray-300 rounded p-2 text-sm bg-white" required>
+                        <option value="">Seleccionar Profesional...</option>
+                        {% for p in profesionales %}
+                            <option value="{{ p.nombre }}">{{ p.nombre }} ({{ p.especialidad }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Días (Selección Múltiple)</label>
+                    <div class="grid grid-cols-2 gap-y-2">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="dias" value="Lunes" class="rounded text-teal-600 focus:ring-teal-500 border-gray-300">
+                            <span class="text-sm text-gray-600">Lunes</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="dias" value="Martes" class="rounded text-teal-600 focus:ring-teal-500 border-gray-300">
+                            <span class="text-sm text-gray-600">Martes</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="dias" value="Miércoles" class="rounded text-teal-600 focus:ring-teal-500 border-gray-300">
+                            <span class="text-sm text-gray-600">Miércoles</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="dias" value="Jueves" class="rounded text-teal-600 focus:ring-teal-500 border-gray-300">
+                            <span class="text-sm text-gray-600">Jueves</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" name="dias" value="Viernes" class="rounded text-teal-600 focus:ring-teal-500 border-gray-300">
+                            <span class="text-sm text-gray-600">Viernes</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Horario</label>
+                        <input type="time" name="hora" class="w-full border border-gray-300 rounded p-2 text-sm" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Consultorio</label>
+                        <select name="consultorio" class="w-full border border-gray-300 rounded p-2 text-sm bg-white">
+                            <option value="Sala 1">Sala 1</option>
+                            <option value="Sala 2">Sala 2</option>
+                            <option value="Sala 3">Sala 3</option>
+                            <option value="Gimnasio">Gimnasio</option>
+                            <option value="Consultorio">Consultorio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Tipo</label>
+                    <select name="tipo" class="w-full border border-gray-300 rounded p-2 text-sm bg-white">
+                        <option value="Individual">Individual</option>
+                        <option value="Grupal">Grupal</option>
+                        <option value="Evaluación">Evaluación</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 flex gap-3">
+                    <button type="button" onclick="document.getElementById('modalTurno').classList.add('hidden')" class="flex-1 py-2 text-gray-600 border border-gray-300 rounded font-bold hover:bg-gray-50 transition">Cancelar</button>
+                    <button type="submit" class="flex-1 py-2 bg-teal-600 text-white rounded font-bold hover:bg-teal-700 shadow-sm transition">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalEquipo" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-white rounded-lg shadow-xl w-[500px]">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="text-lg font-bold text-gray-800">Gestionar Equipo Junami</h3>
+                <button onclick="document.getElementById('modalEquipo').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">&times;</button>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-500 mb-4">Seleccione los profesionales que atienden a {{ paciente.nombre }}:</p>
+                <form action="{{ url_for('actualizar_equipo', id=paciente.id) }}" method="POST">
+                    <div class="max-h-60 overflow-y-auto space-y-2 mb-4 border rounded p-2 bg-slate-50">
+                        {% for p in profesionales %}
+                        <label class="flex items-center space-x-3 p-2 hover:bg-white rounded cursor-pointer transition">
+                            <input type="checkbox" name="profesionales" value="{{ p.nombre }}" 
+                                {% if paciente.profesionales and p.nombre in paciente.profesionales %}checked{% endif %}
+                                class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded">
+                            <span class="text-sm text-gray-700 font-medium">{{ p.nombre }}</span>
+                            <span class="text-xs text-gray-400">({{ p.especialidad }})</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <div class="flex gap-3">
+                        <button type="button" onclick="document.getElementById('modalEquipo').classList.add('hidden')" class="flex-1 py-2 text-gray-600 border border-gray-300 rounded font-bold hover:bg-gray-50">Cancelar</button>
+                        <button type="submit" class="flex-1 py-2 bg-teal-600 text-white rounded font-bold hover:bg-teal-700">Guardar Equipo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
+            document.querySelectorAll('button[id^="tab-"]').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('tab-inactive');
+            });
+            document.getElementById('content-' + tabName).classList.add('active');
+            const activeBtn = document.getElementById('tab-' + tabName);
+            activeBtn.classList.remove('tab-inactive');
+            activeBtn.classList.add('tab-active');
+        }
+
+        // Leer la URL y abrir la solapa automáticamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeTab = urlParams.get('tab');
+            
+            if (activeTab) {
+                const tabToActivate = document.getElementById('tab-' + activeTab);
+                if (tabToActivate) {
+                    switchTab(activeTab); // Hace clic automático en la solapa
+                    
+                    // Opcional: Limpia la URL para que no quede "sucia" con el ?tab=
+                    const urlSinParametros = window.location.pathname;
+                    window.history.replaceState({}, document.title, urlSinParametros);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

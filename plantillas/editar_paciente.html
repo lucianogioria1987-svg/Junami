@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar: {{ paciente.nombre }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-600">
+    
+    <div class="max-w-4xl mx-auto p-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-slate-800">Editar Legajo de Paciente</h1>
+            <a href="{{ url_for('perfil_paciente', id=paciente.id) }}" class="text-gray-500 hover:text-blue-600 text-sm">Cancelar y Volver</a>
+        </div>
+
+        <form action="{{ url_for('editar_paciente', id=paciente.id) }}" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-lg border border-gray-200 space-y-8">
+            
+            <div>
+                <h3 class="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Datos Personales</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Nombre Completo</label><input type="text" name="nombre" value="{{ paciente.nombre }}" required class="w-full rounded border p-2 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">DNI</label><input type="text" name="dni" value="{{ paciente.dni }}" class="w-full rounded border p-2 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Fecha Nacimiento</label><input type="date" name="fecha_nacimiento" value="{{ paciente.fecha_nacimiento }}" class="w-full rounded border p-2 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Edad</label><input type="number" name="edad" value="{{ paciente.edad }}" class="w-full rounded border p-2 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Obra Social</label>
+                        <select name="obra_social" class="w-full rounded border p-2 text-sm bg-white">
+                            {% for os in obras_sociales %}
+                                <option value="{{ os }}" {% if paciente.obra_social == os %}selected{% endif %}>{{ os }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Domicilio</label><input type="text" name="domicilio" value="{{ paciente.domicilio }}" class="w-full rounded border p-2 text-sm"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Familia</h3>
+                    <div class="space-y-3">
+                        <div><label class="block text-xs font-bold text-gray-500">Madre / Tutor 1</label><input type="text" name="nombre_madre" value="{{ paciente.nombre_madre }}" placeholder="Nombre" class="w-full rounded border p-2 text-sm mb-1"><input type="text" name="tel_madre" value="{{ paciente.tel_madre }}" placeholder="Teléfono" class="w-full rounded border p-2 text-sm"></div>
+                        <div><label class="block text-xs font-bold text-gray-500">Padre / Tutor 2</label><input type="text" name="nombre_padre" value="{{ paciente.nombre_padre }}" placeholder="Nombre" class="w-full rounded border p-2 text-sm mb-1"><input type="text" name="tel_padre" value="{{ paciente.tel_padre }}" placeholder="Teléfono" class="w-full rounded border p-2 text-sm"></div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Escuela</h3>
+                    <div class="space-y-3">
+                        <div><label class="block text-xs font-bold text-gray-500">Institución</label><input type="text" name="escuela_nombre" value="{{ paciente.escuela_nombre }}" class="w-full rounded border p-2 text-sm"></div>
+                        <div class="flex gap-2">
+                            <div class="flex-1"><label class="block text-xs font-bold text-gray-500">Grado</label><input type="text" name="escuela_grado" value="{{ paciente.escuela_grado }}" class="w-full rounded border p-2 text-sm"></div>
+                            <div class="flex-1"><label class="block text-xs font-bold text-gray-500">Turno</label><select name="escuela_turno" class="w-full rounded border p-2 text-sm bg-white"><option value="">-</option><option value="Mañana" {% if paciente.escuela_turno == 'Mañana' %}selected{% endif %}>Mañana</option><option value="Tarde" {% if paciente.escuela_turno == 'Tarde' %}selected{% endif %}>Tarde</option><option value="Jornada Completa" {% if paciente.escuela_turno == 'Jornada Completa' %}selected{% endif %}>Jornada Completa</option></select></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Información Clínica</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Diagnóstico Principal</label><input type="text" name="diagnostico" value="{{ paciente.diagnostico }}" class="w-full rounded border p-2 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Médico de Cabecera (Pediatra)</label><input type="text" name="medico_cabecera" value="{{ paciente.medico_cabecera }}" class="w-full rounded border p-2 text-sm"></div>
+                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Neurólogo</label><input type="text" name="neurologo" value="{{ paciente.neurologo }}" class="w-full rounded border p-2 text-sm"></div>
+                    
+                    <div class="col-span-2 mt-2">
+                        <label class="block text-xs font-bold text-gray-500 mb-2">Equipo Terapéutico Asignado</label>
+                        <div class="grid grid-cols-3 gap-2 bg-gray-50 p-4 rounded border border-gray-200">
+                            {% for prof in profesionales %}
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" name="profesionales" value="{{ prof.nombre }}" class="rounded text-teal-600 focus:ring-teal-500" {% if prof.nombre in paciente.profesionales %}checked{% endif %}>
+                                <span class="text-sm text-gray-700">{{ prof.nombre }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Planificación Terapéutica</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-teal-700 mb-1">Plan Anual</label>
+                        <textarea name="plan_anual" rows="3" class="w-full rounded border p-2 text-sm">{{ paciente.plan_anual }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-blue-700 mb-1">Objetivos Mensuales</label>
+                        <textarea name="objetivos_mensuales" rows="3" class="w-full rounded border p-2 text-sm">{{ paciente.objetivos_mensuales }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-purple-700 mb-1">Sugerencias para el Hogar</label>
+                        <textarea name="sugerencias_hogar" rows="3" class="w-full rounded border p-2 text-sm">{{ paciente.sugerencias_hogar }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 pt-4 border-t">
+                <button type="submit" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded shadow-md transition">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    </script>
+</body>
+</html>

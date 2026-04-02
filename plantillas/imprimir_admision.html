@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ficha de Admisión: {{ adm.nombre }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; background: white !important; }
+            .no-print { display: none !important; }
+            @page { margin: 0; size: A4; }
+            .hoja-a4 { box-shadow: none !important; margin: 0 !important; width: 100% !important; }
+        }
+        body { background: #525659; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hoja-a4 {
+            background: white; width: 210mm; min-height: 297mm;
+            margin: 2rem auto; padding: 2cm;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        h2 { border-bottom: 2px solid #334155; padding-bottom: 5px; margin-bottom: 15px; color: #334155; font-size: 14pt; font-weight: bold; text-transform: uppercase; }
+        .campo { margin-bottom: 8px; }
+        .label { font-weight: bold; color: #64748b; font-size: 9pt; text-transform: uppercase; }
+        .valor { color: #0f172a; font-weight: 500; font-size: 11pt; }
+        .seccion { margin-bottom: 25px; }
+    </style>
+</head>
+<body>
+
+    <div class="fixed top-4 right-4 no-print flex gap-2">
+        <button onclick="window.print()" class="bg-blue-600 text-white px-6 py-2 rounded font-bold shadow-lg hover:bg-blue-700 transition flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+            IMPRIMIR
+        </button>
+        <button onclick="window.close()" class="bg-gray-600 text-white px-4 py-2 rounded font-bold shadow hover:bg-gray-700">Cerrar</button>
+    </div>
+
+    <div class="hoja-a4">
+        <div class="flex justify-between items-end border-b-4 border-blue-600 pb-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-800">{{ adm.nombre }}</h1>
+                <p class="text-slate-500 mt-1">Solicitud de Admisión #{{ adm.id }}</p>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-slate-400">Fecha Solicitud</p>
+                <p class="text-xl font-bold text-slate-700">{{ adm.fecha_solicitud }}</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8">
+            
+            <div>
+                <div class="seccion">
+                    <h2>Datos Personales</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="campo"><div class="label">DNI</div><div class="valor">{{ adm.dni or '-' }}</div></div>
+                        <div class="campo"><div class="label">Edad</div><div class="valor">{{ adm.edad }} años</div></div>
+                    </div>
+                    <div class="campo"><div class="label">Fecha Nacimiento</div><div class="valor">{{ adm.fecha_nacimiento or '-' }}</div></div>
+                    <div class="campo"><div class="label">Domicilio</div><div class="valor">{{ adm.domicilio or '-' }}</div></div>
+                    <div class="campo"><div class="label">Obra Social</div><div class="valor">{{ adm.obra_social }}</div></div>
+                    <div class="campo"><div class="label">Email Contacto</div><div class="valor">{{ adm.email or '-' }}</div></div>
+                </div>
+
+                <div class="seccion">
+                    <h2>Escolaridad</h2>
+                    <div class="campo"><div class="label">Escuela</div><div class="valor">{{ adm.escuela_nombre or 'No informada' }}</div></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="campo"><div class="label">Grado/Sala</div><div class="valor">{{ adm.escuela_grado or '-' }}</div></div>
+                        <div class="campo"><div class="label">Turno</div><div class="valor">{{ adm.escuela_turno or '-' }}</div></div>
+                    </div>
+                    {% if adm.escuela_apoyo_nombre %}
+                    <div class="mt-2 p-2 bg-yellow-50 border-l-4 border-yellow-400">
+                        <div class="label text-yellow-700">Acompañante / Apoyo</div>
+                        <div class="valor text-sm">{{ adm.escuela_apoyo_nombre }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="seccion">
+                    <h2>Agenda de Admisión</h2>
+                    <div class="campo"><div class="label">Profesional Asignado</div><div class="valor">{{ adm.profesional_admision }}</div></div>
+                    <div class="campo"><div class="label">Prioridad</div><div class="valor">{{ adm.prioridad }}</div></div>
+                    <div class="campo mt-2">
+                        <div class="label">Entrevista Programada</div>
+                        <div class="valor font-bold text-blue-700 text-lg">
+                            {% if adm.fecha_entrevista %}
+                                {{ adm.fecha_entrevista }} a las {{ adm.hora_entrevista }}hs
+                            {% else %}
+                                Pendiente de agendar
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="seccion">
+                    <h2>Grupo Familiar</h2>
+                    <div class="bg-slate-50 p-3 rounded mb-3">
+                        <div class="label">Madre / Tutor 1</div>
+                        <div class="valor">{{ adm.nombre_madre or '-' }}</div>
+                        <div class="text-sm text-slate-500">Tel: {{ adm.tel_madre or '-' }}</div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded mb-3">
+                        <div class="label">Padre / Tutor 2</div>
+                        <div class="valor">{{ adm.nombre_padre or '-' }}</div>
+                        <div class="text-sm text-slate-500">Tel: {{ adm.tel_padre or '-' }}</div>
+                    </div>
+                    <div class="campo">
+                        <div class="label">Convivencia</div>
+                        <div class="valor">{{ adm.estado_padres }}</div>
+                        {% if adm.estado_padres == 'Separados' %}
+                            <div class="text-sm text-red-600 mt-1">Vive con: <strong>{{ adm.vive_con }}</strong></div>
+                        {% endif %}
+                    </div>
+                    <div class="campo"><div class="label">Hermanos</div><div class="valor text-sm">{{ adm.hermanos or '-' }}</div></div>
+                </div>
+
+                <div class="seccion">
+                    <h2>Datos Clínicos</h2>
+                    <div class="campo">
+                        <div class="label">Motivo de Consulta</div>
+                        <div class="valor bg-slate-50 p-2 rounded border border-slate-200 text-sm mt-1">
+                            {{ adm.motivo_consulta }}
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-3">
+                        <div class="campo"><div class="label">Médico Cabecera</div><div class="valor text-sm">{{ adm.medico_cabecera or '-' }}</div></div>
+                        <div class="campo"><div class="label">Neurólogo</div><div class="valor text-sm">{{ adm.neurologo or '-' }}</div></div>
+                    </div>
+                    
+                    <div class="mt-4 border-t pt-2">
+                        <div class="label mb-1">Historial Terapéutico</div>
+                        {% if adm.tiene_terapias_previas == 'Si' %}
+                            <div class="valor text-sm italic">{{ adm.terapias_previas_desc }}</div>
+                        {% else %}
+                            <div class="valor text-sm text-slate-400">Sin tratamientos previos.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 border-t border-slate-300 pt-4 flex justify-between text-xs text-slate-400">
+            <p>Documento generado por Sistema Junami</p>
+            <p>Página 1 de 1</p>
+        </div>
+    </div>
+
+</body>
+</html>
