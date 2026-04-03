@@ -1,52 +1,150 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nidus - Profesionales</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
+
 <body class="bg-slate-50 font-sans text-slate-600">
 
     <div class="flex h-screen overflow-hidden">
-        
+
         <aside class="w-64 bg-white flex flex-col shadow-2xl z-20 flex-shrink-0 transition-all duration-300">
-            <div class="h-40 bg-gradient-to-br from-blue-700 to-teal-500 flex flex-col items-center justify-center text-white relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 rounded-full bg-white opacity-10 blur-xl"></div>
-                <div class="absolute bottom-0 left-0 -ml-4 -mb-4 w-20 h-20 rounded-full bg-teal-300 opacity-20 blur-lg"></div>
-                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Nidus" class="h-20 w-auto mb-2 z-10 object-contain rounded shadow-sm bg-white/10 backdrop-blur-sm p-1">
-                <div class="text-lg font-bold tracking-widest z-10 uppercase text-shadow">Nidus</div>
+            <div
+                class="h-40 bg-gradient-to-br from-blue-700 to-teal-500 flex flex-col items-center justify-center text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 rounded-full bg-white opacity-10 blur-xl">
+                </div>
+                <div class="absolute bottom-0 left-0 -ml-4 -mb-4 w-20 h-20 rounded-full bg-teal-300 opacity-20 blur-lg">
+                </div>
+                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Nidus"
+                    class="h-20 w-auto mb-2 z-10 object-contain rounded shadow-sm bg-white/10 backdrop-blur-sm p-1">
+                <div class="text-lg font-bold tracking-widest z-10 uppercase text-shadow">Junami</div>
                 <div class="text-xs text-blue-100 z-10 opacity-90">Gestión Terapéutica</div>
             </div>
-            
+
             <nav class="flex-1 py-6 space-y-1 overflow-y-auto">
                 <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Principal</p>
-                <a href="{{ url_for('dashboard_loguin_bp.dashboard') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg>Dashboard General</a>
-                <a href="{{ url_for('dashboard_personal_bp.dashboard2') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>Dashboard Personal</a>
-                <a href="{{ url_for('admisiones') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>Admisiones</a>
-                <a href="{{ url_for('pacientes') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Pacientes</a>
-                <a href="{{ url_for('agenda') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>Agenda / Turnos</a>
-                <a href="{{ url_for('historias') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Historias Clínicas</a>
-                <a href="{{ url_for('reportes') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>Reportes y Estadísticas</a>
-                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">Administración</p>
-                <a href="{{ url_for('profesionales') }}" class="flex items-center px-6 py-3 text-blue-700 bg-blue-50 border-r-4 border-blue-600 font-bold transition-all"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>Profesionales</a>
-                <a href="{{ url_for('facturacion') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition group">
-    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-    Facturación
-</a>
-                <a href="{{ url_for('configuracion') }}" class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Configuración</a>
+                <a href="{{ url_for('dashboard_loguin_bp.dashboard') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z">
+                        </path>
+                    </svg>Dashboard General</a>
+                <a href="{{ url_for('dashboard_personal_bp.dashboard2') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>Dashboard Personal</a>
+                <a href="{{ url_for('admisiones') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                        </path>
+                    </svg>Admisiones</a>
+                <a href="{{ url_for('pacientes') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>Pacientes</a>
+                <a href="{{ url_for('agenda') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>Agenda / Turnos</a>
+                <a href="{{ url_for('historias') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 hover:bg-slate-50 transition-all group"><svg
+                        class="w-5 h-5 mr-3 group-hover:text-blue-500 transition" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>Historias Clínicas</a>
+                <a href="{{ url_for('reportes') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>Reportes y Estadísticas</a>
+                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">Administración
+                </p>
+                <a href="{{ url_for('profesionales') }}"
+                    class="flex items-center px-6 py-3 text-blue-700 bg-blue-50 border-r-4 border-blue-600 font-bold transition-all"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>Profesionales</a>
+                <a href="{{ url_for('facturacion') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition group">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                    Facturación
+                </a>
+                <a href="{{ url_for('configuracion') }}"
+                    class="flex items-center px-6 py-3 text-gray-500 hover:text-blue-600 transition-all group"><svg
+                        class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>Configuración</a>
             </nav>
             <div class="p-4 border-t border-gray-100">
                 <div class="flex items-center gap-3">
-                    {% if profesional.foto %}<img src="{{ url_for('static', filename='uploads/' + profesional.foto) }}" class="w-10 h-10 rounded-full object-cover border border-teal-200">{% else %}<div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold">{{ profesional.iniciales }}</div>{% endif %}
-                    <div><p class="text-sm font-bold text-gray-700">{{ profesional.nombre }}</p><p class="text-xs text-gray-400">{{ profesional.rol }}</p></div>
-                    <a href="/logout" class="ml-auto text-gray-400 hover:text-red-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg></a>
+                    {% if profesional.foto %}<img src="{{ url_for('static', filename='uploads/' + profesional.foto) }}"
+                        class="w-10 h-10 rounded-full object-cover border border-teal-200">{% else %}<div
+                        class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold">
+                        {{ profesional.iniciales }}</div>{% endif %}
+                    <div>
+                        <p class="text-sm font-bold text-gray-700">{{ profesional.nombre }}</p>
+                        <p class="text-xs text-gray-400">{{ profesional.rol }}</p>
+                    </div>
+                    <a href="/logout" class="ml-auto text-gray-400 hover:text-red-500"><svg class="w-5 h-5" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                            </path>
+                        </svg></a>
                 </div>
             </div>
         </aside>
@@ -55,140 +153,238 @@
             <header class="bg-white h-16 flex items-center justify-between px-8 shadow-sm z-10">
                 <h1 class="text-xl font-bold text-slate-700">Profesionales</h1>
                 <div class="flex items-center gap-6">
-                    <div class="relative hidden md:block"><input type="text" id="searchInput" placeholder="Buscar..." class="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-64 transition"><svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                    <button onclick="abrirModalCrear('')" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium transition flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>Nuevo Profesional</button>
+                    <div class="relative hidden md:block"><input type="text" id="searchInput" placeholder="Buscar..."
+                            class="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-64 transition"><svg
+                            class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg></div>
+                    <button onclick="abrirModalCrear('')"
+                        class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium transition flex items-center gap-2"><svg
+                            class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
+                        </svg>Nuevo Profesional</button>
                 </div>
             </header>
 
             <div class="flex-1 overflow-y-auto p-8">
-                
+
                 <div id="panel-cards" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <!-- Card TEO -->
-                    <button onclick="mostrarArea('terapia-ocupacional')" class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-teal-500 hover:shadow-md transition-all group flex items-center gap-6">
-                        <div class="w-16 h-16 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-colors flex-shrink-0">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <button onclick="mostrarArea('terapia-ocupacional')"
+                        class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-teal-500 hover:shadow-md transition-all group flex items-center gap-6">
+                        <div
+                            class="w-16 h-16 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-colors flex-shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-teal-700 transition-colors">Terapia Ocupacional</h3>
+                            <h3
+                                class="text-xl font-bold text-slate-800 mb-1 group-hover:text-teal-700 transition-colors">
+                                Terapia Ocupacional</h3>
                             <p class="text-sm text-gray-500">Gestión del área, pacientes y profesionales de TEO.</p>
                         </div>
                     </button>
 
                     <!-- Card Fonoaudiología -->
-                    <button onclick="mostrarArea('fonoaudiologia')" class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-blue-500 hover:shadow-md transition-all group flex items-center gap-6">
-                        <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors flex-shrink-0">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    <button onclick="mostrarArea('fonoaudiologia')"
+                        class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-blue-500 hover:shadow-md transition-all group flex items-center gap-6">
+                        <div
+                            class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors flex-shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
+                                </path>
+                            </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-blue-700 transition-colors">Fonoaudiología</h3>
+                            <h3
+                                class="text-xl font-bold text-slate-800 mb-1 group-hover:text-blue-700 transition-colors">
+                                Fonoaudiología</h3>
                             <p class="text-sm text-gray-500">Gestión del área, pacientes y profesionales de Fono.</p>
                         </div>
                     </button>
 
                     <!-- Card Psicología -->
-                    <button onclick="mostrarArea('psicologia')" class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-purple-500 hover:shadow-md transition-all group flex items-center gap-6">
-                        <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-colors flex-shrink-0">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v8l9-11h-7z"></path></svg>
+                    <button onclick="mostrarArea('psicologia')"
+                        class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-purple-500 hover:shadow-md transition-all group flex items-center gap-6">
+                        <div
+                            class="w-16 h-16 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center group-hover:bg-purple-500 group-hover:text-white transition-colors flex-shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v8l9-11h-7z"></path>
+                            </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-purple-700 transition-colors">Psicología</h3>
+                            <h3
+                                class="text-xl font-bold text-slate-800 mb-1 group-hover:text-purple-700 transition-colors">
+                                Psicología</h3>
                             <p class="text-sm text-gray-500">Gestión del área, pacientes y profesionales de Psico.</p>
                         </div>
                     </button>
 
                     <!-- Card Psicopedagogía -->
-                    <button onclick="mostrarArea('psicopedagogia')" class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-orange-500 hover:shadow-md transition-all group flex items-center gap-6">
-                        <div class="w-16 h-16 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors flex-shrink-0">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <button onclick="mostrarArea('psicopedagogia')"
+                        class="text-left w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8 border-l-4 border-l-orange-500 hover:shadow-md transition-all group flex items-center gap-6">
+                        <div
+                            class="w-16 h-16 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors flex-shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                </path>
+                            </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-orange-700 transition-colors">Psicopedagogía</h3>
-                            <p class="text-sm text-gray-500">Gestión del área, pacientes y profesionales de Psicopedagogía.</p>
+                            <h3
+                                class="text-xl font-bold text-slate-800 mb-1 group-hover:text-orange-700 transition-colors">
+                                Psicopedagogía</h3>
+                            <p class="text-sm text-gray-500">Gestión del área, pacientes y profesionales de
+                                Psicopedagogía.</p>
                         </div>
                     </button>
                 </div>
-                
+
                 <!-- Panel de Listas de Áreas -->
                 <div id="panel-listas" class="hidden">
-                    <button onclick="volverCards()" class="mb-6 text-sm text-blue-600 font-bold flex items-center gap-2 hover:text-blue-800 transition bg-white py-2 px-4 rounded shadow-sm border border-blue-100 max-w-max">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <button onclick="volverCards()"
+                        class="mb-6 text-sm text-blue-600 font-bold flex items-center gap-2 hover:text-blue-800 transition bg-white py-2 px-4 rounded shadow-sm border border-blue-100 max-w-max">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
                         Volver a las Áreas
                     </button>
-                    
+
                     {% set areas_list = [
-                        {'id': 'Terapia Ocupacional', 'color': 'teal', 'icon': 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'},
-                        {'id': 'Fonoaudiología', 'color': 'blue', 'icon': 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z'},
-                        {'id': 'Psicología', 'color': 'purple', 'icon': 'M13 10V3L4 14h7v8l9-11h-7z'},
-                        {'id': 'Psicopedagogía', 'color': 'orange', 'icon': 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'}
+                    {'id': 'Terapia Ocupacional', 'color': 'teal', 'icon': 'M21 13.255A23.931 23.931 0 0112 15c-3.183
+                    0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0
+                    00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'},
+                    {'id': 'Fonoaudiología', 'color': 'blue', 'icon': 'M11 5.882V19.24a1.76 1.76 0
+                    01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234
+                    9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z'},
+                    {'id': 'Psicología', 'color': 'purple', 'icon': 'M13 10V3L4 14h7v8l9-11h-7z'},
+                    {'id': 'Psicopedagogía', 'color': 'orange', 'icon': 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5
+                    5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5
+                    16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'}
                     ] %}
 
                     {% for area_obj in areas_list %}
                     {% set area = area_obj.id %}
                     {% set safe_area_id = area|replace(' ', '-')|replace('í', 'i')|replace('ó', 'o')|lower %}
-                    
+
                     <div id="area-{{ safe_area_id }}" class="area-view hidden">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3">
-                                <div class="w-10 h-10 bg-{{ area_obj.color }}-50 text-{{ area_obj.color }}-600 rounded-full flex items-center justify-center">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ area_obj.icon }}"></path></svg>
+                                <div
+                                    class="w-10 h-10 bg-{{ area_obj.color }}-50 text-{{ area_obj.color }}-600 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="{{ area_obj.icon }}"></path>
+                                    </svg>
                                 </div>
                                 {{ area }}
                             </h2>
-                            <button onclick="abrirModalCrear('{{ area }}')" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium transition flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            <button onclick="abrirModalCrear('{{ area }}')"
+                                class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded shadow-sm text-sm font-medium transition flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
                                 Agregar Profesional
                             </button>
                         </div>
 
                         {% set profesionales = areas.get(area, []) %}
                         {% if profesionales %}
-                            <div class="grid grid-cols-1 gap-4">
-                                {% for prof in profesionales %}
-                                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex items-center justify-between hover:shadow-md transition group">
-                                    <a href="{{ url_for('profesionales_bp.perfil_profesional', id=prof.id) }}" class="flex items-center flex-1">
-                                        {% if prof.foto %}
-                                            <img src="{{ url_for('static', filename='uploads/' + prof.foto) }}" class="w-12 h-12 rounded-full object-cover mr-4 border border-gray-200">
-                                        {% else %}
-                                            <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm mr-4">{{ prof.iniciales }}</div>
-                                        {% endif %}
-                                        <div>
-                                            <p class="font-bold text-gray-800 text-lg">{{ prof.nombre }}</p>
-                                            <p class="text-xs text-gray-500 flex items-center gap-2 mt-0.5">
-                                                <span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium">{{ prof.rol }}</span>
-                                                {% if prof.jerarquia == 'Titular' %}
-                                                    <span class="text-[10px] bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wide">Titular</span>
-                                                {% else %}
-                                                    <span class="text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wide">Auxiliar</span>
-                                                    {% if prof.supervisor %}
-                                                        <span class="text-[10px] text-gray-400 font-medium">Sup: {{ prof.supervisor }}</span>
-                                                    {% endif %}
-                                                {% endif %}
-                                            </p>
-                                        </div>
-                                    </a>
-                                    <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                                        <button onclick='abrirModalEditar(this.getAttribute("data-prof"))' data-prof='{{ prof | tojson | forceescape }}' class="text-blue-600 bg-blue-50 hover:bg-blue-100 p-2 rounded-full transition" title="Editar">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                        </button>
-                                        <form action="{{ url_for('profesionales_bp.eliminar_profesional', id=prof.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar a {{ prof.nombre }}?');" class="inline">
-                                            <button type="submit" class="text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-full transition" title="Eliminar">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                            </button>
-                                        </form>
+                        <div class="grid grid-cols-1 gap-4">
+                            {% for prof in profesionales %}
+                            <div
+                                class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex items-center justify-between hover:shadow-md transition group">
+                                <a href="{{ url_for('profesionales_bp.perfil_profesional', id=prof.id) }}"
+                                    class="flex items-center flex-1">
+                                    {% if prof.foto %}
+                                    <img src="{{ url_for('static', filename='uploads/' + prof.foto) }}"
+                                        class="w-12 h-12 rounded-full object-cover mr-4 border border-gray-200">
+                                    {% else %}
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-sm mr-4">
+                                        {{ prof.iniciales }}</div>
+                                    {% endif %}
+                                    <div>
+                                        <p class="font-bold text-gray-800 text-lg">{{ prof.nombre }}</p>
+                                        <p class="text-xs text-gray-500 flex items-center gap-2 mt-0.5">
+                                            <span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium">{{
+                                                prof.rol }}</span>
+                                            {% if prof.jerarquia == 'Titular' %}
+                                            <span
+                                                class="text-[10px] bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wide">Titular</span>
+                                            {% else %}
+                                            <span
+                                                class="text-[10px] bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-wide">Auxiliar</span>
+                                            {% if prof.supervisor %}
+                                            <span class="text-[10px] text-gray-400 font-medium">Sup: {{ prof.supervisor
+                                                }}</span>
+                                            {% endif %}
+                                            {% endif %}
+                                        </p>
                                     </div>
+                                </a>
+                                <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition">
+                                    <button onclick='abrirModalEditar(this.getAttribute("data-prof"))'
+                                        data-prof='{{ prof | tojson | forceescape }}'
+                                        class="text-blue-600 bg-blue-50 hover:bg-blue-100 p-2 rounded-full transition"
+                                        title="Editar">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <form action="{{ url_for('profesionales_bp.eliminar_profesional', id=prof.id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar a {{ prof.nombre }}?');"
+                                        class="inline">
+                                        <button type="submit"
+                                            class="text-red-600 bg-red-50 hover:bg-red-100 p-2 rounded-full transition"
+                                            title="Eliminar">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </form>
                                 </div>
-                                {% endfor %}
                             </div>
+                            {% endfor %}
+                        </div>
                         {% else %}
-                            <div class="bg-blue-50 border border-blue-100 rounded-lg p-10 text-center flex flex-col items-center justify-center mt-4 shadow-inner">
-                                <svg class="w-16 h-16 text-blue-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                <p class="text-blue-800 font-medium text-lg mb-1">Aún no hay profesionales registrados en esta área</p>
-                                <p class="text-blue-600/70 text-sm mb-6">Agregue un profesional para visualizarlo en esta lista.</p>
-                                <button onclick="abrirModalCrear('{{ area }}')" class="bg-white text-blue-700 border border-blue-200 hover:border-blue-300 hover:bg-blue-50 px-5 py-2 rounded-full shadow-sm text-sm font-bold transition flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                    Agregar Profesional
-                                </button>
-                            </div>
+                        <div
+                            class="bg-blue-50 border border-blue-100 rounded-lg p-10 text-center flex flex-col items-center justify-center mt-4 shadow-inner">
+                            <svg class="w-16 h-16 text-blue-300 mb-4" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                </path>
+                            </svg>
+                            <p class="text-blue-800 font-medium text-lg mb-1">Aún no hay profesionales registrados en
+                                esta área</p>
+                            <p class="text-blue-600/70 text-sm mb-6">Agregue un profesional para visualizarlo en esta
+                                lista.</p>
+                            <button onclick="abrirModalCrear('{{ area }}')"
+                                class="bg-white text-blue-700 border border-blue-200 hover:border-blue-300 hover:bg-blue-50 px-5 py-2 rounded-full shadow-sm text-sm font-bold transition flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                Agregar Profesional
+                            </button>
+                        </div>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -198,50 +394,83 @@
         </main>
     </div>
 
-    <div id="modalCrear" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+    <div id="modalCrear"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
         <div class="relative mx-auto p-5 border w-[600px] shadow-lg rounded-md bg-white">
             <div class="mt-3">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4 border-b pb-2">Agregar Nuevo Profesional</h3>
-                <form action="{{ url_for('profesionales_bp.profesionales') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    
-                    <div class="flex justify-center mb-4"><div class="text-center"><label class="block text-xs font-bold text-gray-500 mb-1">Foto de Perfil</label><input type="file" name="foto_perfil" accept="image/*" class="text-xs text-gray-500"></div></div>
-                    
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4 border-b pb-2">Agregar Nuevo Profesional
+                </h3>
+                <form action="{{ url_for('profesionales_bp.profesionales') }}" method="POST"
+                    enctype="multipart/form-data" class="space-y-4">
+
+                    <div class="flex justify-center mb-4">
+                        <div class="text-center"><label class="block text-xs font-bold text-gray-500 mb-1">Foto de
+                                Perfil</label><input type="file" name="foto_perfil" accept="image/*"
+                                class="text-xs text-gray-500"></div>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Nombre Completo</label><input type="text" name="nombre" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Usuario</label><input type="text" name="usuario" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Contraseña</label><input type="text" name="contrasena" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Rol (Puesto)</label><input type="text" name="rol" required class="w-full rounded border border-gray-300 p-2 text-sm" placeholder="Ej: Terapista"></div>
+                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Nombre
+                                Completo</label><input type="text" name="nombre" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Usuario</label><input type="text"
+                                name="usuario" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Contraseña</label><input
+                                type="text" name="contrasena" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Rol (Puesto)</label><input
+                                type="text" name="rol" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm" placeholder="Ej: Terapista">
+                        </div>
                         <div><label class="block text-xs font-bold text-gray-500 mb-1">Especialidad (Área)</label>
-                            <select name="especialidad" required class="w-full rounded border border-gray-300 p-2 text-sm bg-white">
+                            <select name="especialidad" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm bg-white">
                                 <option value="Terapia Ocupacional">Terapia Ocupacional</option>
                                 <option value="Fonoaudiología">Fonoaudiología</option>
                                 <option value="Psicología">Psicología</option>
                                 <option value="Psicopedagogía">Psicopedagogía</option>
                             </select>
                         </div>
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Iniciales</label><input type="text" name="iniciales" required maxlength="2" class="w-full rounded border border-gray-300 p-2 text-sm" placeholder="Ej: JP"></div>
+                        <div class="col-span-2"><label
+                                class="block text-xs font-bold text-gray-500 mb-1">Iniciales</label><input type="text"
+                                name="iniciales" required maxlength="2"
+                                class="w-full rounded border border-gray-300 p-2 text-sm" placeholder="Ej: JP"></div>
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded border border-gray-200 grid grid-cols-2 gap-3 mt-2">
-                        <h4 class="col-span-2 text-xs font-bold text-blue-600 uppercase">Datos Personales / Académicos</h4>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">DNI</label><input type="text" name="dni" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Edad</label><input type="number" name="edad" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Teléfono</label><input type="text" name="telefono" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Email</label><input type="email" name="email" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Domicilio</label><input type="text" name="domicilio" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Universidad / Estudio</label><input type="text" name="universidad" class="w-full rounded border border-gray-300 p-2 text-xs" placeholder="Donde estudia o se recibió"></div>
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Matrícula (si aplica)</label><input type="text" name="matricula" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+                        <h4 class="col-span-2 text-xs font-bold text-blue-600 uppercase">Datos Personales / Académicos
+                        </h4>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">DNI</label><input type="text"
+                                name="dni" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Edad</label><input type="number"
+                                name="edad" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Teléfono</label><input
+                                type="text" name="telefono" class="w-full rounded border border-gray-300 p-2 text-xs">
+                        </div>
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Email</label><input type="email"
+                                name="email" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+
+                        <div class="col-span-2"><label
+                                class="block text-xs font-bold text-gray-500 mb-1">Domicilio</label><input type="text"
+                                name="domicilio" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+
+                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Universidad /
+                                Estudio</label><input type="text" name="universidad"
+                                class="w-full rounded border border-gray-300 p-2 text-xs"
+                                placeholder="Donde estudia o se recibió"></div>
+                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Matrícula (si
+                                aplica)</label><input type="text" name="matricula"
+                                class="w-full rounded border border-gray-300 p-2 text-xs"></div>
                     </div>
-                    
+
                     <div>
                         <label class="block text-xs font-bold text-gray-500 mb-1">Jerarquía</label>
-                        <select name="jerarquia" class="w-full rounded border border-gray-300 p-2 text-sm bg-white" onchange="toggleSupervisor(this.value, 'divSupervisorCrear')">
+                        <select name="jerarquia" class="w-full rounded border border-gray-300 p-2 text-sm bg-white"
+                            onchange="toggleSupervisor(this.value, 'divSupervisorCrear')">
                             <option value="Titular">Titular (Profesional a Cargo)</option>
                             <option value="Auxiliar">Auxiliar / Estudiante</option>
                         </select>
@@ -250,123 +479,167 @@
                         <label class="block text-xs font-bold text-gray-500 mb-1">Supervisor a Cargo</label>
                         <select name="supervisor" class="w-full rounded border border-gray-300 p-2 text-sm bg-white">
                             {% for t in titulares %}
-                                <option value="{{ t.nombre }}">{{ t.nombre }} ({{ t.rol }})</option>
+                            <option value="{{ t.nombre }}">{{ t.nombre }} ({{ t.rol }})</option>
                             {% endfor %}
                         </select>
                     </div>
 
-                    <div class="flex items-center gap-3 mt-6"><button type="button" onclick="cerrarModal('modalCrear')" class="flex-1 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">Cancelar</button><button type="submit" class="flex-1 bg-teal-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-teal-700 focus:outline-none">Guardar</button></div>
+                    <div class="flex items-center gap-3 mt-6"><button type="button" onclick="cerrarModal('modalCrear')"
+                            class="flex-1 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">Cancelar</button><button
+                            type="submit"
+                            class="flex-1 bg-teal-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-teal-700 focus:outline-none">Guardar</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div id="modalEditar" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+    <div id="modalEditar"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50 flex items-center justify-center">
         <div class="relative mx-auto p-5 border w-[600px] shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4 border-b pb-2">Editar Profesional</h3>
                 <form id="formEditar" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    
-                    <div class="flex justify-center mb-4"><div class="text-center"><label class="block text-xs font-bold text-gray-500 mb-1">Cambiar Foto</label><input type="file" name="foto_perfil" accept="image/*" class="text-xs text-gray-500"></div></div>
-                    
+
+                    <div class="flex justify-center mb-4">
+                        <div class="text-center"><label class="block text-xs font-bold text-gray-500 mb-1">Cambiar
+                                Foto</label><input type="file" name="foto_perfil" accept="image/*"
+                                class="text-xs text-gray-500"></div>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Nombre Completo</label><input type="text" id="edit_nombre" name="nombre" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Usuario</label><input type="text" id="edit_usuario" name="usuario" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Contraseña</label><input type="text" id="edit_contrasena" name="contrasena" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Rol (Puesto)</label><input type="text" id="edit_rol" name="rol" required class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Nombre
+                                Completo</label><input type="text" id="edit_nombre" name="nombre" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Usuario</label><input type="text"
+                                id="edit_usuario" name="usuario" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Contraseña</label><input
+                                type="text" id="edit_contrasena" name="contrasena" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Rol (Puesto)</label><input
+                                type="text" id="edit_rol" name="rol" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm"></div>
                         <div><label class="block text-xs font-bold text-gray-500 mb-1">Especialidad (Área)</label>
-                            <select id="edit_especialidad" name="especialidad" required class="w-full rounded border border-gray-300 p-2 text-sm bg-white">
+                            <select id="edit_especialidad" name="especialidad" required
+                                class="w-full rounded border border-gray-300 p-2 text-sm bg-white">
                                 <option value="Terapia Ocupacional">Terapia Ocupacional</option>
                                 <option value="Fonoaudiología">Fonoaudiología</option>
                                 <option value="Psicología">Psicología</option>
                                 <option value="Psicopedagogía">Psicopedagogía</option>
                             </select>
                         </div>
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Iniciales</label><input type="text" id="edit_iniciales" name="iniciales" required maxlength="2" class="w-full rounded border border-gray-300 p-2 text-sm"></div>
+                        <div class="col-span-2"><label
+                                class="block text-xs font-bold text-gray-500 mb-1">Iniciales</label><input type="text"
+                                id="edit_iniciales" name="iniciales" required maxlength="2"
+                                class="w-full rounded border border-gray-300 p-2 text-sm"></div>
                     </div>
 
                     <div class="bg-gray-50 p-3 rounded border border-gray-200 grid grid-cols-2 gap-3 mt-2">
-                        <h4 class="col-span-2 text-xs font-bold text-blue-600 uppercase">Datos Personales / Académicos</h4>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">DNI</label><input type="text" id="edit_dni" name="dni" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Edad</label><input type="number" id="edit_edad" name="edad" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Teléfono</label><input type="text" id="edit_telefono" name="telefono" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Email</label><input type="email" id="edit_email" name="email" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Domicilio</label><input type="text" id="edit_domicilio" name="domicilio" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Universidad / Estudio</label><input type="text" id="edit_universidad" name="universidad" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
-                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Matrícula (si aplica)</label><input type="text" id="edit_matricula" name="matricula" class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+                        <h4 class="col-span-2 text-xs font-bold text-blue-600 uppercase">Datos Personales / Académicos
+                        </h4>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">DNI</label><input type="text"
+                                id="edit_dni" name="dni" class="w-full rounded border border-gray-300 p-2 text-xs">
+                        </div>
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Edad</label><input type="number"
+                                id="edit_edad" name="edad" class="w-full rounded border border-gray-300 p-2 text-xs">
+                        </div>
+
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Teléfono</label><input
+                                type="text" id="edit_telefono" name="telefono"
+                                class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+                        <div><label class="block text-xs font-bold text-gray-500 mb-1">Email</label><input type="email"
+                                id="edit_email" name="email" class="w-full rounded border border-gray-300 p-2 text-xs">
+                        </div>
+
+                        <div class="col-span-2"><label
+                                class="block text-xs font-bold text-gray-500 mb-1">Domicilio</label><input type="text"
+                                id="edit_domicilio" name="domicilio"
+                                class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+
+                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Universidad /
+                                Estudio</label><input type="text" id="edit_universidad" name="universidad"
+                                class="w-full rounded border border-gray-300 p-2 text-xs"></div>
+                        <div class="col-span-2"><label class="block text-xs font-bold text-gray-500 mb-1">Matrícula (si
+                                aplica)</label><input type="text" id="edit_matricula" name="matricula"
+                                class="w-full rounded border border-gray-300 p-2 text-xs"></div>
                     </div>
-                    
+
                     <div>
                         <label class="block text-xs font-bold text-gray-500 mb-1">Jerarquía</label>
-                        <select id="edit_jerarquia" name="jerarquia" class="w-full rounded border border-gray-300 p-2 text-sm bg-white" onchange="toggleSupervisor(this.value, 'divSupervisorEditar')">
+                        <select id="edit_jerarquia" name="jerarquia"
+                            class="w-full rounded border border-gray-300 p-2 text-sm bg-white"
+                            onchange="toggleSupervisor(this.value, 'divSupervisorEditar')">
                             <option value="Titular">Titular</option>
                             <option value="Auxiliar">Auxiliar</option>
                         </select>
                     </div>
                     <div id="divSupervisorEditar" class="hidden mt-2">
                         <label class="block text-xs font-bold text-gray-500 mb-1">Supervisor</label>
-                        <select id="edit_supervisor" name="supervisor" class="w-full rounded border border-gray-300 p-2 text-sm bg-white">
+                        <select id="edit_supervisor" name="supervisor"
+                            class="w-full rounded border border-gray-300 p-2 text-sm bg-white">
                             {% for t in titulares %}
-                                <option value="{{ t.nombre }}">{{ t.nombre }}</option>
+                            <option value="{{ t.nombre }}">{{ t.nombre }}</option>
                             {% endfor %}
                         </select>
                     </div>
 
-                    <div class="flex items-center gap-3 mt-6"><button type="button" onclick="cerrarModal('modalEditar')" class="flex-1 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">Cancelar</button><button type="submit" class="flex-1 bg-blue-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-blue-700 focus:outline-none">Actualizar</button></div>
+                    <div class="flex items-center gap-3 mt-6"><button type="button" onclick="cerrarModal('modalEditar')"
+                            class="flex-1 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">Cancelar</button><button
+                            type="submit"
+                            class="flex-1 bg-blue-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-blue-700 focus:outline-none">Actualizar</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-    
+
     <script>
-        function abrirModalCrear(area = '') { 
-            document.getElementById('modalCrear').classList.remove('hidden'); 
-            if(area) {
+        function abrirModalCrear(area = '') {
+            document.getElementById('modalCrear').classList.remove('hidden');
+            if (area) {
                 const selectElement = document.querySelector('select[name="especialidad"]');
                 if (selectElement) selectElement.value = area;
             }
         }
         function cerrarModal(id) { document.getElementById(id).classList.add('hidden'); }
-        
+
         function mostrarArea(areaId, fromHistory = false) {
             document.getElementById('panel-cards').classList.add('hidden');
             document.getElementById('panel-listas').classList.remove('hidden');
-            
+
             // Ocultar todas las sub-vistas
             document.querySelectorAll('.area-view').forEach(el => el.classList.add('hidden'));
-            
+
             // Mostrar la correcta
             const el = document.getElementById('area-' + areaId);
-            if(el) el.classList.remove('hidden');
-            
+            if (el) el.classList.remove('hidden');
+
             if (!fromHistory) {
-                history.pushState({view: 'area', id: areaId}, '', '#' + areaId);
+                history.pushState({ view: 'area', id: areaId }, '', '#' + areaId);
             }
         }
 
         function volverCards(fromHistory = false) {
             document.getElementById('panel-listas').classList.add('hidden');
             document.getElementById('panel-cards').classList.remove('hidden');
-            
+
             if (!fromHistory) {
-                history.pushState({view: 'cards'}, '', window.location.pathname);
+                history.pushState({ view: 'cards' }, '', window.location.pathname);
             }
         }
-        
-        window.onpopstate = function(event) {
+
+        window.onpopstate = function (event) {
             if (event.state && event.state.view === 'area') {
                 mostrarArea(event.state.id, true);
             } else {
                 volverCards(true);
             }
         };
-        
+
         // Manejar caso inicial donde se entra con URL que ya contiene un #hash
         document.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash) {
@@ -375,22 +648,22 @@
                     mostrarArea(areaInit, false); // Esto reemplazará/agregará el estado
                 }
             } else {
-                history.replaceState({view: 'cards'}, '', window.location.pathname);
+                history.replaceState({ view: 'cards' }, '', window.location.pathname);
             }
         });
-        
+
         function abrirModalEditar(profStr) {
             const prof = JSON.parse(profStr);
             document.getElementById('modalEditar').classList.remove('hidden');
             document.getElementById('formEditar').action = "/profesional/editar/" + prof.id;
-            
+
             document.getElementById('edit_nombre').value = prof.nombre;
             document.getElementById('edit_usuario').value = prof.usuario;
             document.getElementById('edit_contrasena').value = prof.contrasena;
             document.getElementById('edit_rol').value = prof.rol;
             document.getElementById('edit_especialidad').value = prof.especialidad || 'Terapia Ocupacional';
             document.getElementById('edit_iniciales').value = prof.iniciales;
-            
+
             // Campos nuevos (protección contra undefined)
             document.getElementById('edit_dni').value = prof.dni || '';
             document.getElementById('edit_edad').value = prof.edad || '';
@@ -403,8 +676,8 @@
             const selJerarquia = document.getElementById('edit_jerarquia');
             selJerarquia.value = prof.jerarquia || 'Titular';
             toggleSupervisor(selJerarquia.value, 'divSupervisorEditar');
-            
-            if(prof.supervisor && prof.supervisor !== 'None') {
+
+            if (prof.supervisor && prof.supervisor !== 'None') {
                 document.getElementById('edit_supervisor').value = prof.supervisor;
             }
         }
@@ -414,9 +687,9 @@
             if (valor === 'Auxiliar') { divSup.classList.remove('hidden'); } else { divSup.classList.add('hidden'); }
         }
 
-        document.getElementById('searchInput').addEventListener('keyup', function() {
+        document.getElementById('searchInput').addEventListener('keyup', function () {
             let filter = this.value.toLowerCase();
-            let cards = document.querySelectorAll('.group'); 
+            let cards = document.querySelectorAll('.group');
             cards.forEach(card => {
                 let text = card.innerText.toLowerCase();
                 // Esta lógica simple oculta las tarjetas individuales pero no los contenedores padres vacíos
@@ -425,4 +698,5 @@
         });
     </script>
 </body>
+
 </html>
