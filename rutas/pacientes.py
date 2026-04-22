@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, session, current_app, flash
 import os
 import json
 from datetime import datetime
@@ -13,9 +13,10 @@ def pacientes():
     profesional = session['usuario_actual']
     if profesional.get('jerarquia') == 'Auxiliar': return redirect(url_for('dashboard_personal_bp.dashboard2'))
 
-    lista_pacientes = cargar_datos('pacientes.json')
+    lista_pacientes_all = cargar_datos('pacientes.json')
+    lista_pacientes = [p for p in lista_pacientes_all if p.get('activo', True)]
     lista_sesiones = cargar_datos('sesiones.json')
-    lista_profesionales = cargar_datos('profesionales.json')
+    lista_profesionales = [p for p in cargar_datos('profesionales.json') if p.get('activo', True)]
     
     for paciente in lista_pacientes:
         agendas = [s for s in lista_sesiones if s['id_paciente'] == paciente['id']]
@@ -36,11 +37,12 @@ def perfil_paciente(id):
     profesional = session['usuario_actual']
     
     lista_pacientes = cargar_datos('pacientes.json')
-    paciente = next((p for p in lista_pacientes if p['id'] == id), None)
+    paciente = next((p for p in lista_pacientes if p['id'] == id and p.get('activo', True)), None)
     if not paciente: return redirect(url_for('dashboard_personal_bp.dashboard2'))
 
     if profesional.get('jerarquia') == 'Auxiliar':
-        if profesional['nombre'] not in paciente.get('profesionales', []):
+        # Validar usando el nuevo modelo de datos (staff_fijo) en lugar de la array vieja de 'profesionales'
+        if str(profesional.get('id', '')) not in map(str, paciente.get('staff_fijo', {}).values()):
             return redirect(url_for('dashboard_personal_bp.dashboard2'))
 
     historias = cargar_datos('historias.json')
@@ -56,19 +58,23 @@ def perfil_paciente(id):
     turnos_paciente = [s for s in sesiones if s['id_paciente'] == id]
     turnos_paciente.sort(key=lambda x: (x['dias'][0], x['hora']))
     
+    mapa_areas = {'Terapia Ocupacional': 'terapia_ocupacional', 'Fonoaudiología': 'fonoaudiologia', 'Psicología': 'psicologia', 'Psicopedagogía': 'psicopedagogia'}
+    area_paciente = mapa_areas.get(profesional.get('especialidad', ''))
+    
     return render_template('ficha_paciente.html', 
                            profesional=profesional, 
                            paciente=paciente, 
                            historial=historial, 
                            equipo=equipo, 
                            turnos=turnos_paciente, 
-                           profesionales=profesionales)
+                           profesionales=profesionales,
+                           area_paciente=area_paciente)
 
 @pacientes_bp.route('/paciente/editar/<int:id>', methods=['GET', 'POST'])
 def editar_paciente(id):
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
     lista_pacientes = cargar_datos('pacientes.json')
-    profesionales = cargar_datos('profesionales.json')
+    profesionales = [p for p in cargar_datos('profesionales.json') if p.get('activo', True)]
     parametros = cargar_datos('parametros.json') or {"obras_sociales": ["Particular"]}
 
     paciente_encontrado = next((p for p in lista_pacientes if p['id'] == id), None)
@@ -126,7 +132,7 @@ def toggle_estado_paciente(id):
 @pacientes_bp.route('/pacientes/nuevo', methods=['GET', 'POST'])
 def crear_paciente():
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
-    profesionales = cargar_datos('profesionales.json')
+    profesionales = [p for p in cargar_datos('profesionales.json') if p.get('activo', True)]
     if request.method == 'POST':
         lista_pacientes = cargar_datos('pacientes.json')
         nuevo_id = 1 if not lista_pacientes else max(p['id'] for p in lista_pacientes) + 1
@@ -177,6 +183,7 @@ def asignar_turno(id):
 @pacientes_bp.route('/paciente/guardar_plan/<int:id>', methods=['POST'])
 def guardar_planificacion(id):
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
+
     
     lista_pacientes = cargar_datos('pacientes.json')
     paciente = next((p for p in lista_pacientes if p['id'] == id), None)
@@ -246,7 +253,7 @@ def asignar_horario_fijo(id):
     
     sesiones = cargar_datos('sesiones.json')
     pacientes = cargar_datos('pacientes.json')
-    profesionales = cargar_datos('profesionales.json') 
+    profesionales = [pr for pr in cargar_datos('profesionales.json') if pr.get('activo', True)] 
     
     paciente = next((p for p in pacientes if p['id'] == id), None)
     

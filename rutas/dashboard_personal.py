@@ -19,7 +19,13 @@ def dashboard2():
     dia_hoy_texto = dias_semana[datetime.now().weekday()]
     
     turnos_hoy = []
+    todos_pacientes = cargar_datos('pacientes.json')
+    ids_pacientes_activos = {p['id'] for p in todos_pacientes if p.get('activo', True)}
+    
     for s in todas_sesiones:
+        if s.get('id_paciente') not in ids_pacientes_activos:
+            continue
+            
         if dia_hoy_texto in s.get('dias', []) and s.get('profesional_nombre') == profesional['nombre']:
             turno_display = s.copy()
             turno_display.setdefault('estado_turno', 'Confirmado')
@@ -61,7 +67,7 @@ def dashboard2():
     todos_profesionales = cargar_datos('profesionales.json')
     mi_equipo = []
     if profesional.get('jerarquia') == 'Titular':
-        mi_equipo = [p for p in todos_profesionales if p.get('supervisor') == profesional['nombre']]
+        mi_equipo = [p for p in todos_profesionales if p.get('supervisor') == profesional['nombre'] and p.get('activo', True)]
         
     # 4. Procesamiento de Recordatorios
     todos_recordatorios = cargar_datos('recordatorios.json')

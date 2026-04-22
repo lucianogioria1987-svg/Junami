@@ -1,1 +1,732 @@
-[]
+[
+    {
+        "id": 1,
+        "usuario": "ana58",
+        "profesional": "Lic. Ana Sosa",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "06/04/2026",
+        "hora": "9:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 2,
+        "usuario": "ana58",
+        "profesional": "Lic. Ana Sosa",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "06/04/2026",
+        "hora": "15:00",
+        "prioridad": "Media",
+        "completado": false
+    },
+    {
+        "id": 3,
+        "usuario": "ana58",
+        "profesional": "Lic. Ana Sosa",
+        "titulo": "Reunión de equipo interdisciplinario",
+        "fecha": "09/04/2026",
+        "hora": "15:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 4,
+        "usuario": "carla96",
+        "profesional": "Lic. Carla Pascal",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "10/04/2026",
+        "hora": "9:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 5,
+        "usuario": "carla96",
+        "profesional": "Lic. Carla Pascal",
+        "titulo": "Reunión de equipo interdisciplinario",
+        "fecha": "09/04/2026",
+        "hora": "12:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 6,
+        "usuario": "silvia57",
+        "profesional": "Lic. Silvia Martinez",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "10/04/2026",
+        "hora": "9:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 7,
+        "usuario": "silvia57",
+        "profesional": "Lic. Silvia Martinez",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "10/04/2026",
+        "hora": "11:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 8,
+        "usuario": "silvia57",
+        "profesional": "Lic. Silvia Martinez",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "09/04/2026",
+        "hora": "9:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 9,
+        "usuario": "silvia57",
+        "profesional": "Lic. Silvia Martinez",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "10/04/2026",
+        "hora": "14:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 10,
+        "usuario": "aux_camila26",
+        "profesional": "Aux. Camila Diaz",
+        "titulo": "Preparar materiales para sesión",
+        "fecha": "10/04/2026",
+        "hora": "9:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 11,
+        "usuario": "aux_camila26",
+        "profesional": "Aux. Camila Diaz",
+        "titulo": "Preparar materiales para sesión",
+        "fecha": "07/04/2026",
+        "hora": "8:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 12,
+        "usuario": "aux_camila26",
+        "profesional": "Aux. Camila Diaz",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "11/04/2026",
+        "hora": "16:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 13,
+        "usuario": "aux_elena12",
+        "profesional": "Aux. Elena Gonzalez",
+        "titulo": "Preparar materiales para sesión",
+        "fecha": "09/04/2026",
+        "hora": "11:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 14,
+        "usuario": "aux_elena12",
+        "profesional": "Aux. Elena Gonzalez",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "07/04/2026",
+        "hora": "14:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 15,
+        "usuario": "aux_elena12",
+        "profesional": "Aux. Elena Gonzalez",
+        "titulo": "Subir informe escolar",
+        "fecha": "07/04/2026",
+        "hora": "18:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 16,
+        "usuario": "aux_federico61",
+        "profesional": "Aux. Federico Benitez",
+        "titulo": "Preparar materiales para sesión",
+        "fecha": "10/04/2026",
+        "hora": "13:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 17,
+        "usuario": "aux_federico61",
+        "profesional": "Aux. Federico Benitez",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "10/04/2026",
+        "hora": "10:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 18,
+        "usuario": "marcos68",
+        "profesional": "Lic. Marcos Rodriguez",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "08/04/2026",
+        "hora": "8:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 19,
+        "usuario": "marcos68",
+        "profesional": "Lic. Marcos Rodriguez",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "07/04/2026",
+        "hora": "10:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 20,
+        "usuario": "marcos68",
+        "profesional": "Lic. Marcos Rodriguez",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "07/04/2026",
+        "hora": "15:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 21,
+        "usuario": "marcos68",
+        "profesional": "Lic. Marcos Rodriguez",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "10/04/2026",
+        "hora": "13:00",
+        "prioridad": "Media",
+        "completado": false
+    },
+    {
+        "id": 22,
+        "usuario": "marta20",
+        "profesional": "Lic. Marta Sarlo",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "06/04/2026",
+        "hora": "11:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 23,
+        "usuario": "marta20",
+        "profesional": "Lic. Marta Sarlo",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "09/04/2026",
+        "hora": "8:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 24,
+        "usuario": "marta20",
+        "profesional": "Lic. Marta Sarlo",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "06/04/2026",
+        "hora": "10:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 25,
+        "usuario": "marta20",
+        "profesional": "Lic. Marta Sarlo",
+        "titulo": "Reunión de equipo interdisciplinario",
+        "fecha": "06/04/2026",
+        "hora": "17:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 26,
+        "usuario": "julia34",
+        "profesional": "Lic. Julia Paz",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "09/04/2026",
+        "hora": "14:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 27,
+        "usuario": "julia34",
+        "profesional": "Lic. Julia Paz",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "11/04/2026",
+        "hora": "13:00",
+        "prioridad": "Media",
+        "completado": false
+    },
+    {
+        "id": 28,
+        "usuario": "julia34",
+        "profesional": "Lic. Julia Paz",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "09/04/2026",
+        "hora": "10:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 29,
+        "usuario": "aux_andres44",
+        "profesional": "Aux. Andres Quiroga",
+        "titulo": "Subir informe escolar",
+        "fecha": "07/04/2026",
+        "hora": "13:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 30,
+        "usuario": "aux_andres44",
+        "profesional": "Aux. Andres Quiroga",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "06/04/2026",
+        "hora": "18:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 31,
+        "usuario": "aux_andres44",
+        "profesional": "Aux. Andres Quiroga",
+        "titulo": "Preparar materiales para sesión",
+        "fecha": "11/04/2026",
+        "hora": "11:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 32,
+        "usuario": "aux_andres44",
+        "profesional": "Aux. Andres Quiroga",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "10/04/2026",
+        "hora": "16:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 33,
+        "usuario": "aux_beatriz58",
+        "profesional": "Aux. Beatriz Ruiz",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "08/04/2026",
+        "hora": "11:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 34,
+        "usuario": "aux_beatriz58",
+        "profesional": "Aux. Beatriz Ruiz",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "09/04/2026",
+        "hora": "16:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 35,
+        "usuario": "aux_beatriz58",
+        "profesional": "Aux. Beatriz Ruiz",
+        "titulo": "Subir informe escolar",
+        "fecha": "08/04/2026",
+        "hora": "8:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 36,
+        "usuario": "aux_beatriz58",
+        "profesional": "Aux. Beatriz Ruiz",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "07/04/2026",
+        "hora": "16:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 37,
+        "usuario": "aux_gonzalo90",
+        "profesional": "Aux. Gonzalo Alvarez",
+        "titulo": "Subir informe escolar",
+        "fecha": "06/04/2026",
+        "hora": "17:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 38,
+        "usuario": "aux_gonzalo90",
+        "profesional": "Aux. Gonzalo Alvarez",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "06/04/2026",
+        "hora": "8:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 39,
+        "usuario": "juana21",
+        "profesional": "Lic. Juana Darin",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "06/04/2026",
+        "hora": "18:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 40,
+        "usuario": "juana21",
+        "profesional": "Lic. Juana Darin",
+        "titulo": "Reunión de equipo interdisciplinario",
+        "fecha": "07/04/2026",
+        "hora": "17:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 41,
+        "usuario": "juana21",
+        "profesional": "Lic. Juana Darin",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "08/04/2026",
+        "hora": "8:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 42,
+        "usuario": "ricardo83",
+        "profesional": "Lic. Ricardo Perez",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "10/04/2026",
+        "hora": "11:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 43,
+        "usuario": "ricardo83",
+        "profesional": "Lic. Ricardo Perez",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "08/04/2026",
+        "hora": "9:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 44,
+        "usuario": "ricardo83",
+        "profesional": "Lic. Ricardo Perez",
+        "titulo": "Reunión de equipo interdisciplinario",
+        "fecha": "10/04/2026",
+        "hora": "17:00",
+        "prioridad": "Media",
+        "completado": false
+    },
+    {
+        "id": 45,
+        "usuario": "maria34",
+        "profesional": "Lic. Maria Vera",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "07/04/2026",
+        "hora": "16:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 46,
+        "usuario": "maria34",
+        "profesional": "Lic. Maria Vera",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "11/04/2026",
+        "hora": "15:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 47,
+        "usuario": "maria34",
+        "profesional": "Lic. Maria Vera",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "06/04/2026",
+        "hora": "15:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 48,
+        "usuario": "maria34",
+        "profesional": "Lic. Maria Vera",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "07/04/2026",
+        "hora": "17:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 49,
+        "usuario": "aux_sofia60",
+        "profesional": "Aux. Sofia Bravo",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "08/04/2026",
+        "hora": "11:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 50,
+        "usuario": "aux_sofia60",
+        "profesional": "Aux. Sofia Bravo",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "09/04/2026",
+        "hora": "16:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 51,
+        "usuario": "aux_pablo98",
+        "profesional": "Aux. Pablo Viale",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "11/04/2026",
+        "hora": "8:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 52,
+        "usuario": "aux_pablo98",
+        "profesional": "Aux. Pablo Viale",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "09/04/2026",
+        "hora": "17:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 53,
+        "usuario": "aux_rosa29",
+        "profesional": "Aux. Rosa Gomez",
+        "titulo": "Preparar materiales para sesión",
+        "fecha": "07/04/2026",
+        "hora": "15:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 54,
+        "usuario": "aux_rosa29",
+        "profesional": "Aux. Rosa Gomez",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "10/04/2026",
+        "hora": "9:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 55,
+        "usuario": "javier51",
+        "profesional": "Lic. Javier Torres",
+        "titulo": "Revisar informes de auxiliares",
+        "fecha": "08/04/2026",
+        "hora": "10:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 56,
+        "usuario": "javier51",
+        "profesional": "Lic. Javier Torres",
+        "titulo": "Reunión de equipo interdisciplinario",
+        "fecha": "07/04/2026",
+        "hora": "17:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 57,
+        "usuario": "javier51",
+        "profesional": "Lic. Javier Torres",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "11/04/2026",
+        "hora": "16:00",
+        "prioridad": "Baja",
+        "completado": false
+    },
+    {
+        "id": 58,
+        "usuario": "javier51",
+        "profesional": "Lic. Javier Torres",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "07/04/2026",
+        "hora": "9:00",
+        "prioridad": "Media",
+        "completado": false
+    },
+    {
+        "id": 59,
+        "usuario": "jorge95",
+        "profesional": "Lic. Jorge Fernandez",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "11/04/2026",
+        "hora": "17:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 60,
+        "usuario": "jorge95",
+        "profesional": "Lic. Jorge Fernandez",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "10/04/2026",
+        "hora": "14:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 61,
+        "usuario": "jorge95",
+        "profesional": "Lic. Jorge Fernandez",
+        "titulo": "Reunión de equipo interdisciplinario",
+        "fecha": "07/04/2026",
+        "hora": "9:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 62,
+        "usuario": "jorge95",
+        "profesional": "Lic. Jorge Fernandez",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "08/04/2026",
+        "hora": "13:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 63,
+        "usuario": "pedro21",
+        "profesional": "Lic. Pedro Acosta",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "11/04/2026",
+        "hora": "18:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 64,
+        "usuario": "pedro21",
+        "profesional": "Lic. Pedro Acosta",
+        "titulo": "Supervisión de caso complejo",
+        "fecha": "11/04/2026",
+        "hora": "11:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 65,
+        "usuario": "pedro21",
+        "profesional": "Lic. Pedro Acosta",
+        "titulo": "Llamar a obra social por presupuesto",
+        "fecha": "08/04/2026",
+        "hora": "18:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 66,
+        "usuario": "aux_lucia83",
+        "profesional": "Aux. Lucia Silva",
+        "titulo": "Subir informe escolar",
+        "fecha": "06/04/2026",
+        "hora": "8:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 67,
+        "usuario": "aux_lucia83",
+        "profesional": "Aux. Lucia Silva",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "06/04/2026",
+        "hora": "16:00",
+        "prioridad": "Alta",
+        "completado": true
+    },
+    {
+        "id": 68,
+        "usuario": "aux_lucia83",
+        "profesional": "Aux. Lucia Silva",
+        "titulo": "Subir informe escolar",
+        "fecha": "09/04/2026",
+        "hora": "8:00",
+        "prioridad": "Alta",
+        "completado": false
+    },
+    {
+        "id": 69,
+        "usuario": "aux_luis65",
+        "profesional": "Aux. Luis Lopez",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "09/04/2026",
+        "hora": "11:00",
+        "prioridad": "Media",
+        "completado": false
+    },
+    {
+        "id": 70,
+        "usuario": "aux_luis65",
+        "profesional": "Aux. Luis Lopez",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "09/04/2026",
+        "hora": "10:00",
+        "prioridad": "Media",
+        "completado": true
+    },
+    {
+        "id": 71,
+        "usuario": "aux_monica62",
+        "profesional": "Aux. Monica Mendez",
+        "titulo": "Cargar evolución semanal",
+        "fecha": "06/04/2026",
+        "hora": "11:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 72,
+        "usuario": "aux_monica62",
+        "profesional": "Aux. Monica Mendez",
+        "titulo": "Actualizar disponibilidad",
+        "fecha": "09/04/2026",
+        "hora": "18:00",
+        "prioridad": "Baja",
+        "completado": true
+    },
+    {
+        "id": 73,
+        "usuario": "aux_monica62",
+        "profesional": "Aux. Monica Mendez",
+        "titulo": "Preparar materiales para sesión",
+        "fecha": "10/04/2026",
+        "hora": "16:00",
+        "prioridad": "Baja",
+        "completado": false
+    }
+]

@@ -13,7 +13,8 @@ def profesionales():
     profesional = session['usuario_actual']
     if profesional.get('jerarquia') == 'Auxiliar': return redirect(url_for('dashboard_personal_bp.dashboard2'))
 
-    lista = cargar_datos('profesionales.json')
+    lista_completa = cargar_datos('profesionales.json')
+    lista = [p for p in lista_completa if p.get('activo', True)]
     areas = {}
     titulares = [p for p in lista if p.get('jerarquia') == 'Titular']
     for p in lista:
@@ -77,7 +78,7 @@ def eliminar_profesional(id):
 def perfil_profesional(id):
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
     profesionales = cargar_datos('profesionales.json')
-    pacientes = cargar_datos('pacientes.json')
+    pacientes = [p for p in cargar_datos('pacientes.json') if p.get('activo', True)]
     prof_ver = next((p for p in profesionales if p['id'] == id), None)
     
     pacientes_cargo = [p for p in pacientes if 'profesionales' in p and prof_ver['nombre'] in p['profesionales']]
@@ -103,7 +104,7 @@ def asignar_paciente_a_profesional():
 def detalle_especialidad(nombre_especialidad):
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
     profesionales = cargar_datos('profesionales.json')
-    pacientes = cargar_datos('pacientes.json')
+    pacientes = [p for p in cargar_datos('pacientes.json') if p.get('activo', True)]
     sesiones = cargar_datos('sesiones.json')
     
     equipo = [p for p in profesionales if p.get('especialidad', p.get('rol')) == nombre_especialidad]

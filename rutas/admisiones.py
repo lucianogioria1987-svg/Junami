@@ -159,7 +159,7 @@ def perfil_admision(id):
 def alta_admision(id):
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
     admisiones = cargar_datos('admisiones.json')
-    pacientes = cargar_datos('pacientes.json')
+    pacientes = [p for p in cargar_datos('pacientes.json') if p.get('activo', True)]
     candidato = next((a for a in admisiones if a['id'] == id), None)
     if not candidato: return redirect(url_for('admisiones_bp.admisiones'))
     

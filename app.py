@@ -14,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # 4. IMPORTACIÓN DE UTILIDADES LOCALES
-from utils import cargar_datos, obtener_mapa_fotos_pacientes, obtener_mapa_fotos_profesionales, procesar_fecha
+from utils import cargar_datos, obtener_mapa_fotos_pacientes, obtener_mapa_fotos_profesionales, procesar_fecha, cargar_configuracion
 
 # 5. FILTROS GLOBALES DE JINJA (FRONTEND)
 # --- LÓGICA DE FECHAS (GLOBAL PARA TODO EL SISTEMA) ---
@@ -30,6 +30,14 @@ def fecha_input_filter(fecha_str):
         return datetime.strptime(fecha_str, '%d/%m/%Y').strftime('%Y-%m-%d')
     except:
         return fecha_str 
+
+from flask import flash
+
+# --- CONTEXT PROCESSOR PARA CONFIGURACIÓN GLOBAL ---
+@app.context_processor
+def inyectar_configuracion():
+    config = cargar_configuracion()
+    return dict(licencia_activa=config.get('licencia_activa', {}), config_visual=config.get('config_visual', {}))
 
 # ==========================================
 # 1. LOGIN Y DASHBOARD (Extraído a Blueprint)
@@ -136,6 +144,13 @@ app.register_blueprint(teo_bp)
 app.register_blueprint(fono_bp)
 app.register_blueprint(psico_bp)
 app.register_blueprint(psicoped_bp)
+
+# ==========================================
+# 12. MÓDULO DE BAJAS
+# ==========================================
+from rutas.bajas import bajas_bp
+app.register_blueprint(bajas_bp)
+
 
 
 if __name__ == '__main__':

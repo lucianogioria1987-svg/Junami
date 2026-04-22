@@ -8,7 +8,7 @@ def reportes():
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
     if session['usuario_actual'].get('jerarquia') == 'Auxiliar': return redirect(url_for('dashboard_personal_bp.dashboard2'))
 
-    pacientes = cargar_datos('pacientes.json')
+    pacientes = [p for p in cargar_datos('pacientes.json') if p.get('activo', True)]
     sesiones = cargar_datos('sesiones.json')
     pagos = cargar_datos('pagos.json') 
     

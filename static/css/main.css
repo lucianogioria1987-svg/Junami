@@ -1,0 +1,24 @@
+.modulo-bloqueado {
+  filter: grayscale(100%) !important;
+  opacity: 0.5 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+a.modulo-bloqueado, 
+button.modulo-bloqueado,
+li.modulo-bloqueado a {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+    user-select: none !important;
+    text-decoration: none !important;
+}
+
+/* El cursor no funciona en elementos con pointer-events: none 
+   Hacemos que el wrapper sea click-through, y visualmente mostramos el hover the otra forma si es necesario,
+   pero el pointer-events ya mata todo "hover". Forzamos colores transparentes en hover nativo para cancelar backgrounds de tailwind si filtran. */
+
+.modulo-bloqueado:hover {
+  background-color: inherit !important;
+  color: inherit !important;
+}

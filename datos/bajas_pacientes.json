@@ -1,0 +1,56 @@
+[
+    {
+        "id": 2,
+        "nombre": "Juan González",
+        "dni": "59.614.582",
+        "edad": "6 años",
+        "nacimiento": "11/10/2017",
+        "obra_social": "OSDE",
+        "numero_afiliado": "3615589",
+        "diagnostico": "TEA",
+        "contacto_tutor": "381-504-7365",
+        "estado": "Activo",
+        "estado_paciente": "activo",
+        "activo": false,
+        "estado_clinico": "Activo",
+        "staff_fijo": {
+            "Terapia Ocupacional": 6,
+            "Fonoaudiología": 8,
+            "Psicología": 13,
+            "Psicopedagogía": 21
+        },
+        "tutor_nombre": "Felipe Fernández",
+        "domicilio": "Calle 195",
+        "email": "paciente.2@gmail.com",
+        "fecha_ingreso": "01/03/2026",
+        "motivo_baja": ".",
+        "tipo_entidad": "paciente"
+    },
+    {
+        "id": 4,
+        "nombre": "Felipe Sánchez",
+        "dni": "54.891.855",
+        "edad": "10 años",
+        "nacimiento": "18/3/2019",
+        "obra_social": "Swiss Medical",
+        "numero_afiliado": "2102899",
+        "diagnostico": "TDAH",
+        "contacto_tutor": "381-543-5625",
+        "estado": "Activo",
+        "estado_paciente": "activo",
+        "activo": false,
+        "estado_clinico": "Activo",
+        "staff_fijo": {
+            "Terapia Ocupacional": 1,
+            "Fonoaudiología": 11,
+            "Psicología": 13,
+            "Psicopedagogía": 21
+        },
+        "tutor_nombre": "Catalina Martínez",
+        "domicilio": "Calle 757",
+        "email": "paciente.4@gmail.com",
+        "fecha_ingreso": "01/03/2026",
+        "motivo_baja": ".",
+        "tipo_entidad": "paciente"
+    }
+]

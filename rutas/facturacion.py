@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 import json
 import os
 from datetime import datetime
-from utils import cargar_datos
+from utils import cargar_datos, cargar_configuracion
 
 facturacion_bp = Blueprint('facturacion_bp', __name__)
 
@@ -11,8 +11,13 @@ def facturacion():
     if 'usuario_actual' not in session: return redirect(url_for('dashboard_loguin_bp.login'))
     if session['usuario_actual'].get('jerarquia') == 'Auxiliar': return redirect(url_for('dashboard_personal_bp.dashboard2'))
 
+    config = cargar_configuracion()
+    if not config.get('licencia_activa', {}).get('facturacion', True):
+        flash('Módulo de Facturación no contratado')
+        return redirect(url_for('profesionales'))
+
     pagos = cargar_datos('pagos.json')
-    pacientes = cargar_datos('pacientes.json')
+    pacientes = [p for p in cargar_datos('pacientes.json') if p.get('activo', True)]
     mapa_pacientes = {p['id']: p['nombre'] for p in pacientes}
     
     if request.method == 'POST':

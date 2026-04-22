@@ -11,6 +11,15 @@ def cargar_datos(nombre_archivo):
     except FileNotFoundError:
         return []
 
+# --- HELPER: Cargar Configuración ---
+def cargar_configuracion():
+    ruta = os.path.join('datos', 'config_clinica.json')
+    try:
+        with open(ruta, 'r', encoding='utf-8') as archivo:
+            return json.load(archivo)
+    except FileNotFoundError:
+        return {}
+
 # --- HELPER: Mapas de Fotos ---
 def obtener_mapa_fotos_pacientes(pacientes):
     return {p['id']: p.get('foto') for p in pacientes}

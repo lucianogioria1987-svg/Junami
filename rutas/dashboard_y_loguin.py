@@ -29,9 +29,9 @@ def dashboard():
     # Si es Auxiliar, no debería ver el general, lo mandamos al personal
     if profesional.get('jerarquia') == 'Auxiliar': return redirect(url_for('dashboard_personal_bp.dashboard2'))
     
-    pacientes = cargar_datos('pacientes.json')
+    pacientes = [p for p in cargar_datos('pacientes.json') if p.get('activo', True)]
     todas_sesiones = cargar_datos('sesiones.json')
-    lista_profesionales = cargar_datos('profesionales.json')
+    lista_profesionales = [p for p in cargar_datos('profesionales.json') if p.get('activo', True)]
     
     mapa_ids_prof = {p['nombre']: p['id'] for p in lista_profesionales}
     mapa_fotos_pac = obtener_mapa_fotos_pacientes(pacientes)
@@ -40,9 +40,15 @@ def dashboard():
     dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
     dia_hoy_texto = dias_semana[datetime.now().weekday()]
     
-    # Filtrar turnos de HOY (de todos los profesionales)
+    # Filtrar turnos de HOY (de todos los profesionales) y chequear que estén activos
+    ids_pacientes_activos = {p['id'] for p in pacientes}
+    nombres_profesionales_activos = {p['nombre'] for p in lista_profesionales}
+    
     turnos_hoy = []
     for s in todas_sesiones:
+        if s.get('id_paciente') not in ids_pacientes_activos or s.get('profesional_nombre') not in nombres_profesionales_activos:
+            continue
+            
         if dia_hoy_texto in s['dias']:
             turno_display = s.copy()
             turno_display.setdefault('estado_turno', 'Pendiente')

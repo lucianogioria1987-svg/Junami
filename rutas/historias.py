@@ -14,7 +14,7 @@ def historias():
     if profesional.get('jerarquia') == 'Auxiliar' and not request.args.get('id_paciente'):
          return redirect(url_for('dashboard_personal_bp.dashboard2'))
 
-    pacientes = cargar_datos('pacientes.json')
+    pacientes = [p for p in cargar_datos('pacientes.json') if p.get('activo', True)]
     historias = cargar_datos('historias.json')
     lista_profesionales = cargar_datos('profesionales.json')
     mapa_fotos_prof = obtener_mapa_fotos_profesionales(lista_profesionales)
