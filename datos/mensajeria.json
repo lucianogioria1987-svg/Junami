@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "emisor_id": 2,
+        "receptor_id": 1,
+        "asunto": "a ver que onda",
+        "mensaje": "lkljlj",
+        "fecha": "05/05/2026 10:56",
+        "leido": true,
+        "respuestas": []
+    }
+]

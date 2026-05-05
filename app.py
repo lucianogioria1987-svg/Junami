@@ -12,6 +12,8 @@ app.secret_key = 'nidus_clave_secreta_segura'
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB limit para subir archivos
+
 
 # 4. IMPORTACIÓN DE UTILIDADES LOCALES
 from utils import cargar_datos, obtener_mapa_fotos_pacientes, obtener_mapa_fotos_profesionales, procesar_fecha, cargar_configuracion
@@ -37,7 +39,27 @@ from flask import flash
 @app.context_processor
 def inyectar_configuracion():
     config = cargar_configuracion()
-    return dict(licencia_activa=config.get('licencia_activa', {}), config_visual=config.get('config_visual', {}))
+    
+    # Mensajería global y lista de profesionales
+    mensajes_sin_leer = 0
+    lista_profesionales = []
+    if 'usuario_actual' in session:
+        mi_id = session['usuario_actual']['id']
+        mensajes = cargar_datos('mensajeria.json')
+        
+        # Contar mensajes donde el último receptor es el usuario y está sin leer
+        mensajes_sin_leer = sum(1 for m in mensajes if m.get('leido') == False and 
+                    (m.get('respuestas')[-1]['emisor_id'] != mi_id if m.get('respuestas') else m.get('receptor_id') == mi_id))
+        
+        # Excluir al propio usuario de los posibles destinatarios
+        lista_profesionales = [p for p in cargar_datos('profesionales.json') if p.get('activo', True) and p['id'] != mi_id]
+
+    return dict(
+        licencia_activa=config.get('licencia_activa', {}), 
+        config_visual=config.get('config_visual', {}),
+        mensajes_sin_leer=mensajes_sin_leer,
+        lista_profesionales_global=lista_profesionales
+    )
 
 # ==========================================
 # 1. LOGIN Y DASHBOARD (Extraído a Blueprint)
@@ -150,6 +172,12 @@ app.register_blueprint(psicoped_bp)
 # ==========================================
 from rutas.bajas import bajas_bp
 app.register_blueprint(bajas_bp)
+
+# ==========================================
+# 13. MÓDULO DE MENSAJERÍA
+# ==========================================
+from rutas.mensajeria import mensajeria_bp
+app.register_blueprint(mensajeria_bp)
 
 
 

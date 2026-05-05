@@ -1,14 +1,14 @@
 {
-  "nombre_clinica": "Junami Demo Center",
-  "licencia_activa": {
-    "psicologia": true,
-    "terapia_ocupacional": true,
-    "fonoaudiologia": true,
-    "psicopedagogia": false,
-    "facturacion": false
-  },
-  "config_visual": {
-    "efecto_gris": true,
-    "mostrar_candado": true
-  }
+    "nombre_clinica": "Junami Demo Center",
+    "licencia_activa": {
+        "psicologia": true,
+        "terapia_ocupacional": true,
+        "fonoaudiologia": true,
+        "psicopedagogia": true,
+        "facturacion": false
+    },
+    "config_visual": {
+        "efecto_gris": true,
+        "mostrar_candado": true
+    }
 }

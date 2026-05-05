@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junami - Buzón de Recados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Transiciones suaves para los modals */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms, transform 300ms;
+        }
+
+        .modal-leave {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .modal-leave-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 300ms, transform 300ms;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-600">
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- El Sidebar se inyectará aquí desde otras plantillas mediante copia/pega o será modificado por nuestro script -->
+        <!-- Como no hay layout base, copiaré el sidebar de dashboard.html y asumiré que el script de inyección también lo actualizará si fuera necesario, o lo dejo completo aquí. -->
+        <aside class="w-64 bg-white flex flex-col shadow-2xl z-20 flex-shrink-0 transition-all duration-300">
+            <div
+                class="h-40 bg-gradient-to-br from-blue-700 to-teal-500 flex flex-col items-center justify-center text-white relative overflow-hidden">
+                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Nidus"
+                    class="h-20 w-auto mb-2 z-10 object-contain rounded shadow-sm bg-white/10 backdrop-blur-sm p-1">
+                <div class="text-lg font-bold tracking-widest z-10 uppercase text-shadow">Junami</div>
+                <div class="text-xs text-blue-100 z-10 opacity-90">Gestión Terapéutica</div>
+            </div>
+
+            <nav class="flex-1 py-6 space-y-1 overflow-y-auto">
+                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Principal</p>
+                <a href="{{ url_for('dashboard_loguin_bp.dashboard') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-chart-line mr-3 w-5 text-center group-hover:text-blue-500"></i> Dashboard General
+                </a>
+                <a href="{{ url_for('dashboard_personal_bp.dashboard2') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-user-md mr-3 w-5 text-center group-hover:text-blue-500"></i> Dashboard Personal
+                </a>
+                <a href="{{ url_for('admisiones') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-user-plus mr-3 w-5 text-center group-hover:text-blue-500"></i> Admisiones
+                </a>
+                <a href="{{ url_for('pacientes_bp.pacientes') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-users mr-3 w-5 text-center group-hover:text-blue-500"></i> Pacientes
+                </a>
+                <a href="{{ url_for('agenda') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-calendar-alt mr-3 w-5 text-center group-hover:text-blue-500"></i> Agenda / Turnos
+                </a>
+                <a href="{{ url_for('historias') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-notes-medical mr-3 w-5 text-center group-hover:text-blue-500"></i> Historias
+                    Clínicas
+                </a>
+                <a href="{{ url_for('reportes') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-chart-bar mr-3 w-5 text-center group-hover:text-blue-500"></i> Reportes y
+                    Estadísticas
+                </a>
+                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">Administración
+                </p>
+                <a href="{{ url_for('profesionales') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-user-nurse mr-3 w-5 text-center group-hover:text-blue-500"></i> Profesionales
+                </a>
+                <a href="{{ url_for('facturacion') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-file-invoice-dollar mr-3 w-5 text-center group-hover:text-blue-500"></i>
+                    Facturación
+                </a>
+                <a href="{{ url_for('configuracion') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                    <i class="fas fa-cog mr-3 w-5 text-center group-hover:text-blue-500"></i> Configuración
+                </a>
+                <!-- INYECCIÓN DEL BUZÓN (Se mantendrá por si el script lo omite aquí) -->
+                <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-2">Mensajería</p>
+                <a href="{{ url_for('mensajeria_bp.inbox') }}"
+                    class="flex items-center px-6 py-3 transition-all group text-emerald-700 bg-emerald-50 border-r-4 border-emerald-600 font-bold">
+                    <svg class="w-5 h-5 mr-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    Buzón
+                    {% if mensajes_sin_leer > 0 %}
+                    <span
+                        class="ml-auto bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm"
+                        id="badgeGlobalSide">{{ mensajes_sin_leer }}</span>
+                    {% endif %}
+                </a>
+                                <div class="px-6 py-3">
+                    <button onclick="abrirModalNuevoMensaje()" class="w-full bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-colors rounded-lg py-2 text-sm font-bold flex items-center justify-center shadow-sm">
+                        <i class="fas fa-edit mr-2"></i> Redactar Mensaje
+                    </button>
+                </div>
+            </nav>
+            <div class="p-4 border-t border-gray-100">
+                <div class="flex items-center gap-3">
+                    {% if profesional.foto %}
+                    <img src="{{ url_for('static', filename='uploads/' + profesional.foto) }}"
+                        class="w-10 h-10 rounded-full object-cover border border-teal-200">
+                    {% else %}
+                    <div
+                        class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold">
+                        {{ profesional.iniciales }}</div>
+                    {% endif %}
+                    <div>
+                        <p class="text-sm font-bold text-gray-700">{{ profesional.nombre }}</p>
+                        <p class="text-xs text-gray-400">{{ profesional.rol }}</p>
+                    </div>
+                    <a href="{{ url_for('dashboard_loguin_bp.logout') }}"
+                        class="ml-auto text-gray-400 hover:text-red-500"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50">
+            <header
+                class="bg-white h-16 flex items-center justify-between px-8 shadow-sm z-10 border-b border-emerald-50">
+                <div class="flex items-center gap-4">
+                    <div class="p-2 bg-emerald-50 text-emerald-500 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-bold text-slate-700">Buzón de Recados</h1>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-8">
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div
+                    class="mb-6 p-4 rounded-lg bg-emerald-50 text-emerald-700 border-l-4 border-emerald-500 flex items-center justify-between shadow-sm">
+                    <div class="flex items-center"><i class="fas fa-check-circle mr-3"></i> {{ message }}</div>
+                    <button onclick="this.parentElement.style.display='none'"
+                        class="text-emerald-500 hover:text-emerald-700"><i class="fas fa-times"></i></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+
+                {% set mensajes_nuevos = mensajes | selectattr('leido', 'equalto', False) | list %}
+                {% set mensajes_historial = mensajes | selectattr('leido', 'equalto', True) | list %}
+
+                <h2 class="text-lg font-bold text-gray-800 mb-4">Mensajes Nuevos</h2>
+                <div class="bg-white rounded-2xl shadow-sm border border-emerald-50 overflow-hidden mb-8">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead
+                                class="bg-gradient-to-r from-emerald-50 to-white text-xs text-gray-500 uppercase border-b border-emerald-100">
+                                <tr>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Estado</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Fecha</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Emisor</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Asunto</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-nuevos" class="divide-y divide-gray-50">
+                                {% for msg in mensajes_nuevos %}
+                                <tr class="hover:bg-emerald-50/30 transition-colors bg-emerald-50/50 font-semibold"
+                                    id="fila-msg-{{ msg.id }}">
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 shadow-sm"
+                                            id="badge-{{ msg.id }}">
+                                            Nuevo
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{ msg.fecha }}</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            {% if msg.emisor_foto %}
+                                            <img src="{{ url_for('static', filename='uploads/' + msg.emisor_foto) }}"
+                                                class="w-8 h-8 rounded-full object-cover border border-emerald-100">
+                                            {% else %}
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">
+                                                {{ msg.emisor_iniciales }}</div>
+                                            {% endif %}
+                                            <span class="text-sm text-gray-700">{{ msg.emisor_nombre }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-800">{{ msg.asunto }} {% if msg.tiene_adjunto
+                                        %} <i class="fas fa-paperclip text-emerald-500 ml-2"
+                                            title="Contiene archivo adjunto"></i>{% endif %}
+                                        {% if msg.menciones %}
+                                        <div class="mt-1.5 flex flex-wrap gap-1">
+                                            {% for m in msg.menciones %}
+                                            <span
+                                                class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold border border-emerald-100"><i
+                                                    class="fas fa-user text-[9px] mr-1"></i> {{ m }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <button
+                                            class="btn-ver inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-bold rounded-lg shadow-sm text-white bg-emerald-500 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
+                                            data-action="ver" data-id="{{ msg.id }}"
+                                            data-emisor="{{ msg.emisor_nombre|escape }}" data-fecha="{{ msg.fecha }}"
+                                            data-asunto="{{ msg.asunto|escape }}" data-leido="false"
+                                            data-tipo="Recibido">
+                                            <i class="fas fa-envelope-open-text mr-2"></i> Leer
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="5" class="px-6 py-10 text-center text-gray-400">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <div
+                                                class="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mb-3 text-emerald-300">
+                                                <i class="fas fa-inbox text-xl"></i>
+                                            </div>
+                                            <p class="text-md font-medium text-gray-500">No hay mensajes nuevos</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <h2 class="text-lg font-bold text-gray-800 mb-4">Mensajes Enviados</h2>
+                <div class="bg-white rounded-2xl shadow-sm border border-emerald-50 overflow-hidden mb-8">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead
+                                class="bg-gradient-to-r from-emerald-50 to-white text-xs text-gray-500 uppercase border-b border-emerald-100">
+                                <tr>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Estado</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Fecha</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Receptor</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800">Asunto</th>
+                                    <th class="px-6 py-4 font-bold text-emerald-800 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-enviados" class="divide-y divide-gray-50">
+                                {% for msg in mensajes_enviados %}
+                                <tr class="hover:bg-emerald-50/30 transition-colors bg-white font-medium"
+                                    id="fila-enviado-{{ msg.id }}">
+                                    <td class="px-6 py-4">
+                                        {% if not msg.leido %}
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 shadow-sm">
+                                            Pendiente
+                                        </span>
+                                        {% else %}
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
+                                            Leído
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{ msg.fecha }}</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            {% if msg.receptor_foto %}
+                                            <img src="{{ url_for('static', filename='uploads/' + msg.receptor_foto) }}"
+                                                class="w-8 h-8 rounded-full object-cover border border-emerald-100">
+                                            {% else %}
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">
+                                                {{ msg.receptor_iniciales }}</div>
+                                            {% endif %}
+                                            <span class="text-sm text-gray-700">{{ msg.receptor_nombre }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-800">{{ msg.asunto }} {% if msg.tiene_adjunto
+                                        %} <i class="fas fa-paperclip text-emerald-500 ml-2"
+                                            title="Contiene archivo adjunto"></i>{% endif %}
+                                        {% if msg.menciones %}
+                                        <div class="mt-1.5 flex flex-wrap gap-1">
+                                            {% for m in msg.menciones %}
+                                            <span
+                                                class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold border border-emerald-100"><i
+                                                    class="fas fa-user text-[9px] mr-1"></i> {{ m }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="flex justify-center gap-2">
+                                            <button
+                                                class="btn-ver inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-bold rounded-lg shadow-sm text-white bg-emerald-500 hover:bg-emerald-600 transition-colors"
+                                                data-action="ver" data-id="{{ msg.id }}"
+                                                data-emisor="{{ msg.receptor_nombre|escape }}"
+                                                data-fecha="{{ msg.fecha }}" data-asunto="{{ msg.asunto|escape }}"
+                                                data-leido="true" data-tipo="Enviado">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="5" class="px-6 py-10 text-center text-gray-400">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <div
+                                                class="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mb-3 text-emerald-300">
+                                                <i class="fas fa-paper-plane text-xl"></i>
+                                            </div>
+                                            <p class="text-md font-medium text-gray-500">No has enviado mensajes</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h2 class="text-lg font-bold text-gray-800 mb-4">Historial de Mensajes</h2>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-50 text-xs text-gray-500 uppercase border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-4 font-bold text-gray-600">Estado</th>
+                                    <th class="px-6 py-4 font-bold text-gray-600">Fecha</th>
+                                    <th class="px-6 py-4 font-bold text-gray-600">Emisor</th>
+                                    <th class="px-6 py-4 font-bold text-gray-600">Asunto</th>
+                                    <th class="px-6 py-4 font-bold text-gray-600 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-historial" class="divide-y divide-gray-100">
+                                {% for msg in mensajes_historial %}
+                                <tr class="hover:bg-gray-50 transition-colors text-gray-500" id="fila-msg-{{ msg.id }}">
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500">
+                                            Leído
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">{{ msg.fecha }}</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            {% if msg.emisor_foto %}
+                                            <img src="{{ url_for('static', filename='uploads/' + msg.emisor_foto) }}"
+                                                class="w-8 h-8 rounded-full object-cover border border-gray-200 grayscale opacity-80">
+                                            {% else %}
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center font-bold text-xs">
+                                                {{ msg.emisor_iniciales }}</div>
+                                            {% endif %}
+                                            <span class="text-sm text-gray-600">{{ msg.emisor_nombre }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">{{ msg.asunto }} {% if msg.tiene_adjunto
+                                        %} <i class="fas fa-paperclip text-emerald-500 ml-2"
+                                            title="Contiene archivo adjunto"></i>{% endif %}
+                                        {% if msg.menciones %}
+                                        <div class="mt-1.5 flex flex-wrap gap-1">
+                                            {% for m in msg.menciones %}
+                                            <span
+                                                class="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold border border-emerald-100"><i
+                                                    class="fas fa-user text-[9px] mr-1"></i> {{ m }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="flex justify-center gap-2">
+                                            <button
+                                                class="btn-ver inline-flex items-center px-3 py-1.5 border border-gray-200 text-xs font-bold rounded-lg shadow-sm text-gray-600 bg-white hover:bg-gray-50 hover:text-emerald-600 transition-colors"
+                                                data-action="ver" data-id="{{ msg.id }}"
+                                                data-emisor="{{ msg.emisor_nombre|escape }}"
+                                                data-fecha="{{ msg.fecha }}" data-asunto="{{ msg.asunto|escape }}"
+                                                data-leido="true" data-tipo="Recibido">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button
+                                                class="btn-borrar inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-bold rounded-lg shadow-sm text-white bg-red-400 hover:bg-red-500 transition-colors"
+                                                data-action="borrar" data-id="{{ msg.id }}" title="Borrar">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="5" class="px-6 py-10 text-center text-gray-400">
+                                        <p class="text-sm font-medium">No hay mensajes en el historial.</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- MODAL LECTURA -->
+    <div id="modalLectura"
+        class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl transform transition-transform duration-300 scale-95 flex flex-col max-h-[90vh]"
+            id="modalLecturaContent">
+            <div
+                class="px-6 py-4 border-b border-emerald-50 flex justify-between items-center bg-gradient-to-r from-emerald-50 to-white rounded-t-2xl shrink-0">
+                <h3 class="font-bold text-emerald-800 flex items-center"><svg class="w-5 h-5 mr-2 text-emerald-500"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg> <span id="lecturaEmisor">Recado</span></h3>
+                <button onclick="cerrarModalLectura()"
+                    class="text-gray-400 hover:text-emerald-500 transition-colors bg-white rounded-full p-1"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="px-8 py-4 border-b border-gray-100 shrink-0">
+                <h2 class="text-xl font-bold text-gray-800" id="lecturaAsunto">Asunto</h2>
+            </div>
+
+            <div class="p-8 overflow-y-auto flex-1 bg-slate-50" id="lecturaMensaje">
+                <!-- Hilo de mensajes renderizado por JS -->
+            </div>
+
+            <div class="px-6 py-4 bg-white border-t border-gray-100 rounded-b-2xl shrink-0">
+                <form id="formResponder" onsubmit="enviarRespuesta(event)" class="flex flex-col gap-3">
+                    <textarea name="respuesta" required rows="2"
+                        class="w-full border-gray-200 rounded-xl shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-sm p-3"
+                        placeholder="Escribir una respuesta..."></textarea>
+                    <div class="flex items-center mt-2 mb-2">
+                        <label class="text-sm font-bold text-gray-600 mr-3">Adjuntar:</label>
+                        <input type="file" name="adjunto" accept=".pdf,.docx,.xlsx,.jpg,.png"
+                            class="text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-bold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 transition-colors cursor-pointer">
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="cerrarModalLectura()"
+                            class="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg font-bold text-sm hover:bg-gray-50 transition-colors shadow-sm">Cerrar</button>
+                        <button type="submit"
+                            class="px-5 py-2 bg-emerald-500 text-white rounded-lg font-bold text-sm hover:bg-emerald-600 transition-colors shadow-sm flex items-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Responder
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- El Modal de Enviar Mensaje será inyectado por el script en todos los HTML, pero lo incluimos aquí si acaso no corremos el script sobre mensajeria.html -->
+    <!-- Para evitar duplicados, lo dejamos que el script lo inyecte -->
+
+
+
+    
+    <!-- MODAL NUEVO MENSAJE (GLOBAL) -->
+    <div id="modalNuevoMensaje"
+        class="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-[100] hidden w-full sm:w-[450px] transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-t-2xl sm:rounded-2xl w-full shadow-[0_10px_50px_-12px_rgba(0,0,0,0.4)] border border-gray-100 transform transition-transform duration-300 translate-y-full sm:translate-y-10"
+            id="modalNuevoMensajeContent">
+            <div
+                class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-2xl sm:rounded-t-2xl">
+                <h3 class="font-bold text-gray-800 flex items-center"><svg class="w-5 h-5 mr-2 text-blue-600"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg> Nuevo Recado</h3>
+                <button type="button" onclick="cerrarModalNuevoMensaje()"
+                    class="text-gray-400 hover:text-red-500 transition-colors bg-white rounded-full p-1"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <form action="{{ url_for('mensajeria_bp.enviar') }}" method="POST" enctype="multipart/form-data" class="p-6">
+                <div class="mb-4">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Destinatario</label>
+                    <select name="receptor_id" required
+                        class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        <option value="">Seleccione un profesional...</option>
+                        {% for p in lista_profesionales_global %}
+                        <option value="{{ p.id }}">{{ p.nombre }} ({{ p.rol }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Asunto</label>
+                    <input type="text" name="asunto" required
+                        class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                        placeholder="Breve descripción...">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Mensaje</label>
+                    <textarea name="mensaje" required rows="4"
+                        class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                        placeholder="Escriba su recado aquí..."></textarea>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Adjunto (Opcional, Max 10MB)</label>
+                    <input type="file" name="adjunto" accept=".pdf,.docx,.xlsx,.jpg,.png"
+                        class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition-colors">
+                </div>
+                <div class="flex justify-end gap-3 pt-2 border-t border-gray-50">
+                    <button type="button" onclick="cerrarModalNuevoMensaje()"
+                        class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg font-bold text-sm hover:bg-gray-50 transition-colors shadow-sm">Cancelar</button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg font-bold text-sm hover:bg-blue-700 transition-colors shadow-sm flex items-center"><svg
+                            class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg> Enviar Recado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const MI_ID = {{ profesional.id }};
+        let currentModalId = null;
+        let currentModalTipo = null;
+
+        // DELEGACIÓN DE EVENTOS GLOBAL: Unificada para Ver y Borrar
+        document.addEventListener('click', function (e) {
+            const btnVer = e.target.closest('.btn-ver');
+            const btnBorrar = e.target.closest('.btn-borrar');
+
+            if (btnVer) {
+                const d = btnVer.dataset;
+                abrirModalLectura(d.id, d.emisor, d.fecha, d.asunto, d.leido === 'true', d.tipo);
+            }
+            if (btnBorrar) {
+                borrarMensaje(btnBorrar.dataset.id);
+            }
+        });
+
+        function moverFila(id, destino) {
+            const fila = document.getElementById(`fila-msg-${id}`) || document.getElementById(`fila-enviado-${id}`);
+            if (!fila) return;
+
+            const badge = fila.querySelector('td:first-child span');
+            if (destino === 'Historial') {
+                if (badge) {
+                    badge.className = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500";
+                    badge.innerText = "Leído";
+                }
+                fila.classList.remove('bg-emerald-50/50', 'font-semibold');
+                fila.classList.add('text-gray-500');
+                document.getElementById('tbody-historial').prepend(fila);
+            }
+        }
+
+        function abrirModalLectura(id, emisor, fecha, asunto, leido_previo, tipo) {
+            currentModalId = id;
+            currentModalTipo = tipo;
+            document.getElementById('lecturaEmisor').innerText = (tipo === 'Enviado' ? "Para: " : "De: ") + emisor;
+            document.getElementById('lecturaAsunto').innerText = asunto;
+
+            const msgContainer = document.getElementById('lecturaMensaje');
+            msgContainer.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin"></i></div>';
+
+            document.getElementById('modalLectura').classList.remove('hidden');
+            setTimeout(() => document.getElementById('modalLectura').classList.remove('opacity-0'), 10);
+
+            fetch(`/mensajeria/hilo/${id}`).then(res => res.json()).then(data => {
+                if (data.success) {
+                    let html = '';
+                    data.hilo.forEach(item => {
+                        const es_mio = item.emisor_id === MI_ID;
+                        html += `
+                        <div class="mb-6 flex ${es_mio ? 'justify-end' : 'justify-start'}">
+                            <div class="max-w-[85%] p-4 rounded-2xl ${es_mio ? 'bg-emerald-500 text-white' : 'bg-white border border-gray-100'}">
+                                <p class="text-[10px] opacity-70 mb-1">${es_mio ? 'Tú' : item.emisor_nombre} - ${item.fecha}</p>
+                                <div class="text-sm">${item.texto}</div>
+                                ${item.adjunto ? `<a href="/static/${item.adjunto.ruta}" target="_blank" class="block mt-2 text-xs underline"><i class="fas fa-paperclip"></i> ${item.adjunto.nombre_original}</a>` : ''}
+                            </div>
+                        </div>`;
+                    });
+                    msgContainer.innerHTML = html;
+                    msgContainer.scrollTop = msgContainer.scrollHeight;
+                }
+            });
+        }
+
+        function cerrarModalLectura() {
+            if (currentModalTipo !== 'Enviado') {
+                fetch(`/mensajeria/leer/${currentModalId}`, { method: 'POST' })
+                    .then(() => moverFila(currentModalId, 'Historial'));
+            }
+            document.getElementById('modalLectura').classList.add('opacity-0');
+            setTimeout(() => document.getElementById('modalLectura').classList.add('hidden'), 300);
+        }
+
+        function borrarMensaje(id) {
+            if (confirm("¿Eliminar este mensaje?")) {
+                fetch(`/mensajeria/borrar/${id}`, { method: 'POST' })
+                    .then(res => res.json()).then(data => { if (data.success) location.reload(); });
+            }
+        }
+
+        function abrirModalNuevoMensaje() {
+            const modal = document.getElementById('modalNuevoMensaje');
+            if(!modal) return;
+            const content = document.getElementById('modalNuevoMensajeContent');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; // force reflow
+            modal.classList.remove('opacity-0');
+            content.classList.remove('translate-y-full', 'sm:translate-y-10');
+            content.classList.add('translate-y-0');
+        }
+
+        function cerrarModalNuevoMensaje() {
+            const modal = document.getElementById('modalNuevoMensaje');
+            if(!modal) return;
+            const content = document.getElementById('modalNuevoMensajeContent');
+            modal.classList.add('opacity-0');
+            content.classList.remove('translate-y-0');
+            content.classList.add('translate-y-full', 'sm:translate-y-10');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
