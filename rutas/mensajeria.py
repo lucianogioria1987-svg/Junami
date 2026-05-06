@@ -23,15 +23,12 @@ def procesar_menciones(texto, tag_a_paciente):
     texto_esc = html.escape(str(texto))
     
     def reemplazar(match):
-        tag = match.group(0)
-        tag_lower = tag.lower()
-        if tag_lower in tag_a_paciente:
-            paciente = tag_a_paciente[tag_lower]
-            menciones_encontradas[paciente['id']] = paciente['nombre']
-            return f'<a href="/paciente/{paciente["id"]}" class="text-emerald-600 font-bold hover:underline">{tag}</a>'
-        return tag
+        nombre = match.group(1)
+        id_pac = match.group(2)
+        menciones_encontradas[id_pac] = nombre
+        return f'<a href="javascript:void(0)" onclick="cargarVistaPaciente(\'{id_pac}\')" class="text-blue-600 font-bold hover:underline"><i class="fas fa-user-medical mr-1"></i> @{nombre}</a>'
 
-    texto_procesado = re.sub(r'@[A-Za-zÁÉÍÓÚáéíóúÑñ]+', reemplazar, texto_esc)
+    texto_procesado = re.sub(r'@([^#]+)#([a-zA-Z0-9_-]+)', reemplazar, texto_esc)
     return texto_procesado, list(menciones_encontradas.values())
 
 def guardar_mensajes(mensajes):

@@ -27,6 +27,26 @@
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Volver a Pacientes
                 </a>
+                
+                <!-- Bloque de Mensajería Global -->
+                <div class="mt-8 border-t border-slate-100 pt-4 -mx-4">
+                    <p class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Mensajería</p>
+                    <a href="{{ url_for('mensajeria_bp.inbox') }}"
+                        class="flex items-center px-6 py-3 transition-all group text-gray-500 hover:text-blue-600 hover:bg-slate-50">
+                        <i class="fas fa-envelope mr-3 w-5 text-center group-hover:text-blue-500"></i>
+                        Buzón
+                        {% if mensajes_sin_leer and mensajes_sin_leer > 0 %}
+                        <span class="ml-auto bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                            {{ mensajes_sin_leer }}
+                        </span>
+                        {% endif %}
+                    </a>
+                    <div class="px-6 py-3">
+                        <button onclick="abrirModalNuevoMensaje()" class="w-full bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-600 hover:text-white transition-colors rounded-lg py-2 text-sm font-bold flex items-center justify-center shadow-sm">
+                            <i class="fas fa-edit mr-2"></i> Redactar Mensaje
+                        </button>
+                    </div>
+                </div>
             </nav>
         </aside>
 
@@ -65,11 +85,11 @@
 
             <div class="flex-1 overflow-y-auto p-6">
                 <div class="flex border-b border-gray-200 mb-6 bg-white rounded-t-lg shadow-sm">
-                    <button onclick="switchTab('datos')" id="tab-datos" class="flex-1 py-3 text-sm font-medium text-center tab-active transition rounded-tl-lg">Datos Personales</button>
-                    <button onclick="switchTab('clinica')" id="tab-clinica" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Clínica y Equipo</button>
-                    <button onclick="switchTab('plan')" id="tab-plan" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Planificación</button>
-                    <button onclick="switchTab('evoluciones')" id="tab-evoluciones" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Registro Diario</button>
-                    <button onclick="switchTab('docs')" id="tab-docs" class="flex-1 py-3 text-sm font-medium text-center tab-inactive transition rounded-tr-lg">Documentación</button>
+                    <button type="button" onclick="window.switchTab('datos')" id="tab-datos" class="tab-btn flex-1 py-3 text-sm font-medium text-center tab-active transition rounded-tl-lg">Datos Personales</button>
+                    <button type="button" onclick="window.switchTab('clinica')" id="tab-clinica" class="tab-btn flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Clínica y Equipo</button>
+                    <button type="button" onclick="window.switchTab('plan')" id="tab-plan" class="tab-btn flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Planificación</button>
+                    <button type="button" onclick="window.switchTab('evoluciones')" id="tab-evoluciones" class="tab-btn flex-1 py-3 text-sm font-medium text-center tab-inactive transition">Registro Diario</button>
+                    <button type="button" onclick="window.switchTab('docs')" id="tab-docs" class="tab-btn flex-1 py-3 text-sm font-medium text-center tab-inactive transition rounded-tr-lg">Documentación</button>
                 </div>
 
                 <div id="content-datos" class="tab-content active space-y-6">
@@ -477,17 +497,43 @@
     </div>
 
     <script>
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
-            document.querySelectorAll('button[id^="tab-"]').forEach(btn => {
-                btn.classList.remove('tab-active');
-                btn.classList.add('tab-inactive');
-            });
-            document.getElementById('content-' + tabName).classList.add('active');
-            const activeBtn = document.getElementById('tab-' + tabName);
-            activeBtn.classList.remove('tab-inactive');
-            activeBtn.classList.add('tab-active');
-        }
+        window.switchTab = function(tabName) {
+            try {
+                console.log("Forzando cambio visual a:", tabName);
+                const contenedorActivo = document.querySelector('main') || document;
+                
+                // 1. Ocultar TODO con estilo directo y remover clases activas de botones
+                contenedorActivo.querySelectorAll('.tab-content').forEach(el => {
+                    el.style.setProperty('display', 'none', 'important');
+                    el.classList.remove('active');
+                });
+                
+                contenedorActivo.querySelectorAll('button[id^="tab-"]').forEach(btn => {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                });
+                
+                // 2. Mostrar la sección específica con estilo directo
+                const target = contenedorActivo.querySelector('#content-' + tabName) || 
+                               contenedorActivo.querySelector('#seccion-' + tabName);
+                
+                if (target) {
+                    target.style.setProperty('display', 'block', 'important');
+                    target.classList.add('active');
+                    console.log("Sección mostrada con éxito:", target.id);
+                } else {
+                    console.error("No se encontró la sección para:", tabName);
+                }
+                
+                const activeBtn = contenedorActivo.querySelector('#tab-' + tabName);
+                if (activeBtn) {
+                    activeBtn.classList.remove('tab-inactive');
+                    activeBtn.classList.add('tab-active');
+                }
+            } catch (error) {
+                console.error("Error cambiando pestaña:", error);
+            }
+        };
 
         // Leer la URL y abrir la solapa automáticamente
         document.addEventListener('DOMContentLoaded', function() {
@@ -497,7 +543,7 @@
             if (activeTab) {
                 const tabToActivate = document.getElementById('tab-' + activeTab);
                 if (tabToActivate) {
-                    switchTab(activeTab); // Hace clic automático en la solapa
+                    window.switchTab(activeTab); // Hace clic automático en la solapa
                     
                     // Opcional: Limpia la URL para que no quede "sucia" con el ?tab=
                     const urlSinParametros = window.location.pathname;
@@ -514,7 +560,7 @@
                 <h3 class="font-bold text-gray-800 flex items-center"><svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg> Nuevo Recado</h3>
                 <button onclick="cerrarModalNuevoMensaje()" class="text-gray-400 hover:text-red-500 transition-colors bg-white rounded-full p-1"><i class="fas fa-times"></i></button>
             </div>
-            <form action="{{ url_for('mensajeria_bp.enviar') }}" method="POST" class="p-6">
+            <form action="{{ url_for('mensajeria_bp.enviar') }}" method="POST" enctype="multipart/form-data" class="p-6">
                 <div class="mb-4">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Destinatario</label>
                     <select name="receptor_id" required class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
@@ -528,9 +574,18 @@
                     <label class="block text-sm font-bold text-gray-700 mb-2">Asunto</label>
                     <input type="text" name="asunto" required class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm" placeholder="Breve descripción...">
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 relative">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Mensaje</label>
                     <textarea name="mensaje" required rows="4" class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm" placeholder="Escriba su recado aquí..."></textarea>
+                
+                    <!-- DROPDOWN MENCIONES -->
+                    <div id="mencionesDropdown" class="absolute z-50 bg-white border border-gray-200 rounded-lg shadow-lg w-full max-h-48 overflow-y-auto hidden" style="top: 100%; margin-top: 4px;"></div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Adjuntar archivo (Opcional)</label>
+                    <input type="file" name="adjunto" 
+                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                    <p class="mt-1 text-xs text-gray-400">Formatos permitidos: PDF, DOCX, XLSX, JPG, PNG</p>
                 </div>
                 <div class="flex justify-end gap-3 pt-2 border-t border-gray-50">
                     <button type="button" onclick="cerrarModalNuevoMensaje()" class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg font-bold text-sm hover:bg-gray-50 transition-colors shadow-sm">Cancelar</button>
@@ -563,5 +618,120 @@
             }, 300);
         }
     </script>
+
+    <!-- SCRIPTS DE AUTOCOMPLETADO (MENCIONES) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.querySelector('textarea[name="mensaje"]');
+            const dropdown = document.getElementById('mencionesDropdown');
+            let isMentioning = false;
+            let mentionStartIndex = -1;
+
+            if (textarea && dropdown) {
+                const pacientesData = {{ lista_pacientes_global | tojson | safe }};
+                
+                textarea.addEventListener('input', function(e) {
+                    const text = textarea.value;
+                    const cursorPos = textarea.selectionStart;
+                    const textBeforeCursor = text.substring(0, cursorPos);
+                    const lastAtPos = textBeforeCursor.lastIndexOf('@');
+                    
+                    if (lastAtPos !== -1 && (lastAtPos === 0 || text[lastAtPos - 1] === ' ' || text[lastAtPos - 1] === '\n')) {
+                        const query = textBeforeCursor.substring(lastAtPos + 1).toLowerCase();
+                        if (query.length >= 0) {
+                            isMentioning = true;
+                            mentionStartIndex = lastAtPos;
+                            mostrarSugerencias(query);
+                        }
+                    } else {
+                        cerrarMenciones();
+                    }
+                });
+
+                textarea.addEventListener('keydown', function(e) {
+                    if (!isMentioning) return;
+                    
+                    const items = dropdown.querySelectorAll('.mencion-item');
+                    if (items.length === 0) return;
+
+                    let activeItem = dropdown.querySelector('.mencion-item.bg-emerald-50');
+                    let activeIndex = Array.from(items).indexOf(activeItem);
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (activeIndex < items.length - 1) {
+                            if (activeItem) activeItem.classList.remove('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex + 1].classList.add('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex + 1].scrollIntoView({block: "nearest"});
+                        }
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (activeIndex > 0) {
+                            if (activeItem) activeItem.classList.remove('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex - 1].classList.add('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex - 1].scrollIntoView({block: "nearest"});
+                        }
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (activeItem) {
+                            activeItem.click();
+                        }
+                    } else if (e.key === 'Escape') {
+                        cerrarMenciones();
+                    }
+                });
+
+                function mostrarSugerencias(query) {
+                    const filtered = pacientesData.filter(p => p.nombre.toLowerCase().includes(query));
+                    if (filtered.length === 0) {
+                        cerrarMenciones();
+                        return;
+                    }
+
+                    let html = '';
+                    filtered.forEach((p, index) => {
+                        const bgClass = index === 0 ? 'bg-emerald-50 text-emerald-700 font-bold' : 'hover:bg-gray-50';
+                        html += `<div class="mencion-item cursor-pointer px-4 py-2 text-sm text-gray-700 transition-colors border-b border-gray-50 last:border-0 ${bgClass}" 
+                                      data-id="${p.id}" data-nombre="${p.nombre}">
+                                    ${p.nombre}
+                                 </div>`;
+                    });
+                    dropdown.innerHTML = html;
+                    dropdown.classList.remove('hidden');
+
+                    dropdown.querySelectorAll('.mencion-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            insertarMencion(this.dataset.nombre, this.dataset.id);
+                        });
+                    });
+                }
+
+                function insertarMencion(nombre, id) {
+                    const text = textarea.value;
+                    const before = text.substring(0, mentionStartIndex);
+                    const after = text.substring(textarea.selectionStart);
+                    const marca = `@${nombre}#${id}`;
+                    
+                    textarea.value = before + marca + ' ' + after;
+                    textarea.focus();
+                    textarea.selectionStart = textarea.selectionEnd = before.length + marca.length + 1;
+                    cerrarMenciones();
+                }
+
+                function cerrarMenciones() {
+                    isMentioning = false;
+                    mentionStartIndex = -1;
+                    dropdown.classList.add('hidden');
+                }
+
+                document.addEventListener('click', function(e) {
+                    if (!dropdown.contains(e.target) && e.target !== textarea) {
+                        cerrarMenciones();
+                    }
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>

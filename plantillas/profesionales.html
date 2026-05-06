@@ -756,11 +756,14 @@
                         class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                         placeholder="Breve descripción...">
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 relative">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Mensaje</label>
                     <textarea name="mensaje" required rows="4"
                         class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                         placeholder="Escriba su recado aquí..."></textarea>
+                
+                    <!-- DROPDOWN MENCIONES -->
+                    <div id="mencionesDropdown" class="absolute z-50 bg-white border border-gray-200 rounded-lg shadow-lg w-full max-h-48 overflow-y-auto hidden" style="top: 100%; margin-top: 4px;"></div>
                 </div>
 
                 <div class="mb-6">
@@ -806,6 +809,121 @@
             }, 300);
         }
     </script>
+
+    <!-- SCRIPTS DE AUTOCOMPLETADO (MENCIONES) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.querySelector('textarea[name="mensaje"]');
+            const dropdown = document.getElementById('mencionesDropdown');
+            let isMentioning = false;
+            let mentionStartIndex = -1;
+
+            if (textarea && dropdown) {
+                const pacientesData = {{ lista_pacientes_global | tojson | safe }};
+                
+                textarea.addEventListener('input', function(e) {
+                    const text = textarea.value;
+                    const cursorPos = textarea.selectionStart;
+                    const textBeforeCursor = text.substring(0, cursorPos);
+                    const lastAtPos = textBeforeCursor.lastIndexOf('@');
+                    
+                    if (lastAtPos !== -1 && (lastAtPos === 0 || text[lastAtPos - 1] === ' ' || text[lastAtPos - 1] === '\n')) {
+                        const query = textBeforeCursor.substring(lastAtPos + 1).toLowerCase();
+                        if (query.length >= 0) {
+                            isMentioning = true;
+                            mentionStartIndex = lastAtPos;
+                            mostrarSugerencias(query);
+                        }
+                    } else {
+                        cerrarMenciones();
+                    }
+                });
+
+                textarea.addEventListener('keydown', function(e) {
+                    if (!isMentioning) return;
+                    
+                    const items = dropdown.querySelectorAll('.mencion-item');
+                    if (items.length === 0) return;
+
+                    let activeItem = dropdown.querySelector('.mencion-item.bg-emerald-50');
+                    let activeIndex = Array.from(items).indexOf(activeItem);
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (activeIndex < items.length - 1) {
+                            if (activeItem) activeItem.classList.remove('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex + 1].classList.add('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex + 1].scrollIntoView({block: "nearest"});
+                        }
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (activeIndex > 0) {
+                            if (activeItem) activeItem.classList.remove('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex - 1].classList.add('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex - 1].scrollIntoView({block: "nearest"});
+                        }
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (activeItem) {
+                            activeItem.click();
+                        }
+                    } else if (e.key === 'Escape') {
+                        cerrarMenciones();
+                    }
+                });
+
+                function mostrarSugerencias(query) {
+                    const filtered = pacientesData.filter(p => p.nombre.toLowerCase().includes(query));
+                    if (filtered.length === 0) {
+                        cerrarMenciones();
+                        return;
+                    }
+
+                    let html = '';
+                    filtered.forEach((p, index) => {
+                        const bgClass = index === 0 ? 'bg-emerald-50 text-emerald-700 font-bold' : 'hover:bg-gray-50';
+                        html += `<div class="mencion-item cursor-pointer px-4 py-2 text-sm text-gray-700 transition-colors border-b border-gray-50 last:border-0 ${bgClass}" 
+                                      data-id="${p.id}" data-nombre="${p.nombre}">
+                                    ${p.nombre}
+                                 </div>`;
+                    });
+                    dropdown.innerHTML = html;
+                    dropdown.classList.remove('hidden');
+
+                    dropdown.querySelectorAll('.mencion-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            insertarMencion(this.dataset.nombre, this.dataset.id);
+                        });
+                    });
+                }
+
+                function insertarMencion(nombre, id) {
+                    const text = textarea.value;
+                    const before = text.substring(0, mentionStartIndex);
+                    const after = text.substring(textarea.selectionStart);
+                    const marca = `@${nombre}#${id}`;
+                    
+                    textarea.value = before + marca + ' ' + after;
+                    textarea.focus();
+                    textarea.selectionStart = textarea.selectionEnd = before.length + marca.length + 1;
+                    cerrarMenciones();
+                }
+
+                function cerrarMenciones() {
+                    isMentioning = false;
+                    mentionStartIndex = -1;
+                    dropdown.classList.add('hidden');
+                }
+
+                document.addEventListener('click', function(e) {
+                    if (!dropdown.contains(e.target) && e.target !== textarea) {
+                        cerrarMenciones();
+                    }
+                });
+            }
+        });
+    </script>
+
 </body>
 
 </html>

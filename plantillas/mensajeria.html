@@ -444,11 +444,11 @@
 
     <!-- MODAL LECTURA -->
     <div id="modalLectura"
-        class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
-        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl transform transition-transform duration-300 scale-95 flex flex-col max-h-[90vh]"
+        class="fixed bottom-0 right-0 sm:bottom-6 sm:right-[480px] z-[90] hidden w-full sm:w-[500px] lg:w-[600px] transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="bg-white rounded-t-2xl sm:rounded-2xl w-full shadow-[0_10px_50px_-12px_rgba(0,0,0,0.4)] border border-gray-100 transform transition-transform duration-300 translate-y-full sm:translate-y-10 flex flex-col max-h-[85vh] pointer-events-auto"
             id="modalLecturaContent">
-            <div
-                class="px-6 py-4 border-b border-emerald-50 flex justify-between items-center bg-gradient-to-r from-emerald-50 to-white rounded-t-2xl shrink-0">
+            <div id="lecturaHeader"
+                class="px-6 py-4 border-b border-emerald-50 flex justify-between items-center bg-gradient-to-r from-emerald-50 to-white rounded-t-2xl shrink-0 cursor-move">
                 <h3 class="font-bold text-emerald-800 flex items-center"><svg class="w-5 h-5 mr-2 text-emerald-500"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -529,11 +529,14 @@
                         class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                         placeholder="Breve descripción...">
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 relative">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Mensaje</label>
                     <textarea name="mensaje" required rows="4"
                         class="w-full border-gray-200 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                         placeholder="Escriba su recado aquí..."></textarea>
+                
+                    <!-- DROPDOWN MENCIONES -->
+                    <div id="mencionesDropdown" class="absolute z-50 bg-white border border-gray-200 rounded-lg shadow-lg w-full max-h-48 overflow-y-auto hidden" style="top: 100%; margin-top: 4px;"></div>
                 </div>
 
                 <div class="mb-6">
@@ -599,8 +602,25 @@
             const msgContainer = document.getElementById('lecturaMensaje');
             msgContainer.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin"></i></div>';
 
-            document.getElementById('modalLectura').classList.remove('hidden');
-            setTimeout(() => document.getElementById('modalLectura').classList.remove('opacity-0'), 10);
+            const modal = document.getElementById('modalLectura');
+            const content = document.getElementById('modalLecturaContent');
+            
+            // Resetear posicionamiento por si fue arrastrado
+            modal.style.top = '';
+            modal.style.left = '';
+            modal.style.bottom = '';
+            modal.style.right = '';
+            modal.style.width = '';
+
+            modal.style.display = ''; // Limpiar display:none si existiera
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; // force reflow
+            modal.classList.remove('opacity-0', 'pointer-events-none'); // Acción 3
+            content.classList.remove('translate-y-full', 'sm:translate-y-10');
+            content.classList.add('translate-y-0');
+
+            // Asegurar que el body nunca quede bloqueado al abrir
+            document.body.classList.remove('overflow-hidden', 'pointer-events-none');
 
             fetch(`/mensajeria/hilo/${id}`).then(res => res.json()).then(data => {
                 if (data.success) {
@@ -627,8 +647,21 @@
                 fetch(`/mensajeria/leer/${currentModalId}`, { method: 'POST' })
                     .then(() => moverFila(currentModalId, 'Historial'));
             }
-            document.getElementById('modalLectura').classList.add('opacity-0');
-            setTimeout(() => document.getElementById('modalLectura').classList.add('hidden'), 300);
+            const modal = document.getElementById('modalLectura');
+            const content = document.getElementById('modalLecturaContent');
+            modal.classList.add('opacity-0', 'pointer-events-none'); // Bloqueo seguro
+            content.classList.remove('translate-y-0');
+            content.classList.add('translate-y-full', 'sm:translate-y-10');
+            
+            // Acción 1: Limpieza Total al Cerrar (Body y Main)
+            document.body.classList.remove('overflow-hidden', 'pointer-events-none');
+            const mainCont = document.querySelector('main');
+            if (mainCont) mainCont.classList.remove('overflow-hidden', 'pointer-events-none');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none'; // Display estricto
+            }, 300);
         }
 
         function borrarMensaje(id) {
@@ -636,6 +669,70 @@
                 fetch(`/mensajeria/borrar/${id}`, { method: 'POST' })
                     .then(res => res.json()).then(data => { if (data.success) location.reload(); });
             }
+        }
+
+        function cargarVistaPaciente(id) {
+            fetch(`/paciente/${id}`)
+                .then(res => res.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    
+                    const newMain = doc.querySelector('main');
+                    if (newMain) {
+                        const currentMain = document.querySelector('main');
+                        if (currentMain) {
+                            currentMain.innerHTML = '';
+                            currentMain.innerHTML = newMain.innerHTML;
+                        }
+                    }
+                    
+                    const newAside = doc.querySelector('aside');
+                    if (newAside) {
+                        const currentAside = document.querySelector('aside');
+                        if (currentAside) {
+                            currentAside.innerHTML = '';
+                            currentAside.innerHTML = newAside.innerHTML;
+                        }
+                    }
+                    
+                    if (doc.title) {
+                        document.title = doc.title;
+                    }
+
+                    // Limpiar modales inyectados previamente
+                    document.querySelectorAll('.injected-modal').forEach(m => m.remove());
+
+                    // Inyectar modales específicos de la ficha (ej. modalEquipo, modalTurno)
+                    Array.from(doc.body.children).forEach(child => {
+                        if (child.id && child.id.startsWith('modal') && child.id !== 'modalLectura' && child.id !== 'modalNuevoMensaje') {
+                            const newModal = document.importNode(child, true);
+                            newModal.classList.add('injected-modal');
+                            document.body.appendChild(newModal);
+                        }
+                    });
+
+                    // Extraer y ejecutar scripts específicos de la ficha del paciente (como switchTab)
+                    doc.querySelectorAll('script').forEach(script => {
+                        if (!script.src && script.textContent.includes('switchTab')) {
+                            if (typeof window.switchTab === 'undefined') {
+                                const newScript = document.createElement('script');
+                                newScript.textContent = script.textContent;
+                                document.body.appendChild(newScript);
+                            }
+                        }
+                    });
+
+                    // Inicializar solapas de la ficha (ya que DOMContentLoaded no se disparará para el HTML inyectado)
+                    setTimeout(() => {
+                        if (typeof window.switchTab === 'function') {
+                            window.switchTab('datos');
+                        }
+                    }, 100);
+                    
+                    window.history.pushState({}, '', `/paciente/${id}`);
+                })
+                .catch(err => console.error('Error cargando paciente:', err));
         }
 
         function abrirModalNuevoMensaje() {
@@ -660,6 +757,176 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+
+        // --- LÓGICA DE DRAG AND DROP PARA EL MODAL DE LECTURA ---
+        const dndModal = document.getElementById('modalLectura');
+        const dndHeader = document.getElementById('lecturaHeader');
+        let isDraggingModal = false;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+
+        if (dndHeader && dndModal) {
+            dndHeader.addEventListener('mousedown', function(e) {
+                // No iniciar arrastre si hace clic en el botón de cerrar
+                if (e.target.closest('button')) return;
+                
+                isDraggingModal = true;
+                const rect = dndModal.getBoundingClientRect();
+                
+                // Fijar ancho para evitar saltos en el redimensionamiento
+                dndModal.style.width = rect.width + 'px';
+                
+                // Convertir de posicionamiento relativo (bottom/right) a absoluto (top/left)
+                dndModal.style.bottom = 'auto';
+                dndModal.style.right = 'auto';
+                dndModal.style.left = rect.left + 'px';
+                dndModal.style.top = rect.top + 'px';
+                
+                dragOffsetX = e.clientX - rect.left;
+                dragOffsetY = e.clientY - rect.top;
+                
+                document.body.style.userSelect = 'none';
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isDraggingModal) return;
+                
+                let newLeft = e.clientX - dragOffsetX;
+                let newTop = e.clientY - dragOffsetY;
+                
+                // Límites de la ventana para que no desaparezca de la pantalla
+                const maxLeft = window.innerWidth - dndModal.offsetWidth;
+                const maxTop = window.innerHeight - dndModal.offsetHeight;
+                
+                newLeft = Math.max(0, Math.min(newLeft, maxLeft));
+                newTop = Math.max(0, Math.min(newTop, maxTop));
+                
+                dndModal.style.left = newLeft + 'px';
+                dndModal.style.top = newTop + 'px';
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (isDraggingModal) {
+                    isDraggingModal = false;
+                    document.body.style.userSelect = '';
+                }
+            });
+        }
     </script>
+
+    <!-- SCRIPTS DE AUTOCOMPLETADO (MENCIONES) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.querySelector('textarea[name="mensaje"]');
+            const dropdown = document.getElementById('mencionesDropdown');
+            let isMentioning = false;
+            let mentionStartIndex = -1;
+
+            if (textarea && dropdown) {
+                const pacientesData = {{ lista_pacientes_global | tojson | safe }};
+                
+                textarea.addEventListener('input', function(e) {
+                    const text = textarea.value;
+                    const cursorPos = textarea.selectionStart;
+                    const textBeforeCursor = text.substring(0, cursorPos);
+                    const lastAtPos = textBeforeCursor.lastIndexOf('@');
+                    
+                    if (lastAtPos !== -1 && (lastAtPos === 0 || text[lastAtPos - 1] === ' ' || text[lastAtPos - 1] === '\n')) {
+                        const query = textBeforeCursor.substring(lastAtPos + 1).toLowerCase();
+                        if (query.length >= 0) {
+                            isMentioning = true;
+                            mentionStartIndex = lastAtPos;
+                            mostrarSugerencias(query);
+                        }
+                    } else {
+                        cerrarMenciones();
+                    }
+                });
+
+                textarea.addEventListener('keydown', function(e) {
+                    if (!isMentioning) return;
+                    
+                    const items = dropdown.querySelectorAll('.mencion-item');
+                    if (items.length === 0) return;
+
+                    let activeItem = dropdown.querySelector('.mencion-item.bg-emerald-50');
+                    let activeIndex = Array.from(items).indexOf(activeItem);
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (activeIndex < items.length - 1) {
+                            if (activeItem) activeItem.classList.remove('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex + 1].classList.add('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex + 1].scrollIntoView({block: "nearest"});
+                        }
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (activeIndex > 0) {
+                            if (activeItem) activeItem.classList.remove('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex - 1].classList.add('bg-emerald-50', 'text-emerald-700');
+                            items[activeIndex - 1].scrollIntoView({block: "nearest"});
+                        }
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (activeItem) {
+                            activeItem.click();
+                        }
+                    } else if (e.key === 'Escape') {
+                        cerrarMenciones();
+                    }
+                });
+
+                function mostrarSugerencias(query) {
+                    const filtered = pacientesData.filter(p => p.nombre.toLowerCase().includes(query));
+                    if (filtered.length === 0) {
+                        cerrarMenciones();
+                        return;
+                    }
+
+                    let html = '';
+                    filtered.forEach((p, index) => {
+                        const bgClass = index === 0 ? 'bg-emerald-50 text-emerald-700 font-bold' : 'hover:bg-gray-50';
+                        html += `<div class="mencion-item cursor-pointer px-4 py-2 text-sm text-gray-700 transition-colors border-b border-gray-50 last:border-0 ${bgClass}" 
+                                      data-id="${p.id}" data-nombre="${p.nombre}">
+                                    ${p.nombre}
+                                 </div>`;
+                    });
+                    dropdown.innerHTML = html;
+                    dropdown.classList.remove('hidden');
+
+                    dropdown.querySelectorAll('.mencion-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            insertarMencion(this.dataset.nombre, this.dataset.id);
+                        });
+                    });
+                }
+
+                function insertarMencion(nombre, id) {
+                    const text = textarea.value;
+                    const before = text.substring(0, mentionStartIndex);
+                    const after = text.substring(textarea.selectionStart);
+                    const marca = `@${nombre}#${id}`;
+                    
+                    textarea.value = before + marca + ' ' + after;
+                    textarea.focus();
+                    textarea.selectionStart = textarea.selectionEnd = before.length + marca.length + 1;
+                    cerrarMenciones();
+                }
+
+                function cerrarMenciones() {
+                    isMentioning = false;
+                    mentionStartIndex = -1;
+                    dropdown.classList.add('hidden');
+                }
+
+                document.addEventListener('click', function(e) {
+                    if (!dropdown.contains(e.target) && e.target !== textarea) {
+                        cerrarMenciones();
+                    }
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>

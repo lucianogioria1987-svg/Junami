@@ -43,6 +43,14 @@ def inyectar_configuracion():
     # Mensajería global y lista de profesionales
     mensajes_sin_leer = 0
     lista_profesionales = []
+    
+    # Cargar pacientes globalmente de forma segura
+    try:
+        pacientes_data = cargar_datos('pacientes.json')
+        lista_pacientes = [{"id": p["id"], "nombre": p["nombre"]} for p in pacientes_data if 'nombre' in p and 'id' in p]
+    except Exception:
+        lista_pacientes = []
+
     if 'usuario_actual' in session:
         mi_id = session['usuario_actual']['id']
         mensajes = cargar_datos('mensajeria.json')
@@ -58,7 +66,8 @@ def inyectar_configuracion():
         licencia_activa=config.get('licencia_activa', {}), 
         config_visual=config.get('config_visual', {}),
         mensajes_sin_leer=mensajes_sin_leer,
-        lista_profesionales_global=lista_profesionales
+        lista_profesionales_global=lista_profesionales,
+        lista_pacientes_global=lista_pacientes
     )
 
 # ==========================================

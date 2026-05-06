@@ -25,7 +25,10 @@
         "fecha_ingreso": "01/03/2026",
         "profesionales": [
             "Aux. Sofia Vera"
-        ]
+        ],
+        "plan_anual": "",
+        "objetivos_mensuales": "",
+        "sugerencias_hogar": ""
     },
     {
         "id": 2,
@@ -425,7 +428,10 @@
         "tutor_nombre": "Martina Pérez",
         "domicilio": "Calle 324",
         "email": "paciente.17@gmail.com",
-        "fecha_ingreso": "01/03/2026"
+        "fecha_ingreso": "01/03/2026",
+        "profesionales": [
+            "Lic. Federico Paz"
+        ]
     },
     {
         "id": 18,

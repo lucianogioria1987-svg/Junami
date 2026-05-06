@@ -1,11 +1,21 @@
 [
     {
         "id": 1,
+        "emisor_id": 1,
+        "receptor_id": 2,
+        "asunto": "a ver que onda",
+        "mensaje": "Hola, ¿podés revisar los laboratorios de @Emma García#1 ",
+        "fecha": "05/05/2026 12:48",
+        "leido": true,
+        "respuestas": []
+    },
+    {
+        "id": 2,
         "emisor_id": 2,
         "receptor_id": 1,
-        "asunto": "a ver que onda",
-        "mensaje": "lkljlj",
-        "fecha": "05/05/2026 10:56",
+        "asunto": "rfd",
+        "mensaje": "@Juan Martínez#3 ",
+        "fecha": "05/05/2026 13:09",
         "leido": true,
         "respuestas": []
     }

@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "id": 1,
+        "id_paciente": 1,
+        "fecha": "06/05/2026",
+        "hora": "11:53",
+        "profesional": "Lic. Marta Ruiz",
+        "nota": "fdfdfdf"
+    }
+]
